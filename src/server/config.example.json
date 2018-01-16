@@ -1,0 +1,11 @@
+{
+  "db": {
+    "username": "root",
+    "password": null,
+    "database": "pawgistics",
+    "host": "localhost",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  },
+  "jwt_secret": "AdmCsgpUvGBDaMGkS02a3yqfN12aHIVrH3Kw7XjKyeqXt8sqnNlU2cIEhi3djVkc"
+}

@@ -8,7 +8,8 @@
     "compat"
   ],
   "rules": {
-    "compat/compat": 2
+    "compat/compat": 2,
+    "camelcase": "off"
   },
   "env": {
     "browser": true,

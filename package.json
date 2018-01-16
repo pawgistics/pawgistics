@@ -49,10 +49,16 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
+    "body-parser": "^1.18.2",
     "compression": "^1.7.1",
     "express": "^4.16.2",
     "immutable": "4.0.0-rc.9",
     "isomorphic-fetch": "^2.2.1",
+    "jsonwebtoken": "^8.1.0",
+    "mysql2": "^1.5.1",
+    "passport": "^0.4.0",
+    "passport-jwt": "^3.0.1",
+    "passport-local": "^1.0.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-hot-loader": "^4.0.0-beta.13",
@@ -61,6 +67,7 @@
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "sequelize": "^4.31.2"
   }
 }
