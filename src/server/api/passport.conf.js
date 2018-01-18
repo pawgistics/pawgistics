@@ -1,3 +1,7 @@
+// @flow
+
+import argon2 from 'argon2';
+
 import { ExtractJwt, Strategy as JwtStrategy } from 'passport-jwt';
 import { Strategy as LocalStrategy } from 'passport-local';
 import models from '../models';
@@ -7,7 +11,7 @@ const { jwt_secret } = require('../config.json');
 // flow-disable-next-line
 const User = models.user;
 
-export default (passport) => {
+export default (passport: any) => {
   passport.use(new JwtStrategy({
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: jwt_secret,
@@ -30,10 +34,16 @@ export default (passport) => {
         email,
       },
     }).then((user) => {
-      if (user && user.password === password) {
-        done(null, user);
+      if (user) {
+        argon2.verify(user.password, password).then((match) => {
+          if (match) {
+            done(null, user);
+          } else {
+            done(null, false, { message: 'Incorrect password.' });
+          }
+        }).catch(err => done(err, false));
       } else {
-        done(null, false);
+        done(null, false, { message: 'User not found.' });
       }
     }).catch(err => done(err, false));
   }));

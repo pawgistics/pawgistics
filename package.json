@@ -48,6 +48,7 @@
     "webpack-dev-server": "^2.11.0"
   },
   "dependencies": {
+    "argon2": "^0.17.0",
     "babel-polyfill": "^6.26.0",
     "body-parser": "^1.18.2",
     "compression": "^1.7.1",

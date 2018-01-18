@@ -1,4 +1,8 @@
-export default (sequelize, Sequelize) => {
+// @flow
+
+import argon2 from 'argon2';
+
+export default (sequelize: any, Sequelize: any) => {
   const User = sequelize.define('user', {
     id: {
       autoIncrement: true,
@@ -8,12 +12,12 @@ export default (sequelize, Sequelize) => {
     },
     email: {
       type: Sequelize.STRING,
-      // notEmpty: true,
-      // allowNull: false,
+      notEmpty: true,
+      allowNull: false,
       unique: true,
-      // validate: {
-      //   isEmail: true,
-      // },
+      validate: {
+        isEmail: true,
+      },
     },
     password: {
       type: Sequelize.STRING,
@@ -58,6 +62,18 @@ export default (sequelize, Sequelize) => {
     //   // notEmpty: true,
     //   // allowNull: false,
     // },
+  }, {
+    hooks: {
+      beforeSave: (user) => {
+        if (user.changed()) {
+          return argon2.hash(user.password, { type: argon2.argon2id })
+            // eslint-disable-next-line no-param-reassign
+            .then((hash) => { user.password = hash; });
+        }
+        // eslint-disable-next-line compat/compat
+        return Promise.resolve();
+      },
+    },
   });
 
   return User;
