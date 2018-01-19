@@ -6,44 +6,62 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { AppContainer } from 'react-hot-loader';
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
 import App from './app';
-import helloReducer from './reducer/hello';
+import rootReducer from './reducers';
 import { APP_CONTAINER_SELECTOR } from '../shared/config';
-import { isProd } from '../shared/util';
+
+declare var PROD: boolean;
 
 // eslint-disable-next-line no-underscore-dangle
-const composeEnhancers = (isProd ? null : window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+const composeEnhancers = (PROD ? null : window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
 const store = createStore(
-  combineReducers({ hello: helloReducer }),
+  rootReducer,
   composeEnhancers(applyMiddleware(thunkMiddleware)),
 );
 
-const rootEl = document.querySelector(APP_CONTAINER_SELECTOR);
+const rootEl: Element = (document.querySelector(APP_CONTAINER_SELECTOR): any);
 
-const wrapApp = (AppComponent, reduxStore) => (
-  <Provider store={reduxStore}>
-    <BrowserRouter>
-      <AppContainer>
+let wrapApp;
+
+if (PROD) {
+  wrapApp = (AppComponent, reduxStore) => (
+    <Provider store={reduxStore}>
+      <BrowserRouter>
         <AppComponent />
-      </AppContainer>
-    </BrowserRouter>
-  </Provider>
-);
+      </BrowserRouter>
+    </Provider>
+  );
+} else {
+  // eslint-disable-next-line
+  const { AppContainer } = require('react-hot-loader');
 
-// flow-disable-next-line
-ReactDOM.render(wrapApp(App, store), rootEl);
+  wrapApp = (AppComponent, reduxStore) => (
+    <Provider store={reduxStore}>
+      <BrowserRouter>
+        <AppContainer>
+          <AppComponent />
+        </AppContainer>
+      </BrowserRouter>
+    </Provider>
+  );
 
-if (module.hot) {
   // flow-disable-next-line
   module.hot.accept('./app', () => {
     // eslint-disable-next-line global-require
-    const NextApp = require('./app').default;
-    // flow-disable-next-line
-    ReactDOM.render(wrapApp(NextApp), rootEl);
+    const nextApp = require('./app').default;
+    ReactDOM.render(wrapApp(nextApp, store), rootEl);
+  });
+
+  // flow-disable-next-line
+  module.hot.accept('./reducers', () => {
+    // eslint-disable-next-line global-require
+    const nextRootReducer = require('./reducers').default;
+    store.replaceReducer(nextRootReducer);
   });
 }
+
+ReactDOM.render(wrapApp(App, store), rootEl);

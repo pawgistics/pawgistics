@@ -23,7 +23,7 @@ const User = models.user;
 models.sequelize.sync()
   .then(() => {
     console.log('Database sync success.');
-    User.findOne({
+    return User.findOne({
       where: {
         email: 'admin@pawgistics.com',
       },

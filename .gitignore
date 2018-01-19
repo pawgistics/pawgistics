@@ -2,6 +2,6 @@
 /*.log
 /node_modules/
 /coverage/
-/lib/
+/build/
 /dist/
 /src/server/config.json

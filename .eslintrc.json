@@ -17,5 +17,8 @@
   },
   "settings": {
     "polyfills": ["fetch"]
+  },
+  "globals": {
+    "PROD": false
   }
 }
