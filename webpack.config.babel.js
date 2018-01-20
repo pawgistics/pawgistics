@@ -4,6 +4,7 @@ import path from 'path';
 import webpack from 'webpack';
 import { getIfUtils, removeEmpty } from 'webpack-config-utils';
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
+import OptimizeJsPlugin from 'optimize-js-plugin';
 import ZopfliPlugin from 'zopfli-webpack-plugin';
 import BrotliPlugin from 'brotli-webpack-plugin';
 // import Visualizer from 'webpack-visualizer-plugin';
@@ -42,6 +43,9 @@ export default {
   plugins: removeEmpty([
     ifProduction(new UglifyJsPlugin({
       parallel: true,
+    })),
+    ifProduction(new OptimizeJsPlugin({
+      sourceMap: false,
     })),
     ifProduction(new ZopfliPlugin()),
     ifProduction(new BrotliPlugin()),
