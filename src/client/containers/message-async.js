@@ -2,7 +2,7 @@
 
 import { connect } from 'react-redux';
 
-import MessageAsync from '../component/message';
+import MessageAsync from '../components/message';
 
 const mapStateToProps = state => ({
   message: state.hello.get('messageAsync'),

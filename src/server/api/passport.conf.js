@@ -43,7 +43,7 @@ export default (passport: any) => {
           }
         }).catch(err => done(err, false));
       } else {
-        done(null, false, { message: 'User not found.' });
+        done(null, false, { message: 'Email address not found.' });
       }
     }).catch(err => done(err, false));
   }));

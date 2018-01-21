@@ -1,0 +1,23 @@
+@import '../global/variables.scss';
+
+.content {
+    width: calc(100% - #{$sidebar-width});
+    padding: 40px;
+    min-height: 100vh;
+    transition: all 0.3s;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.content:global(.active) {
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+  .content {
+    width: 100%;
+  }
+  .content:global(.active) {
+    width: calc(100% - #{$sidebar-width});
+  }
+}

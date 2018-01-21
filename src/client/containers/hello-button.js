@@ -1,16 +1,15 @@
 // @flow
 
 import { connect } from 'react-redux';
-
-import { sayHelloAsync } from '../action/hello';
-import Button from '../component/button';
+import { sayHello } from '../actions/hello';
+import Button from '../components/button';
 
 const mapStateToProps = () => ({
-  label: 'Say hello asynchronously and send 1234',
+  label: 'Say hello',
 });
 
 const mapDispatchToProps = dispatch => ({
-  handleClick: () => { dispatch(sayHelloAsync(1234)); },
+  handleClick: () => { dispatch(sayHello('Hello!')); },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Button);

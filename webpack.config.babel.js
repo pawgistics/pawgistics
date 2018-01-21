@@ -5,6 +5,8 @@ import webpack from 'webpack';
 import { getIfUtils, removeEmpty } from 'webpack-config-utils';
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 import OptimizeJsPlugin from 'optimize-js-plugin';
+import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import ZopfliPlugin from 'zopfli-webpack-plugin';
 import BrotliPlugin from 'brotli-webpack-plugin';
 // import Visualizer from 'webpack-visualizer-plugin';
@@ -26,7 +28,27 @@ export default {
   },
   module: {
     rules: [
-      { test: /\.(js|jsx)$/, use: 'babel-loader', exclude: /node_modules/ },
+      { test: /\.jsx?$/, use: 'babel-loader', exclude: /node_modules/ },
+      {
+        test: /\.m\.s?css$/,
+        use: ifProduction(
+          ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: ['css-loader?modules,localIdentName="[name]-[local]-[hash:base64:6]"', 'sass-loader'],
+          }),
+          ['style-loader', 'css-loader?modules,localIdentName="[name]-[local]-[hash:base64:6]"', 'sass-loader'],
+        ),
+      },
+      {
+        test: /^((?!\.m).)*\.s?css$/,
+        use: ifProduction(
+          ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: ['css-loader', 'sass-loader'],
+          }),
+          ['style-loader', 'css-loader', 'sass-loader'],
+        ),
+      },
     ],
   },
   devtool: ifProduction(false, 'source-map'),
@@ -47,6 +69,8 @@ export default {
     ifProduction(new OptimizeJsPlugin({
       sourceMap: false,
     })),
+    ifProduction(new OptimizeCssAssetsPlugin()),
+    ifProduction(new ExtractTextPlugin({ filename: 'css/styles.css' })),
     ifProduction(new ZopfliPlugin()),
     ifProduction(new BrotliPlugin()),
     ifDevelopment(new webpack.HotModuleReplacementPlugin()),

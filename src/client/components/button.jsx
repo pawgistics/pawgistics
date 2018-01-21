@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react';
+import { Button as BootstrapButton } from 'reactstrap';
 
 type Props = {
   label: string,
@@ -8,6 +9,6 @@ type Props = {
 }
 
 const Button = ({ label, handleClick }: Props) =>
-  <button onClick={handleClick}>{label}</button>;
+  <BootstrapButton onClick={handleClick}>{label}</BootstrapButton>;
 
 export default Button;

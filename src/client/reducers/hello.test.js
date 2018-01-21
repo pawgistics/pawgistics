@@ -3,7 +3,7 @@ import {
   sayHelloAsyncRequest,
   sayHelloAsyncSuccess,
   sayHelloAsyncFailure,
-} from '../action/hello';
+} from '../actions/hello';
 
 import helloReducer from './hello';
 

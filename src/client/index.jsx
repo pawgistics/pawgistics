@@ -5,23 +5,16 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/lib/integration/react';
 import { BrowserRouter } from 'react-router-dom';
-import { createStore, applyMiddleware, compose } from 'redux';
-import thunkMiddleware from 'redux-thunk';
 
 import App from './app';
-import rootReducer from './reducers';
+import { store, persistor } from './store';
 import { APP_CONTAINER_SELECTOR } from '../shared/config';
 
+import './styles/global/styles.scss';
+
 declare var PROD: boolean;
-
-// eslint-disable-next-line no-underscore-dangle
-const composeEnhancers = (PROD ? null : window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
-
-const store = createStore(
-  rootReducer,
-  composeEnhancers(applyMiddleware(thunkMiddleware)),
-);
 
 const rootEl: Element = (document.querySelector(APP_CONTAINER_SELECTOR): any);
 
@@ -30,9 +23,11 @@ let wrapApp;
 if (PROD) {
   wrapApp = (AppComponent, reduxStore) => (
     <Provider store={reduxStore}>
-      <BrowserRouter>
-        <AppComponent />
-      </BrowserRouter>
+      <PersistGate loading={null} persistor={persistor}>
+        <BrowserRouter>
+          <AppComponent />
+        </BrowserRouter>
+      </PersistGate>
     </Provider>
   );
 } else {
@@ -41,11 +36,13 @@ if (PROD) {
 
   wrapApp = (AppComponent, reduxStore) => (
     <Provider store={reduxStore}>
-      <BrowserRouter>
-        <AppContainer>
-          <AppComponent />
-        </AppContainer>
-      </BrowserRouter>
+      <PersistGate loading={null} persistor={persistor}>
+        <BrowserRouter>
+          <AppContainer>
+            <AppComponent />
+          </AppContainer>
+        </BrowserRouter>
+      </PersistGate>
     </Provider>
   );
 
