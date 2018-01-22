@@ -12,7 +12,7 @@ export const LOGOUT_FAILURE = 'LOGOUT_FAILURE';
 
 export const requestLogout = createAction(LOGOUT_REQUEST, () => ({
   isFetching: true,
-  errMsg: null,
+  errMsg: '',
 }));
 
 export const receiveLogout = createAction(LOGOUT_SUCCESS, () => ({

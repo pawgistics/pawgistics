@@ -9,7 +9,6 @@
   ],
   "rules": {
     "compat/compat": 2,
-    "camelcase": "off",
     "import/no-extraneous-dependencies": "off"
   },
   "env": {

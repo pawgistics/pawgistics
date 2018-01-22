@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "browserslist": [
-    "> 1%"
+    "> 1%", "last 2 versions"
   ],
   "scripts": {
     "start": "yarn dev:start",
@@ -19,6 +19,7 @@
     "prepush": "yarn test && yarn prod:build"
   },
   "devDependencies": {
+    "autoprefixer": "^7.2.5",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.1",
@@ -50,6 +51,7 @@
     "nodemon": "^1.14.11",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
     "optimize-js-plugin": "^0.0.4",
+    "postcss-loader": "^2.0.10",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-css-modules": "^4.7.1",

@@ -5,13 +5,13 @@ import path from 'path';
 import Sequelize from 'sequelize';
 
 // const env = process.env.NODE_ENV || 'development';
-const { db_config } = require('../config.json');
+const { dbConfig } = require('../config.json');
 
 const sequelize = new Sequelize(
-  db_config.database,
-  db_config.username,
-  db_config.password,
-  db_config,
+  dbConfig.database,
+  dbConfig.username,
+  dbConfig.password,
+  dbConfig,
 );
 
 const db = {};

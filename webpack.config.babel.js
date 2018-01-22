@@ -34,9 +34,9 @@ export default {
         use: ifProduction(
           ExtractTextPlugin.extract({
             fallback: 'style-loader',
-            use: ['css-loader?modules,localIdentName="[name]-[local]-[hash:base64:6]"', 'sass-loader'],
+            use: ['css-loader?modules,localIdentName="[name]-[local]-[hash:base64:6]"', 'postcss-loader', 'sass-loader'],
           }),
-          ['style-loader', 'css-loader?modules,localIdentName="[name]-[local]-[hash:base64:6]"', 'sass-loader'],
+          ['style-loader', 'css-loader?modules,localIdentName="[name]-[local]-[hash:base64:6]"', 'postcss-loader', 'sass-loader'],
         ),
       },
       {
@@ -44,9 +44,9 @@ export default {
         use: ifProduction(
           ExtractTextPlugin.extract({
             fallback: 'style-loader',
-            use: ['css-loader', 'sass-loader'],
+            use: ['css-loader', 'postcss-loader', 'sass-loader'],
           }),
-          ['style-loader', 'css-loader', 'sass-loader'],
+          ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
         ),
       },
     ],

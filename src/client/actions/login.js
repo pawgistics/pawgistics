@@ -13,7 +13,7 @@ export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
 export const requestLogin = createAction(LOGIN_REQUEST, () => ({
   isFetching: true,
-  errMsg: null,
+  errMsg: '',
 }));
 
 export const receiveLogin = createAction(LOGIN_SUCCESS, user => ({
@@ -41,14 +41,14 @@ export function loginUser(creds) {
     dispatch(requestLogin());
 
     return fetch(apiLoginRoute, config)
-      .then(response => response.json().then(response_data => ({ response_data, response })))
-      .then(({ response_data, response }) => {
+      .then(response => response.json().then(responseData => ({ responseData, response })))
+      .then(({ responseData, response }) => {
         if (!response.ok) {
           // Dispatch the error condition
-          dispatch(loginError(response_data.message));
+          dispatch(loginError(responseData.message));
         } else {
           // Dispatch the success action
-          dispatch(receiveLogin(response_data));
+          dispatch(receiveLogin(responseData));
         }
       // eslint-disable-next-line no-console
       }).catch(err => console.log('Error: ', err));

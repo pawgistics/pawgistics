@@ -7,7 +7,7 @@ import passport from 'passport';
 import models from '../models';
 
 const jwt = require('jsonwebtoken');
-const { jwt_secret } = require('../config.json');
+const { jwtSecret } = require('../config.json');
 
 // flow-disable-next-line
 const User = models.user;
@@ -56,7 +56,7 @@ authRouter.post('/login', (req, res) => {
       return res.status(500).json({ success: false, message: 'An error occurred.' });
     }
     if (user) {
-      const token = jwt.sign({ id: user.id }, jwt_secret, {
+      const token = jwt.sign({ id: user.id }, jwtSecret, {
         expiresIn: 10800, // in seconds
       });
       return res.status(200).json({ success: true, token });

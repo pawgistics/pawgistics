@@ -1,5 +1,5 @@
 {
-  "db_config": {
+  "dbConfig": {
     "username": "root",
     "password": null,
     "database": "pawgistics",
@@ -8,6 +8,6 @@
     "operatorsAliases": false,
     "logging": false
   },
-  "jwt_secret": "AdmCsgpUvGBDaMGkS02a3yqfN12aHIVrH3Kw7XjKyeqXt8sqnNlU2cIEhi3djVkc",
-  "pawgistics_admin_password": "password"
+  "jwtSecret": "AdmCsgpUvGBDaMGkS02a3yqfN12aHIVrH3Kw7XjKyeqXt8sqnNlU2cIEhi3djVkc",
+  "pawgisticsAdminPassword": "password"
 }

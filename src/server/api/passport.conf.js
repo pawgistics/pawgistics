@@ -6,7 +6,7 @@ import { ExtractJwt, Strategy as JwtStrategy } from 'passport-jwt';
 import { Strategy as LocalStrategy } from 'passport-local';
 import models from '../models';
 
-const { jwt_secret } = require('../config.json');
+const { jwtSecret } = require('../config.json');
 
 // flow-disable-next-line
 const User = models.user;
@@ -14,9 +14,9 @@ const User = models.user;
 export default (passport: any) => {
   passport.use(new JwtStrategy({
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: jwt_secret,
-  }, (jwt_payload, done) => {
-    User.findById(jwt_payload.id).then((user) => {
+    secretOrKey: jwtSecret,
+  }, (jwtPayload, done) => {
+    User.findById(jwtPayload.id).then((user) => {
       if (user) {
         done(null, user);
       } else {

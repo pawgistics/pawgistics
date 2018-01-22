@@ -19,7 +19,7 @@ const initialState = Immutable.fromJS({
   isFetching: false,
   isAuthenticated: false,
   token: null,
-  errMsg: null,
+  errMsg: '',
 });
 
 const authReducer = (state: Immut = initialState, action: { type: string, payload: any }) => {

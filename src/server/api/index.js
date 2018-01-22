@@ -9,7 +9,7 @@ import authRouter from './auth.api';
 import models from '../models';
 import passportConfig from './passport.conf';
 
-const { pawgistics_admin_password } = require('../config.json');
+const { pawgisticsAdminPassword } = require('../config.json');
 
 const apiRouter = express.Router();
 
@@ -31,7 +31,7 @@ models.sequelize.sync()
       if (!user) {
         User.create({
           email: 'admin@pawgistics.com',
-          password: pawgistics_admin_password,
+          password: pawgisticsAdminPassword,
           role: 'administrator',
           first_name: 'Administrator',
           last_name: '',
