@@ -4,12 +4,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 import CSSModules from 'react-css-modules';
 import { Form, FormGroup, Input, Button, Label } from 'reactstrap';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 import { loginUser } from '../actions/login';
 import styles from '../styles/pages/login.m.scss';
 
-class LoginPage extends React.Component {
+type Props = {
+  isFetching: boolean,
+  errMsg: string,
+  handleLogin: ({ email: string, password: string }) => void,
+}
+
+class LoginPage extends React.Component<Props> {
   constructor() {
     super();
     this.state = {
@@ -96,11 +102,15 @@ class LoginPage extends React.Component {
   }
 }
 
-LoginPage.propTypes = {
-  isFetching: PropTypes.bool.isRequired,
-  errMsg: PropTypes.string.isRequired,
-  handleLogin: PropTypes.func.isRequired,
-};
+// LoginPage.propTypes = {
+//   isFetching: PropTypes.bool.isRequired,
+//   errMsg: PropTypes.string,
+//   handleLogin: PropTypes.func.isRequired,
+// };
+//
+// LoginPage.defaultProps = {
+//   errMsg: null,
+// };
 
 const mapStateToProps = state => ({
   isFetching: state.auth.get('isFetching'),

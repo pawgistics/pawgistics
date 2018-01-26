@@ -11,21 +11,9 @@ export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
-export const requestLogin = createAction(LOGIN_REQUEST, () => ({
-  isFetching: true,
-  errMsg: '',
-}));
-
-export const receiveLogin = createAction(LOGIN_SUCCESS, user => ({
-  isFetching: false,
-  isAuthenticated: true,
-  token: user.token,
-}));
-
-export const loginError = createAction(LOGIN_FAILURE, message => ({
-  isFetching: false,
-  errMsg: message,
-}));
+export const requestLogin = createAction(LOGIN_REQUEST);
+export const receiveLogin = createAction(LOGIN_SUCCESS, token => ({ token }));
+export const loginError = createAction(LOGIN_FAILURE, message => ({ message }));
 
 // Calls the API to get a token and
 // dispatches actions along the way
@@ -48,7 +36,7 @@ export function loginUser(creds) {
           dispatch(loginError(responseData.message));
         } else {
           // Dispatch the success action
-          dispatch(receiveLogin(responseData));
+          dispatch(receiveLogin(responseData.token));
         }
       // eslint-disable-next-line no-console
       }).catch(err => console.log('Error: ', err));

@@ -56,7 +56,7 @@ authRouter.post('/login', (req, res) => {
       return res.status(500).json({ success: false, message: 'An error occurred.' });
     }
     if (user) {
-      const token = jwt.sign({ id: user.id }, jwtSecret, {
+      const token = jwt.sign({ id: user.id, admin: (user.role === 'administrator') }, jwtSecret, {
         expiresIn: 10800, // in seconds
       });
       return res.status(200).json({ success: true, token });

@@ -16,10 +16,16 @@ const App = ({ isAuthenticated }: Props) => (
     <Route
       exact
       path={LOGIN_PAGE_ROUTE}
-      render={() => (isAuthenticated ? <Redirect to="/" /> : <LoginPage />)}
+      render={props => (isAuthenticated ?
+        <Redirect to="/" /> :
+        <LoginPage {...props} />
+      )}
     />
     <Route
-      render={() => (isAuthenticated ? <DashboardPage /> : <Redirect to={LOGIN_PAGE_ROUTE} />)}
+      render={props => (isAuthenticated ?
+        <DashboardPage {...props} /> :
+        <Redirect to={LOGIN_PAGE_ROUTE} />
+      )}
     />
   </Switch>
 );
