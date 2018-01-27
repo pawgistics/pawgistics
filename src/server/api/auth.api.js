@@ -4,47 +4,43 @@
 
 import express from 'express';
 import passport from 'passport';
-import models from '../models';
+import db from '../models/index';
 
 const jwt = require('jsonwebtoken');
 const { jwtSecret } = require('../config.json');
 
 // flow-disable-next-line
-const User = models.user;
+const UserTable = db.userTable;
 const authRouter = express.Router();
 
 // Register new users
 authRouter.post('/register', (req, res) => {
-  User.findOne({
-    where: {
-      email: req.body.email,
-    },
-  }).then((user) => {
+  UserTable.query('emailGlobalIndex').eq(req.body.email).exec((err, user) => {
+    if (err) {
+      res.status(500).json({ success: false, message: 'An error occurred.' });
+    }
     if (!user) {
-      User.create({
+      const newUser = new UserTable({
         email: req.body.email,
         password: req.body.password,
-        role: 'volunteer',
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        phone_number: req.body.phone_number,
-        profile_picture: req.body.profile_picture,
-      }).then(() => {
-        res.status(201).json({ success: true, message: 'Successfully created new user.' });
-      })
-        .catch((err) => {
-          if (err.name === 'SequelizeValidationError') {
-            res.status(400).json({ success: false, message: 'Failed to validate user properties.' });
-          }
-          console.log(err.keys);
+        admin: req.body.admin,
+        fname: req.body.fname,
+        lname: req.body.lname,
+        phone: req.body.phone,
+        address: req.body.address,
+        uri: req.body.profile_picture,
+      });
+      newUser.save((insertErr) => {
+        if (insertErr) {
+          console.log(insertErr);
           res.status(500).json({ success: false, message: 'An error occurred.' });
-        });
+        } else {
+          res.status(201).json({ success: true, message: 'Successfully created new user.' });
+        }
+      });
     } else {
       res.status(400).json({ success: false, message: 'Email already in use.' });
     }
-  }).catch((err) => {
-    console.log(err);
-    res.status(500).json({ success: false, message: 'An error occurred.' });
   });
 });
 

@@ -38,7 +38,7 @@ const User = new dynamoose.Schema({
   phone: {
     type: String,
     required: true,
-    validate: RegExp.test('[0-9]{3}-[0-9]{3}-[0-9]{4}'),
+    validate: RegExp('[0-9]{3}-[0-9]{3}-[0-9]{4}'),
   },
   address: {
     type: Object,

@@ -18,8 +18,7 @@ if (!isProd) {
   populateDev();
 }
 const uTable = dynamoose.model('userTable', User);
-const db = {
-  userTable: uTable,
-};
+const db = {};
+db.userTable = uTable;
 
 export default db;

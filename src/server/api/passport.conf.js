@@ -4,12 +4,12 @@ import argon2 from 'argon2';
 
 import { ExtractJwt, Strategy as JwtStrategy } from 'passport-jwt';
 import { Strategy as LocalStrategy } from 'passport-local';
-import models from '../models';
+import db from '../models/index';
 
 const { jwtSecret } = require('../config.json');
 
 // flow-disable-next-line
-const User = models.user;
+const User = db.userTable;
 
 export default (passport: any) => {
   passport.use(new JwtStrategy({
@@ -29,11 +29,7 @@ export default (passport: any) => {
     usernameField: 'email',
     session: false,
   }, (email, password, done) => {
-    User.findOne({
-      where: {
-        email,
-      },
-    }).then((user) => {
+    User.query('emailGlobalIndex').eq(email).then((user) => {
       if (user) {
         argon2.verify(user.password, password).then((match) => {
           if (match) {

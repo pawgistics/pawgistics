@@ -5,6 +5,7 @@
 import db from './index';
 
 function populateDev() {
+  console.log(db);
   const UserTable = db.userTable;
   const devAdmin = new UserTable({
     email: 'admin@pawgistics.com',
