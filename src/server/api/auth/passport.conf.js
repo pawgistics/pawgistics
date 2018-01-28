@@ -4,40 +4,40 @@ import argon2 from 'argon2';
 
 import { ExtractJwt, Strategy as JwtStrategy } from 'passport-jwt';
 import { Strategy as LocalStrategy } from 'passport-local';
-import db from '../models/index';
+import models from '../../models';
 
-const { jwtSecret } = require('../config.json');
+const { User } = models;
 
-// flow-disable-next-line
-const User = db.userTable;
+const { jwtSecret } = require('../../config.json');
 
 export default (passport: any) => {
   passport.use(new JwtStrategy({
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: jwtSecret,
   }, (jwtPayload, done) => {
-    User.findById(jwtPayload.id).then((user) => {
-      if (user) {
-        done(null, user);
-      } else {
-        done(null, false);
-      }
-    }).catch(err => done(err, false));
+    console.log(jwtPayload);
+    // User.findById(jwtPayload.id).then((user) => {
+    //   if (user) {
+    //     done(null, user);
+    //   } else {
+    //     done(null, false);
+    //   }
+    // }).catch(err => done(err, false));
   }));
 
   passport.use(new LocalStrategy({
     usernameField: 'email',
     session: false,
   }, (email, password, done) => {
-    User.query('emailGlobalIndex').eq(email).then((user) => {
-      if (user) {
-        argon2.verify(user.password, password).then((match) => {
+    User.query('email').eq(email).exec((err, user) => {
+      if (user.count > 0) {
+        argon2.verify(user[0].password, password).then((match) => {
           if (match) {
-            done(null, user);
+            done(null, user[0]);
           } else {
             done(null, false, { message: 'Incorrect password.' });
           }
-        }).catch(err => done(err, false));
+        }).catch(hashErr => done(hashErr, false));
       } else {
         done(null, false, { message: 'Email address not found.' });
       }
@@ -49,8 +49,10 @@ export default (passport: any) => {
   });
 
   passport.deserializeUser((id, done) => {
-    User.findById(id).then((user) => {
-      done(null, user);
-    }).catch(err => done(err, false));
+    console.log(id);
+    // User.findById(id).then((user) => {
+    //   done(null, user);
+    // }).catch(err => done(err, false));
+    done(null, {});
   });
 };

@@ -2,12 +2,14 @@
   A development only scrip to populate the database with some sample data in each
   of the tables.
 */
-import db from './index';
 
-function populateDev() {
-  console.log(db);
-  const UserTable = db.userTable;
-  const devAdmin = new UserTable({
+import { createUser } from './user';
+// import models from '../models';
+//
+// const { User } = models;
+
+export default () => {
+  createUser({
     email: 'admin@pawgistics.com',
     password: 'password',
     admin: true,
@@ -22,8 +24,12 @@ function populateDev() {
       zip: '30327',
     },
     uri: 's3://canineassistants/assets/profilepics/*',
+  }).then((user) => {
+    console.log(`New user created with email: ${user.email}`);
+  }).catch(() => {
+    // console.log(err);
   });
-  const devVolunteer = new UserTable({
+  createUser({
     email: 'volunteer@pawgistics.com',
     password: 'password',
     admin: true,
@@ -38,16 +44,9 @@ function populateDev() {
       zip: '30327',
     },
     uri: 's3://canineassistants/assets/profilepics/*',
+  }).then((user) => {
+    console.log(`New user created with email: ${user.email}`);
+  }).catch(() => {
+    // console.log(err);
   });
-  devAdmin.save((err) => {
-    /* eslint no-console: 0 */
-    if (err) { return console.log(err); }
-    return 0;
-  });
-  devVolunteer.save((err) => {
-    /* eslint no-console: 0 */
-    if (err) { return console.log(err); }
-    return 0;
-  });
-}
-export default populateDev;
+};

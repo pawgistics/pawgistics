@@ -1,7 +1,6 @@
-import argon2 from 'argon2';
 import dynamoose from 'dynamoose';
 
-const User = new dynamoose.Schema({
+const UserSchema = new dynamoose.Schema({
   id: {
     type: String,
     hashKey: true,
@@ -13,14 +12,12 @@ const User = new dynamoose.Schema({
     trim: true,
     index: {
       global: true,
-      rangeKey: 'fname',
       throughput: 1,
     },
   },
   password: {
     type: String,
     required: true,
-    set: (pw => argon2.hash(pw, { type: argon2.argon2id })),
   },
   admin: {
     type: Boolean,
@@ -50,6 +47,11 @@ const User = new dynamoose.Schema({
   fid: {
     type: Number,
   },
+}, {
+  useNativeBooleans: true,
+  useDocumentTypes: true,
 });
+
+const User = dynamoose.model('User', UserSchema);
 
 export default User;
