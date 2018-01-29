@@ -5,6 +5,8 @@
     "react"
 	],
   "plugins": [
-    "flow-react-proptypes"
+    "flow-react-proptypes",
+    "transform-es2015-destructuring",
+    "transform-object-rest-spread"
   ]
 }

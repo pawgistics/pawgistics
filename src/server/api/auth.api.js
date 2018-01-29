@@ -4,47 +4,31 @@
 
 import express from 'express';
 import passport from 'passport';
-import models from '../models';
+import jwt from 'jsonwebtoken';
 
-const jwt = require('jsonwebtoken');
+import protectRoute from './auth/protectRoute';
+import { createUser } from '../util/user';
+
 const { jwtSecret } = require('../config.json');
 
-// flow-disable-next-line
-const User = models.user;
 const authRouter = express.Router();
 
 // Register new users
-authRouter.post('/register', (req, res) => {
-  User.findOne({
-    where: {
-      email: req.body.email,
-    },
-  }).then((user) => {
-    if (!user) {
-      User.create({
-        email: req.body.email,
-        password: req.body.password,
-        role: 'volunteer',
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        phone_number: req.body.phone_number,
-        profile_picture: req.body.profile_picture,
-      }).then(() => {
-        res.status(201).json({ success: true, message: 'Successfully created new user.' });
-      })
-        .catch((err) => {
-          if (err.name === 'SequelizeValidationError') {
-            res.status(400).json({ success: false, message: 'Failed to validate user properties.' });
-          }
-          console.log(err.keys);
-          res.status(500).json({ success: false, message: 'An error occurred.' });
-        });
-    } else {
-      res.status(400).json({ success: false, message: 'Email already in use.' });
-    }
-  }).catch((err) => {
-    console.log(err);
-    res.status(500).json({ success: false, message: 'An error occurred.' });
+authRouter.post('/register', protectRoute({ requireAdmin: true }), (req, res) => {
+  createUser({
+    email: req.body.email,
+    password: req.body.password,
+    admin: req.body.admin,
+    fname: req.body.fname,
+    lname: req.body.lname,
+    phone: req.body.phone,
+    address: req.body.address,
+    uri: req.body.profile_picture,
+  }).then(() => {
+    res.status(201).json({ success: true, message: 'Successfully created new user.' });
+  }).catch(() => {
+    // TODO: Catch actual errors
+    res.status(400).json({ success: false, message: 'Email already in use.' });
   });
 });
 
@@ -56,7 +40,7 @@ authRouter.post('/login', (req, res) => {
       return res.status(500).json({ success: false, message: 'An error occurred.' });
     }
     if (user) {
-      const token = jwt.sign({ id: user.id }, jwtSecret, {
+      const token = jwt.sign({ id: user.id, admin: user.admin }, jwtSecret, {
         expiresIn: 10800, // in seconds
       });
       return res.status(200).json({ success: true, token });

@@ -6,42 +6,16 @@ import express from 'express';
 import passport from 'passport';
 
 import authRouter from './auth.api';
-import models from '../models';
-import passportConfig from './passport.conf';
+import passportConfig from './auth/passport.conf';
 
-const { pawgisticsAdminPassword } = require('../config.json');
+import populateDev from '../util/populateDev';
+
+populateDev();
 
 const apiRouter = express.Router();
 
 apiRouter.use(passport.initialize());
-
 passportConfig(passport);
-
-// flow-disable-next-line
-const User = models.user;
-
-models.sequelize.sync()
-  .then(() => {
-    console.log('Database sync success.');
-    return User.findOne({
-      where: {
-        email: 'admin@pawgistics.com',
-      },
-    }).then((user) => {
-      if (!user) {
-        User.create({
-          email: 'admin@pawgistics.com',
-          password: pawgisticsAdminPassword,
-          role: 'administrator',
-          first_name: 'Administrator',
-          last_name: '',
-          phone_number: '',
-          profile_picture: '',
-        });
-      }
-    }).catch(err => console.log(err));
-  })
-  .catch(err => console.log(err, 'Database sync failed.'));
 
 apiRouter.use('/auth', authRouter);
 // apiRouter.use('/users', require('./users.api'));
