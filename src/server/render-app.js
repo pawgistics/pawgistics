@@ -9,6 +9,7 @@ const renderApp = isProd ?
     <html>
       <head>
         <title>${title}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="${STATIC_PATH}/css/styles.css">
       </head>
       <body>
@@ -21,6 +22,7 @@ const renderApp = isProd ?
     <html>
       <head>
         <title>${title}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
       <body>
         <div class="${APP_CONTAINER_CLASS} container-fluid"></div>

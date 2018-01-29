@@ -7,12 +7,15 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import { BrowserRouter } from 'react-router-dom';
+import viewportUnitsBuggyfill from 'viewport-units-buggyfill';
 
 import App from './app';
 import { store, persistor } from './store';
 import { APP_CONTAINER_SELECTOR } from '../shared/config';
 
 import './styles/global/styles.scss';
+
+viewportUnitsBuggyfill.init();
 
 declare var PROD: boolean;
 

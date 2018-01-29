@@ -49,7 +49,7 @@ class LoginPage extends React.Component<Props> {
       <div styleName="login-wrapper">
         <Form styleName="login" onSubmit={this.handleSubmit}>
           <div className="text-center mb-4">
-            <img className="mb-4" src="/static/img/canine-assistants.svg" width="390" alt="Canine Assistants" />
+            <img styleName="banner" className="mb-4" src="/static/img/canine-assistants.svg" alt="Canine Assistants" />
           </div>
 
           {this.props.errMsg && <div className="mb-2 text-danger">{this.props.errMsg}</div>}
