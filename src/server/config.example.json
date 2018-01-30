@@ -4,15 +4,5 @@
     "AWS_SECRET_ACCESS_KEY": "Your AWS Secret Access Key",
     "AWS_REGION":"Your AWS Region"
   },
-  "dbConfig": {
-    "username": "root",
-    "password": null,
-    "database": "pawgistics",
-    "host": "localhost",
-    "dialect": "mysql",
-    "operatorsAliases": false,
-    "logging": false
-  },
-  "jwtSecret": "AdmCsgpUvGBDaMGkS02a3yqfN12aHIVrH3Kw7XjKyeqXt8sqnNlU2cIEhi3djVkc",
-  "pawgisticsAdminPassword": "password"
+  "jwtSecret": "AdmCsgpUvGBDaMGkS02a3yqfN12aHIVrH3Kw7XjKyeqXt8sqnNlU2cIEhi3djVkc"
 }
