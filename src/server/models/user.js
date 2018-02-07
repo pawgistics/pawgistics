@@ -7,9 +7,9 @@ const UserSchema = new dynamoose.Schema({
   },
   email: {
     type: String,
-    // validate: (v => /* placeholder for an email regex */ v === v),
     required: true,
     trim: true,
+    set: (s => s.toLowerCase()),
     index: {
       global: true,
       throughput: 1,
@@ -45,7 +45,7 @@ const UserSchema = new dynamoose.Schema({
     type: String,
   },
   fid: {
-    type: Number,
+    type: String,
   },
 }, {
   useNativeBooleans: true,
