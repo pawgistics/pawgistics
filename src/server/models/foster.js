@@ -7,13 +7,16 @@ const FosterSchema = new dynamoose.Schema({
     hashKey: true,
   },
   dogs: {
-    type: ['String'],
+    type: [String],
     required: true,
   },
   users: {
-    type: ['String'],
+    type: [String],
     required: true,
   },
+}, {
+  useNativeBooleans: true,
+  useDocumentTypes: true,
 });
 
 const Foster = dynamoose.model('Foster', FosterSchema);

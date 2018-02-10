@@ -7,10 +7,13 @@ import passport from 'passport';
 
 import authRouter from './auth.api';
 import passportConfig from './auth/passport.conf';
-
 import populateDev from '../util/populateDev';
 
-populateDev();
+import { isProd } from '../../shared/util';
+
+if (!isProd) {
+  populateDev();
+}
 
 const apiRouter = express.Router();
 

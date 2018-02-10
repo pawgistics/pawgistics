@@ -37,6 +37,9 @@ const DogSchema = new dynamoose.Schema({
   uri: {
     type: String,
   },
+}, {
+  useNativeBooleans: true,
+  useDocumentTypes: true,
 });
 
 const Dog = dynamoose.model('Dog', DogSchema);
