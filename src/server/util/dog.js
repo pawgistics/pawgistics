@@ -1,6 +1,7 @@
 import models from '../models';
 
 const { Dog } = models;
+const { Litter } = models;
 
 // eslint-disable-next-line import/prefer-default-export
 export const createDog = dog =>
@@ -23,7 +24,13 @@ export const createDog = dog =>
           if (createErr) {
             reject(createErr);
           } else {
-            resolve(newDog);
+            Litter.update({ name: dog.litter }, (err) => {
+              if (err) {
+                reject(err);
+              } else {
+                resolve(newDog);
+              }
+            });
           }
         });
       } else {
