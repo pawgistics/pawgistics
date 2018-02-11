@@ -4,8 +4,24 @@
 */
 
 import { createUser } from './user';
+import { createDog } from './dog';
 
 export default () => {
+  createDog({
+    chipId: 123456789,
+    name: 'Goku',
+    litter: 'DBZ',
+    fid: null,
+    color: 'blue',
+    shape: 'circle',
+    gender: 'M',
+    uri: 's3://canineassistants/assests/dogs/*',
+  }).then((dog) => {
+    // eslint-disable-next-line no-console
+    console.log(`New dog created with name: ${dog.name}`);
+  }).catch(() => {
+    // console.log(err);
+  });
   createUser({
     email: 'admin@pawgistics.com',
     password: 'password',
