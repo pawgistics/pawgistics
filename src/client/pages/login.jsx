@@ -6,12 +6,10 @@ import CSSModules from 'react-css-modules';
 import { Form, FormGroup, Input, Button, Label } from 'reactstrap';
 // import PropTypes from 'prop-types';
 
-import { loginUser } from '../actions/login';
+import { loginUser } from '../actions/auth';
 import styles from '../styles/pages/login.m.scss';
 
 type Props = {
-  isFetching: boolean,
-  errMsg: string,
   handleLogin: ({ email: string, password: string }) => void,
 }
 
@@ -21,6 +19,8 @@ class LoginPage extends React.Component<Props> {
     this.state = {
       email: '',
       password: '',
+      errMsg: null,
+      loading: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -38,9 +38,16 @@ class LoginPage extends React.Component<Props> {
   handleSubmit(event) {
     event.preventDefault();
 
+    this.setState({ loading: true });
+
     this.props.handleLogin({
       email: this.state.email,
       password: this.state.password,
+    }, (errMsg) => {
+      this.setState({
+        loading: false,
+        errMsg,
+      });
     });
   }
 
@@ -52,7 +59,7 @@ class LoginPage extends React.Component<Props> {
             <img styleName="banner" className="mb-4" src="/static/img/canine-assistants.svg" alt="Canine Assistants" />
           </div>
 
-          {this.props.errMsg && <div className="mb-2 text-danger">{this.props.errMsg}</div>}
+          {this.state.errMsg && <div className="mb-2 text-danger">{this.state.errMsg}</div>}
 
           <div styleName="label-group">
             <Input
@@ -62,7 +69,7 @@ class LoginPage extends React.Component<Props> {
               placeholder="Email address"
               value={this.state.email}
               onChange={this.handleChange('email')}
-              disabled={this.props.isFetching}
+              disabled={this.state.loading}
               autoFocus
               required
             />
@@ -77,22 +84,22 @@ class LoginPage extends React.Component<Props> {
               placeholder="Password"
               value={this.state.password}
               onChange={this.handleChange('password')}
-              disabled={this.props.isFetching}
+              disabled={this.state.loading}
               required
             />
             <Label for="inputPassword">Password</Label>
           </div>
           <FormGroup check className="mb-3">
             <Label check>
-              <Input type="checkbox" value="remember-me" disabled={this.props.isFetching} /> Remember me
+              <Input type="checkbox" value="remember-me" disabled={this.state.loading} /> Remember me
             </Label>
           </FormGroup>
           <Button
             color="primary"
             size="lg"
             block
-            disabled={this.props.isFetching}
-            {...(this.props.isFetching ? { className: 'progress-bar-striped progress-bar-animated' } : {})}
+            disabled={this.state.loading}
+            {...(this.state.loading ? { className: 'progress-bar-striped progress-bar-animated' } : {})}
           >Login
           </Button>
           <p className="mt-5 mb-3 text-muted text-center">&copy; 2018</p>
@@ -112,13 +119,10 @@ class LoginPage extends React.Component<Props> {
 //   errMsg: null,
 // };
 
-const mapStateToProps = state => ({
-  isFetching: state.auth.get('isFetching'),
-  errMsg: state.auth.get('errMsg'),
-});
+const mapStateToProps = state => ({ isFetching: state.auth.get('isFetching') });
 
 const mapDispatchToProps = dispatch => ({
-  handleLogin: (creds) => { dispatch(loginUser(creds)); },
+  handleLogin: (creds, done) => { dispatch(loginUser(creds, done)); },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CSSModules(LoginPage, styles));
