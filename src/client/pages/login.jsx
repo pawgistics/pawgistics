@@ -43,7 +43,7 @@ class LoginPage extends React.Component<Props> {
     this.props.handleLogin({
       email: this.state.email,
       password: this.state.password,
-    }, (errMsg) => {
+    }).catch((errMsg) => {
       this.setState({
         loading: false,
         errMsg,
@@ -122,7 +122,7 @@ class LoginPage extends React.Component<Props> {
 const mapStateToProps = state => ({ isFetching: state.auth.get('isFetching') });
 
 const mapDispatchToProps = dispatch => ({
-  handleLogin: (creds, done) => { dispatch(loginUser(creds, done)); },
+  handleLogin: creds => dispatch(loginUser(creds)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CSSModules(LoginPage, styles));

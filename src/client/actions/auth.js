@@ -12,26 +12,27 @@ export const loginAction = createAction(LOGIN, token => ({ token }));
 export const logoutAction = createAction(LOGOUT);
 
 // Call API to log in user
-export function loginUser(creds, done) {
-  const config = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(creds),
-  };
-
-  return dispatch => fetch(apiLoginRoute, config)
-    .then(response => response.json().then(responseData => ({ responseData, response })))
-    .then(({ responseData, response }) => {
-      if (!response.ok) {
-        // Callback with error message
-        done(responseData.message);
-      } else {
-        // Callback with no error message, and dispatch authentication information to the store
-        done();
-        dispatch(loginAction(responseData.token));
-      }
-    // eslint-disable-next-line no-console
-    }).catch(err => console.log('Error: ', err));
+export function loginUser(creds) {
+  return dispatch =>
+    // eslint-disable-next-line compat/compat
+    new Promise((resolve, reject) => {
+      fetch(apiLoginRoute, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(creds),
+      }).then(response => response.json().then(responseData => ({ responseData, response })))
+        .then(({ responseData, response }) => {
+          if (response.ok) {
+            // Resolve with no error message, and dispatch authentication information to the store
+            resolve();
+            dispatch(loginAction(responseData.token));
+          } else {
+            // Reject with error message
+            reject(responseData.message);
+          }
+        // eslint-disable-next-line no-console
+        }).catch(err => console.log('Error: ', err));
+    });
 }
 
 // Logs the user out
