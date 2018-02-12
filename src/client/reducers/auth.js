@@ -5,8 +5,8 @@ import jwtDecode from 'jwt-decode';
 import type { fromJS as Immut } from 'immutable';
 
 import {
-  LOGIN_SUCCESS,
-  LOGOUT_SUCCESS,
+  LOGIN,
+  LOGOUT,
 } from '../actions/auth';
 
 const initialState = Immutable.fromJS({
@@ -17,13 +17,13 @@ const initialState = Immutable.fromJS({
 
 const authReducer = (state: Immut = initialState, action: { type: string, payload: any }) => {
   switch (action.type) {
-    case LOGIN_SUCCESS:
+    case LOGIN:
       return state.merge({
         isAuthenticated: true,
         token: action.payload.token,
         isAdmin: jwtDecode(action.payload.token).admin,
       });
-    case LOGOUT_SUCCESS:
+    case LOGOUT:
       return state.merge({
         isAuthenticated: false,
         token: null,
