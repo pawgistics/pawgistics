@@ -13,19 +13,21 @@ export default function apiCall(method, route, body) {
         method,
         headers: {
           'Content-Type': 'application/json',
-          Authorizaton: `Bearer ${getState().auth.get('token')}`,
+          Authorization: `Bearer ${getState().auth.get('token')}`,
         },
         body,
-      }).then(response => response.json().then(responseData => ({ responseData, response })))
+      }).then(response =>
+        response.json()
+          .then(responseData => ({ responseData, response }))
+          .catch(() => ({ responseData: null, response })))
         .then(({ responseData, response }) => {
           if (response.ok) {
             // Resolve with response
             resolve(responseData);
+          } else if (response.status === 401) {
+            // Unauthorized, logout the user
+            dispatch(logoutAction());
           } else {
-            if (response.status === 401) {
-              // Unauthorized, logout the user
-              dispatch(logoutAction());
-            }
             // Reject with raw response object
             reject(response);
           }
