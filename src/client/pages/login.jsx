@@ -10,7 +10,7 @@ import { loginUser } from '../actions/auth';
 import styles from '../styles/pages/login.m.scss';
 
 type Props = {
-  handleLogin: ({ email: string, password: string }) => void,
+  loginUser: ({ email: string, password: string }) => Promise,
 }
 
 class LoginPage extends React.Component<Props> {
@@ -24,7 +24,7 @@ class LoginPage extends React.Component<Props> {
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
   }
 
   handleChange(variable) {
@@ -35,15 +35,15 @@ class LoginPage extends React.Component<Props> {
     };
   }
 
-  handleSubmit(event) {
+  handleLogin(event) {
     event.preventDefault();
 
     this.setState({ loading: true });
 
-    this.props.handleLogin({
+    this.props.loginUser({
       email: this.state.email,
       password: this.state.password,
-    }, (errMsg) => {
+    }).catch((errMsg) => {
       this.setState({
         loading: false,
         errMsg,
@@ -54,7 +54,7 @@ class LoginPage extends React.Component<Props> {
   render() {
     return (
       <div styleName="login-wrapper">
-        <Form styleName="login" onSubmit={this.handleSubmit}>
+        <Form styleName="login" onSubmit={this.handleLogin}>
           <div className="text-center mb-4">
             <img styleName="banner" className="mb-4" src="/static/img/canine-assistants.svg" alt="Canine Assistants" />
           </div>
@@ -112,17 +112,13 @@ class LoginPage extends React.Component<Props> {
 // LoginPage.propTypes = {
 //   isFetching: PropTypes.bool.isRequired,
 //   errMsg: PropTypes.string,
-//   handleLogin: PropTypes.func.isRequired,
+//   loginUser: PropTypes.func.isRequired,
 // };
 //
 // LoginPage.defaultProps = {
 //   errMsg: null,
 // };
 
-const mapStateToProps = state => ({ isFetching: state.auth.get('isFetching') });
+const mapDispatchToProps = dispatch => ({ loginUser: creds => dispatch(loginUser(creds)) });
 
-const mapDispatchToProps = dispatch => ({
-  handleLogin: (creds, done) => { dispatch(loginUser(creds, done)); },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(CSSModules(LoginPage, styles));
+export default connect(null, mapDispatchToProps)(CSSModules(LoginPage, styles));
