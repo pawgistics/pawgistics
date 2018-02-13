@@ -12,6 +12,8 @@ import LittersPage from './litters';
 import HelloPage from './hello';
 import HelloAsyncPage from './hello-async';
 import AdminPanelPage from './admin-panel';
+import VickyTestPage from './vicky-test';
+import AddDogPage from './addDog';
 import NotFoundPage from './not-found';
 import {
   HOME_PAGE_ROUTE,
@@ -19,6 +21,8 @@ import {
   HELLO_ASYNC_PAGE_ROUTE,
   ADMIN_PANEL_PAGE_ROUTE,
   LITTERS,
+  VICKY_TEST_PAGE_ROUTE,
+  ADD_DOG_PAGE_ROUTE,
 } from '../../shared/routes';
 
 import styles from '../styles/pages/dashboard.m.scss';
@@ -34,6 +38,8 @@ const Dashboard = () => (
         <Route path={HELLO_PAGE_ROUTE} component={HelloPage} />
         <Route path={HELLO_ASYNC_PAGE_ROUTE} component={HelloAsyncPage} />
         <Route path={HELLO_ASYNC_PAGE_ROUTE} component={HelloAsyncPage} />
+        <Route path={VICKY_TEST_PAGE_ROUTE} component={VickyTestPage} />
+        <Route path={ADD_DOG_PAGE_ROUTE} component={AddDogPage} />
         <AdminRoute path={ADMIN_PANEL_PAGE_ROUTE} component={AdminPanelPage} />
         <Route component={NotFoundPage} />
       </Switch>

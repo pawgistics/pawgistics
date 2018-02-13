@@ -13,6 +13,8 @@ import {
   HELLO_ASYNC_PAGE_ROUTE,
   ADMIN_PANEL_PAGE_ROUTE,
   LITTERS,
+  VICKY_TEST_PAGE_ROUTE,
+  ADD_DOG_PAGE_ROUTE,
   NOT_FOUND_DEMO_PAGE_ROUTE,
 } from '../../shared/routes';
 import { logoutUser } from '../actions/auth';
@@ -35,6 +37,8 @@ const Sidebar = ({ isAdmin, handleLogout }: Props) => (
         { route: HOME_PAGE_ROUTE, label: 'Home' },
         { route: HELLO_PAGE_ROUTE, label: 'Say Hello' },
         { route: HELLO_ASYNC_PAGE_ROUTE, label: 'Say Hello Asynchronously' },
+        { route: VICKY_TEST_PAGE_ROUTE, label: 'Vicky Test Page' },
+        { route: ADD_DOG_PAGE_ROUTE, label: 'Add Dog Page' },
         { route: NOT_FOUND_DEMO_PAGE_ROUTE, label: '404 Demo' },
         ...(isAdmin ? [
           { route: ADMIN_PANEL_PAGE_ROUTE, label: 'Admin Panel' },
