@@ -22,6 +22,36 @@ export default () => {
   }).catch(() => {
     // console.log(err);
   });
+  createDog({
+    chipId: 123456790,
+    name: 'Luke',
+    litter: 'Star Wars',
+    fid: null,
+    color: 'red',
+    shape: 'triangle',
+    gender: 'M',
+    uri: 's3://canineassistants/assests/dogs/*',
+  }).then((dog) => {
+    // eslint-disable-next-line no-console
+    console.log(`New dog created with name: ${dog.name}`);
+  }).catch(() => {
+    // console.log(err);
+  });
+  createDog({
+    chipId: 123456791,
+    name: 'Bulma',
+    litter: 'DBZ',
+    fid: null,
+    color: 'orange',
+    shape: 'circle',
+    gender: 'F',
+    uri: 's3://canineassistants/assests/dogs/*',
+  }).then((dog) => {
+    // eslint-disable-next-line no-console
+    console.log(`New dog created with name: ${dog.name}`);
+  }).catch(() => {
+    // console.log(err);
+  });
   createUser({
     email: 'admin@pawgistics.com',
     password: 'password',
