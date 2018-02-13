@@ -12,6 +12,7 @@ import {
   HELLO_PAGE_ROUTE,
   HELLO_ASYNC_PAGE_ROUTE,
   ADMIN_PANEL_PAGE_ROUTE,
+  LITTERS,
   NOT_FOUND_DEMO_PAGE_ROUTE,
 } from '../../shared/routes';
 import { logoutUser } from '../actions/auth';
@@ -30,6 +31,7 @@ const Sidebar = ({ isAdmin, handleLogout }: Props) => (
 
     <ul styleName="pages">
       {[
+        { route: LITTERS, label: 'Litters' },
         { route: HOME_PAGE_ROUTE, label: 'Home' },
         { route: HELLO_PAGE_ROUTE, label: 'Say Hello' },
         { route: HELLO_ASYNC_PAGE_ROUTE, label: 'Say Hello Asynchronously' },

@@ -8,6 +8,7 @@ import CSSModules from 'react-css-modules';
 import Sidebar from '../components/sidebar';
 import AdminRoute from '../components/admin-route';
 import HomePage from './home';
+import LittersPage from './litters';
 import HelloPage from './hello';
 import HelloAsyncPage from './hello-async';
 import AdminPanelPage from './admin-panel';
@@ -17,6 +18,7 @@ import {
   HELLO_PAGE_ROUTE,
   HELLO_ASYNC_PAGE_ROUTE,
   ADMIN_PANEL_PAGE_ROUTE,
+  LITTERS,
 } from '../../shared/routes';
 
 import styles from '../styles/pages/dashboard.m.scss';
@@ -28,6 +30,7 @@ const Dashboard = () => (
     <div styleName="content">
       <Switch>
         <Route exact path={HOME_PAGE_ROUTE} component={HomePage} />
+        <Route path={LITTERS} component={LittersPage} />
         <Route path={HELLO_PAGE_ROUTE} component={HelloPage} />
         <Route path={HELLO_ASYNC_PAGE_ROUTE} component={HelloAsyncPage} />
         <Route path={HELLO_ASYNC_PAGE_ROUTE} component={HelloAsyncPage} />

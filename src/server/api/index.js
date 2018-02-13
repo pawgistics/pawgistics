@@ -8,8 +8,10 @@ import passport from 'passport';
 import authRouter from './auth.api';
 import testRouter from './test.api';
 import passportConfig from './auth/passport.conf';
-import populateDev from '../util/populateDev';
 
+import litterRouter from './litters.api';
+
+import populateDev from '../util/populateDev';
 import { isProd } from '../../shared/util';
 
 if (!isProd) {
@@ -22,6 +24,7 @@ apiRouter.use(passport.initialize());
 passportConfig(passport);
 
 apiRouter.use('/auth', authRouter);
+apiRouter.use('/litter', litterRouter);
 apiRouter.use('/test', testRouter);
 // apiRouter.use('/users', require('./users.api'));
 
