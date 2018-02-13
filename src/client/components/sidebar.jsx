@@ -15,7 +15,7 @@ import {
   LITTERS,
   NOT_FOUND_DEMO_PAGE_ROUTE,
 } from '../../shared/routes';
-import { logoutUser } from '../actions/logout';
+import { logoutUser } from '../actions/auth';
 import styles from '../styles/components/sidebar.m.scss';
 
 type Props = {
