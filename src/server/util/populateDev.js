@@ -5,6 +5,7 @@
 
 import { createUser } from './user';
 import { createDog } from './dog';
+// import { createFoster } from './foster';
 
 export default () => {
   createDog({
@@ -94,4 +95,14 @@ export default () => {
   }).catch(() => {
     // console.log(err);
   });
+  // createFoster({
+  //   dogs: [123456789],
+  //   users: ['r1gCr7h5Uz'],
+  // }).then((foster) => {
+  //   console.log(`New user created with fid: ${foster.fid}`);
+  //   console.log(`New user created with dogs: ${foster.dogs}`);
+  //   console.log(`New user created with users: ${foster.users}`);
+  // }).catch(() => {
+  //   //
+  // });
 };

@@ -52,4 +52,6 @@ litterRouter.get('/search/:litterName', protectRoute, (req, res) => {
   });
 });
 
+// litterRouter.post('/add/:litterName', )
+
 export default litterRouter;
