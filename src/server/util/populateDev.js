@@ -5,6 +5,7 @@
 
 import { createUser } from './user';
 import { createDog } from './dog';
+// import { createFoster } from './foster';
 
 export default () => {
   createDog({
@@ -15,6 +16,36 @@ export default () => {
     color: 'blue',
     shape: 'circle',
     gender: 'M',
+    uri: 's3://canineassistants/assests/dogs/*',
+  }).then((dog) => {
+    // eslint-disable-next-line no-console
+    console.log(`New dog created with name: ${dog.name}`);
+  }).catch(() => {
+    // console.log(err);
+  });
+  createDog({
+    chipId: 123456790,
+    name: 'Luke',
+    litter: 'Star Wars',
+    fid: null,
+    color: 'red',
+    shape: 'triangle',
+    gender: 'M',
+    uri: 's3://canineassistants/assests/dogs/*',
+  }).then((dog) => {
+    // eslint-disable-next-line no-console
+    console.log(`New dog created with name: ${dog.name}`);
+  }).catch(() => {
+    // console.log(err);
+  });
+  createDog({
+    chipId: 123456791,
+    name: 'Bulma',
+    litter: 'DBZ',
+    fid: null,
+    color: 'orange',
+    shape: 'circle',
+    gender: 'F',
     uri: 's3://canineassistants/assests/dogs/*',
   }).then((dog) => {
     // eslint-disable-next-line no-console
@@ -64,4 +95,14 @@ export default () => {
   }).catch(() => {
     // console.log(err);
   });
+  // createFoster({
+  //   dogs: [123456789],
+  //   users: ['r1gCr7h5Uz'],
+  // }).then((foster) => {
+  //   console.log(`New user created with fid: ${foster.fid}`);
+  //   console.log(`New user created with dogs: ${foster.dogs}`);
+  //   console.log(`New user created with users: ${foster.users}`);
+  // }).catch(() => {
+  //   //
+  // });
 };

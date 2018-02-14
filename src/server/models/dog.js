@@ -20,6 +20,9 @@ const DogSchema = new dynamoose.Schema({
   },
   fid: {
     type: String,
+    index: {
+      global: true,
+    },
   },
   color: {
     type: String,
