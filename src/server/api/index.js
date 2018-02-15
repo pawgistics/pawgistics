@@ -11,6 +11,7 @@ import testRouter from './test.api';
 import litterRouter from './litters.api';
 import fosterRouter from './fosters.api';
 import dogRouter from './dogs.api';
+import userRouter from './users.api';
 
 import populateDev from '../util/populateDev';
 import { isProd } from '../../shared/util';
@@ -28,6 +29,7 @@ apiRouter.use('/auth', authRouter);
 apiRouter.use('/litter', litterRouter);
 apiRouter.use('/foster', fosterRouter);
 apiRouter.use('/dog', dogRouter);
+apiRouter.use('/user', userRouter);
 apiRouter.use('/test', testRouter);
 // apiRouter.use('/users', require('./users.api'));
 
