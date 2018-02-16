@@ -5,7 +5,7 @@
 
 import { createUser } from './user';
 import { createDog } from './dog';
-// import { createFoster } from './foster';
+import { createFoster } from './foster';
 
 export default () => {
   createDog({
@@ -95,14 +95,17 @@ export default () => {
   }).catch(() => {
     // console.log(err);
   });
-  // createFoster({
-  //   dogs: [123456789],
-  //   users: ['r1gCr7h5Uz'],
-  // }).then((foster) => {
-  //   console.log(`New user created with fid: ${foster.fid}`);
-  //   console.log(`New user created with dogs: ${foster.dogs}`);
-  //   console.log(`New user created with users: ${foster.users}`);
-  // }).catch(() => {
-  //   //
-  // });
+  createFoster({
+    dogs: [123456789],
+    users: ['BJgXpZObDM'],
+  }).then((foster) => {
+    // eslint-disable-next-line no-console
+    console.log(`New user created with fid: ${foster.fid}`);
+    // eslint-disable-next-line no-console
+    console.log(`New user created with dogs: ${foster.dogs}`);
+    // eslint-disable-next-line no-console
+    console.log(`New user created with users: ${foster.users}`);
+  }).catch(() => {
+    //
+  });
 };

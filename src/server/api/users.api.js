@@ -3,6 +3,7 @@ import express from 'express';
 
 import protectRoute from './auth/protectRoute';
 import models from '../models';
+// import createUser from '../util/user';
 
 const { User } = models;
 const userRouter = express.Router();
