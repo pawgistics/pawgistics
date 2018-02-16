@@ -2,6 +2,7 @@
 
 export const HOME_PAGE_ROUTE = '/';
 export const LOGIN_PAGE_ROUTE = '/login';
+export const DOGS_PAGE_ROUTE = '/dogs';
 export const HELLO_PAGE_ROUTE = '/hello';
 export const HELLO_ASYNC_PAGE_ROUTE = '/hello-async';
 export const ADMIN_PANEL_PAGE_ROUTE = '/admin';

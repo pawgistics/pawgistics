@@ -10,7 +10,7 @@ const { Dog } = models;
 // const { Foster } = models;
 const { User } = models;
 
-fosterRouter.get('/list', protectRoute, (req, res) => {
+fosterRouter.get('/list', protectRoute(), (req, res) => {
   const toReturn = {};
   User.scan('fid').not().null().attributes(['id', 'fname', 'lname', 'uri', 'fid'])
     .exec((err, users) => {
@@ -47,7 +47,7 @@ fosterRouter.get('/list', protectRoute, (req, res) => {
     });
 });
 
-fosterRouter.get('/dogs/:fid', protectRoute, (req, res) => {
+fosterRouter.get('/dogs/:fid', protectRoute(), (req, res) => {
   Dog.query('fid').eq(req.params.fid).attributes(['chipId', 'name', 'uri', 'fid'])
     .exec((err, dogs) => {
       if (err) {
@@ -58,7 +58,7 @@ fosterRouter.get('/dogs/:fid', protectRoute, (req, res) => {
     });
 });
 
-fosterRouter.get('/users/:fid', protectRoute, (req, res) => {
+fosterRouter.get('/users/:fid', protectRoute(), (req, res) => {
   User.query('fid').eq(req.params.fid).attributes(['id', 'fname', 'lname', 'uri', 'fid'])
     .exec((err, users) => {
       if (err) {
@@ -69,7 +69,7 @@ fosterRouter.get('/users/:fid', protectRoute, (req, res) => {
     });
 });
 
-fosterRouter.get('/:fid', protectRoute, (req, res) => {
+fosterRouter.get('/:fid', protectRoute(), (req, res) => {
   const toReturn = {};
   User.query('fid').eq(req.params.fid).attributes(['id', 'fname', 'lname', 'uri', 'fid'])
     .exec((err, users) => {

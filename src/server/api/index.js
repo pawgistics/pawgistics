@@ -10,7 +10,7 @@ import authRouter from './auth.api';
 import testRouter from './test.api';
 import litterRouter from './litters.api';
 import fosterRouter from './fosters.api';
-import dogRouter from './dogs.api';
+import dogsRouter from './dogs.api';
 import userRouter from './users.api';
 
 import populateDev from '../util/populateDev';
@@ -28,7 +28,7 @@ passportConfig(passport);
 apiRouter.use('/auth', authRouter);
 apiRouter.use('/litter', litterRouter);
 apiRouter.use('/foster', fosterRouter);
-apiRouter.use('/dog', dogRouter);
+apiRouter.use('/dogs', dogsRouter);
 apiRouter.use('/user', userRouter);
 apiRouter.use('/test', testRouter);
 // apiRouter.use('/users', require('./users.api'));

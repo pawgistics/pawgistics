@@ -4,3 +4,7 @@ import apiCall from '../actions/api';
 export function apiTestVolunteer() {
   return apiCall('GET', '/api/test/volunteer', {});
 }
+
+export function getDogs() {
+  return apiCall('GET', '/api/dogs/', {});
+}
