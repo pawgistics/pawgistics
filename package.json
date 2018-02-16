@@ -66,7 +66,7 @@
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
-    "reactstrap": "^5.0.0-alpha.4",
+    "reactstrap": "^5.0.0-beta",
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
     "redux-mock-store": "^1.4.0",

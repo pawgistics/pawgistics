@@ -37,14 +37,14 @@ const Sidebar = ({ isAdmin, handleLogout }: Props) => (
       {[
         { route: HOME_PAGE_ROUTE, label: 'Home' },
         { route: DOG_MANAGEMENT_PAGE_ROUTE, label: 'Dog Management Page' },
-        { route: ADD_DOG_PAGE_ROUTE, label: 'Add Dog Page' },
         { route: USER_MANAGEMENT_PAGE_ROUTE, label: 'User Management Page' },
         { route: DOG_DETAIL_PAGE_ROUTE, label: 'Dog Detail Page' },
         { route: USER_DETAIL_PAGE_ROUTE, label: 'User Detail Page' },
-        { route: USER_EDIT_PAGE_ROUTE, label: 'User Edit Page' },
-        { route: DOG_EDIT_PAGE_ROUTE, label: 'Dog Edit Page' },
         { route: DOGS_PAGE_ROUTE, label: 'Dogs' },
         ...(isAdmin ? [
+          { route: ADD_DOG_PAGE_ROUTE, label: 'Add Dog Page' },
+          { route: USER_EDIT_PAGE_ROUTE, label: 'User Edit Page' },
+          { route: DOG_EDIT_PAGE_ROUTE, label: 'Dog Edit Page' },
           { route: ADMIN_PANEL_PAGE_ROUTE, label: 'Admin Panel' },
         ] : []),
       ].map(link => (
