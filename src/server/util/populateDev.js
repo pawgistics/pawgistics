@@ -16,7 +16,7 @@ export default () => {
     color: 'blue',
     shape: 'circle',
     gender: 'M',
-    uri: 's3://canineassistants/assests/dogs/*',
+    uri: 'https://s3.amazonaws.com/canine-assistants-assets/dogs/o9jaFsXt.jpg',
   }).then((dog) => {
     // eslint-disable-next-line no-console
     console.log(`New dog created with name: ${dog.name}`);
@@ -31,7 +31,7 @@ export default () => {
     color: 'red',
     shape: 'triangle',
     gender: 'M',
-    uri: 's3://canineassistants/assests/dogs/*',
+    uri: 'https://s3.amazonaws.com/canine-assistants-assets/dogs/o9jaFsXt.jpg',
   }).then((dog) => {
     // eslint-disable-next-line no-console
     console.log(`New dog created with name: ${dog.name}`);
@@ -46,7 +46,7 @@ export default () => {
     color: 'orange',
     shape: 'circle',
     gender: 'F',
-    uri: 's3://canineassistants/assests/dogs/*',
+    uri: 'https://s3.amazonaws.com/canine-assistants-assets/dogs/o9jaFsXt.jpg',
   }).then((dog) => {
     // eslint-disable-next-line no-console
     console.log(`New dog created with name: ${dog.name}`);
@@ -97,10 +97,13 @@ export default () => {
   });
   // createFoster({
   //   dogs: [123456789],
-  //   users: ['r1gCr7h5Uz'],
+  //   users: ['BJgXpZObDM'],
   // }).then((foster) => {
+  //   // eslint-disable-next-line no-console
   //   console.log(`New user created with fid: ${foster.fid}`);
+  //   // eslint-disable-next-line no-console
   //   console.log(`New user created with dogs: ${foster.dogs}`);
+  //   // eslint-disable-next-line no-console
   //   console.log(`New user created with users: ${foster.users}`);
   // }).catch(() => {
   //   //

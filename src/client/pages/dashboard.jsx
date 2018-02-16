@@ -11,6 +11,7 @@ import HomePage from './home';
 import DogManagementPage from './dogManagement';
 import UserManagementPage from './userManagement';
 import DogDetailPage from './dogDetail';
+import DogsPage from './dogs';
 import AdminPanelPage from './admin-panel';
 import UserDetailPage from './userDetail';
 import AddDogPage from './addDog';
@@ -19,6 +20,7 @@ import DogEditPage from './dogEdit';
 import {
   HOME_PAGE_ROUTE,
   DOG_DETAIL_PAGE_ROUTE,
+  DOGS_PAGE_ROUTE,
   ADMIN_PANEL_PAGE_ROUTE,
   DOG_MANAGEMENT_PAGE_ROUTE,
   USER_DETAIL_PAGE_ROUTE,
@@ -44,6 +46,7 @@ const Dashboard = () => (
         <Route path={ADD_DOG_PAGE_ROUTE} component={AddDogPage} />
         <Route path={USER_EDIT_PAGE_ROUTE} component={UserEditPage} />
         <Route path={DOG_EDIT_PAGE_ROUTE} component={DogEditPage} />
+        <Route path={DOGS_PAGE_ROUTE} component={DogsPage} />
         <AdminRoute path={ADMIN_PANEL_PAGE_ROUTE} component={AdminPanelPage} />
       </Switch>
     </div>

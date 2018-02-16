@@ -11,6 +11,7 @@ import {
   HOME_PAGE_ROUTE,
   USER_MANAGEMENT_PAGE_ROUTE,
   DOG_DETAIL_PAGE_ROUTE,
+  DOGS_PAGE_ROUTE,
   ADMIN_PANEL_PAGE_ROUTE,
   DOG_MANAGEMENT_PAGE_ROUTE,
   USER_DETAIL_PAGE_ROUTE,
@@ -42,6 +43,7 @@ const Sidebar = ({ isAdmin, handleLogout }: Props) => (
         { route: USER_DETAIL_PAGE_ROUTE, label: 'User Detail Page' },
         { route: USER_EDIT_PAGE_ROUTE, label: 'User Edit Page' },
         { route: DOG_EDIT_PAGE_ROUTE, label: 'Dog Edit Page' },
+        { route: DOGS_PAGE_ROUTE, label: 'Dogs' },
         ...(isAdmin ? [
           { route: ADMIN_PANEL_PAGE_ROUTE, label: 'Admin Panel' },
         ] : []),
