@@ -9,13 +9,14 @@ import { Button } from 'reactstrap';
 
 import {
   HOME_PAGE_ROUTE,
-  HELLO_PAGE_ROUTE,
-  HELLO_ASYNC_PAGE_ROUTE,
+  USER_MANAGEMENT_PAGE_ROUTE,
+  DOG_DETAIL_PAGE_ROUTE,
   ADMIN_PANEL_PAGE_ROUTE,
-  LITTERS,
-  VICKY_TEST_PAGE_ROUTE,
+  DOG_MANAGEMENT_PAGE_ROUTE,
+  USER_DETAIL_PAGE_ROUTE,
   ADD_DOG_PAGE_ROUTE,
-  NOT_FOUND_DEMO_PAGE_ROUTE,
+  USER_EDIT_PAGE_ROUTE,
+  DOG_EDIT_PAGE_ROUTE,
 } from '../../shared/routes';
 import { logoutUser } from '../actions/auth';
 import styles from '../styles/components/sidebar.m.scss';
@@ -33,13 +34,14 @@ const Sidebar = ({ isAdmin, handleLogout }: Props) => (
 
     <ul styleName="pages">
       {[
-        { route: LITTERS, label: 'Litters' },
         { route: HOME_PAGE_ROUTE, label: 'Home' },
-        { route: HELLO_PAGE_ROUTE, label: 'Say Hello' },
-        { route: HELLO_ASYNC_PAGE_ROUTE, label: 'Say Hello Asynchronously' },
-        { route: VICKY_TEST_PAGE_ROUTE, label: 'Vicky Test Page' },
+        { route: DOG_MANAGEMENT_PAGE_ROUTE, label: 'Dog Management Page' },
         { route: ADD_DOG_PAGE_ROUTE, label: 'Add Dog Page' },
-        { route: NOT_FOUND_DEMO_PAGE_ROUTE, label: '404 Demo' },
+        { route: USER_MANAGEMENT_PAGE_ROUTE, label: 'User Management Page' },
+        { route: DOG_DETAIL_PAGE_ROUTE, label: 'Dog Detail Page' },
+        { route: USER_DETAIL_PAGE_ROUTE, label: 'User Detail Page' },
+        { route: USER_EDIT_PAGE_ROUTE, label: 'User Edit Page' },
+        { route: DOG_EDIT_PAGE_ROUTE, label: 'Dog Edit Page' },
         ...(isAdmin ? [
           { route: ADMIN_PANEL_PAGE_ROUTE, label: 'Admin Panel' },
         ] : []),
