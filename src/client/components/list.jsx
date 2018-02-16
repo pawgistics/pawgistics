@@ -17,7 +17,7 @@ const List = ({ items }: Props) => (
     {items.map(item => (
       <ListGroupItem tag="a" href="#" key={item.name} action>
         <Row styleName="item">
-          <img src="/static/img/dog1.jpg" alt="Doggo" />
+          <img src="/static/img/dog1.jpg" alt="Doggo" className="border rounded" />
           <h3>{item.name}</h3>
           <ChevronRight size="2em" className="ml-auto" />
         </Row>

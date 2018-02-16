@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col, Input } from 'reactstrap';
 
 import { getDogs } from '../api/volunteer';
 import List from '../components/list';
@@ -34,7 +34,8 @@ class DogsPage extends React.Component<Props> {
     return (
       <Container>
         <Row>
-          <Col xs="6">
+          <Col lg={{ size: 8, offset: 2 }} md={{ size: 10, offset: 1 }} xs="12">
+            <Input type="text" name="dog_filter" className="mb-3" placeholder="Filter dogs..." />
             <List items={this.state.dogs} />
           </Col>
         </Row>
