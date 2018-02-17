@@ -2,13 +2,13 @@
 
 import React from 'react';
 import _ from 'lodash';
-// import CSSModules from 'react-css-modules';
+import CSSModules from 'react-css-modules';
 
-// import ChevronRight from 'react-icons/lib/fa/chevron-right';
-import { Table, Button } from 'reactstrap';
+import ChevronRight from 'react-icons/lib/io/chevron-right';
+import { Table } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
-// import styles from '../styles/components/table.m.scss';
+import styles from '../styles/components/detail-table.m.scss';
 
 type Props = {
   headings: [string],
@@ -29,19 +29,32 @@ const DetailTable = ({
   <Table hover>
     <thead>
       <tr>
-        {headings.map(heading => <th key={heading}>{heading}</th>)}
-        <th />
+        {headings.map(heading =>
+          <th className="col-auto text-nowrap align-middle" key={heading}>{heading}</th>)}
+        <th className="col text-nowrap align-middle" />
       </tr>
     </thead>
     <tbody>
       {_.map(items, (item, index) => (
-        <tr key={index}>
-          <th scope="row">{item[keys[headings[0]]]}</th>
+        <tr
+          key={index}
+          styleName="row"
+          onClick={e => e.currentTarget.lastChild.firstChild.firstChild.click()}
+        >
+          <th scope="row" className="col-auto text-nowrap align-middle">{item[keys[headings[0]]]}</th>
           {_.map(_.drop(headings), (heading, hIndex) => (
-            <td key={hIndex}>{item[keys[heading]]}</td>
+            <td className="col-auto text-nowrap align-middle" key={hIndex}>{item[keys[heading]]}</td>
           ))}
-          <td>
-            <Button tag={Link} to={detailRoute.template(item[detailRoute.key])} size="sm"block>View</Button>
+          <td className="col text-nowrap align-middle">
+            <div className="d-flex">
+              <Link
+                to={detailRoute.template(item[detailRoute.key])}
+                className="ml-auto"
+                styleName="link-unstyled"
+              >
+                <ChevronRight size="2em" />
+              </Link>
+            </div>
           </td>
         </tr>
       ))}
@@ -49,5 +62,4 @@ const DetailTable = ({
   </Table>
 );
 
-// export default CSSModules(DetailTable, styles);
-export default DetailTable;
+export default CSSModules(DetailTable, styles);

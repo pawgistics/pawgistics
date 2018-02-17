@@ -1,16 +1,16 @@
 // @flow
 
 import React from 'react';
-import _ from 'lodash';
 import { connect } from 'react-redux';
-import CSSModules from 'react-css-modules';
-import { Label, Container, Row, InputGroup, InputGroupAddon, Form, FormGroup, Input, Button } from 'reactstrap';
+// import CSSModules from 'react-css-modules';
+import { Label, Container, Col, Row, InputGroup, InputGroupAddon, FormGroup, Input, Button } from 'reactstrap';
 
 import { getDogs } from '../api/volunteer';
-import DetailTable from '../components/detail-table';
+import DogDetailTable from '../containers/dog-detail-table';
 
-import styles from '../styles/pages/dogManagement.m.scss';
+// import styles from '../styles/pages/dogManagement.m.scss';
 // need to change this later!!
+// ^ whose comment is this?
 
 type Props = {
   getDogs: () => Promise,
@@ -38,19 +38,19 @@ class DogManagementPage extends React.Component<Props> {
   render() {
     return (
       <Container>
-        <Row className="mb-2">
-          <h1>Dog Management Page</h1>
-        </Row>
-        <Form>
+        <Col xl="8" lg="9" md="10" sm="11" xs="12">
+          <Row className="mb-2">
+            <h1>Dog Management Page</h1>
+          </Row>
           <Row className="mb-2">
             <FormGroup check inline>
               <Label check>
-                <Input type="checkbox" id="checkbox2" /> Active
+                <Input type="checkbox" />Active
               </Label>
             </FormGroup>
             <FormGroup check inline>
               <Label check>
-                <Input type="checkbox" id="checkbox2" /> Available for check out
+                <Input type="checkbox" />Available for check out
               </Label>
             </FormGroup>
           </Row>
@@ -63,18 +63,9 @@ class DogManagementPage extends React.Component<Props> {
             </InputGroup>
           </Row>
           <Row>
-            <br />
-            <DetailTable
-              headings={['Dog Name', 'Dog ID', 'Custody']}
-              keys={{ 'Dog Name': 'name', 'Dog ID': 'chipId', Custody: 'custody' }}
-              items={_.map(this.state.dogs, dog => _.assign({}, dog, { custody: 'Canine Assistants' }))}
-              detailRoute={{
-                template: chipId => `/dog/${chipId}`,
-                key: 'chipId',
-              }}
-            />
+            <DogDetailTable dogs={this.state.dogs} />
           </Row>
-        </Form>
+        </Col>
       </Container>
     );
   }
@@ -82,4 +73,4 @@ class DogManagementPage extends React.Component<Props> {
 
 export default connect(null, dispatch => ({
   getDogs: () => dispatch(getDogs()),
-}))(CSSModules(DogManagementPage, styles));
+}))(DogManagementPage);
