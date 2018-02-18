@@ -40,6 +40,10 @@ const DogSchema = new dynamoose.Schema({
   uri: {
     type: String,
   },
+  dob: {
+    type: Date,
+    required: true,
+  },
 }, {
   useNativeBooleans: true,
   useDocumentTypes: true,

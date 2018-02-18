@@ -1,11 +1,21 @@
 /* eslint-disable no-console */
 import express from 'express';
+import AWS from 'aws-sdk';
+import { awsConfig, s3Config } from '../config.json';
 import protectRoute from './auth/protectRoute';
 import models from '../models';
-import createDog from '../util/dog';
+import { createDog } from '../util/dog';
 
 const { Dog } = models;
 const dogsRouter = express.Router();
+AWS.config.update({
+  region: awsConfig.AWS_REGION,
+  accessKeyId: awsConfig.AWS_ACCESS_KEY_ID,
+  secretAccessKey: awsConfig.AWS_SECRET_ACCESS_KEY,
+});
+const s3 = new AWS.S3({
+  params: { Bucket: s3Config.BUCKET_NAME },
+});
 
 dogsRouter.get('/', protectRoute(), (req, res) => {
   Dog.scan().exec((err, dogs) => {
@@ -22,7 +32,7 @@ dogsRouter.get('/:id', protectRoute(), (req, res) => {
       console.log(err);
       return res.status(500).json({ success: false, message: 'An error occurred.' });
     }
-    return res.status(200).json({ success: true, response: dog });
+    return res.status(200).json({ success: true, response: dog[0] });
   });
 });
 
@@ -44,7 +54,8 @@ dogsRouter.get('/search/name/:name', protectRoute(), (req, res) => {
   });
 });
 
-dogsRouter.post('/new', protectRoute({ requireAdmin: true }), (req, res) => {
+dogsRouter.post('/new/dog', protectRoute({ requireAdmin: true }), (req, res) => {
+  console.log(req.body);
   createDog({
     chipId: req.body.chipId,
     name: req.body.name,
@@ -53,12 +64,25 @@ dogsRouter.post('/new', protectRoute({ requireAdmin: true }), (req, res) => {
     color: req.body.color,
     shape: req.body.shape,
     gender: req.body.gender,
-    uri: req.param('uri'),
-  }).then((dog) => { res.status(200).json({ success: true, message: dog.chipId }); })
-    .catch((err) => { res.status(500).json({ success: false, message: err.message }); });
+    dob: req.body.dob,
+    uri: `https://s3.amazonaws.com/canine-assistants-assets/dogs/${req.body.chipId}`,
+  }).then((dog) => {
+    s3.upload({
+      Key: `dogs/${dog.chipId}`,
+      Body: req.body.image,
+      ACL: 'public-read',
+    }, (err) => {
+      if (err) {
+        return res.status(500).json({ success: false, message: err.message });
+      }
+      return res.status(200).json({ success: true, message: dog.chipId });
+    });
+  }).catch((err) => {
+    res.status(500).json({ success: false, message: err.message });
+  });
 });
 
-dogsRouter.post('/update', protectRoute({ requireAdmin: true }), (req, res) => {
+dogsRouter.post('/update/dog', protectRoute({ requireAdmin: true }), (req, res) => {
   Dog.update({ chipId: req.body.chipId }, req.body.updates, (err) => {
     if (err) {
       return res.status(500).json({ success: false, message: 'An error occurred.' });

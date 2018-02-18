@@ -48,7 +48,11 @@ const DetailTable = ({
           <td className="col text-nowrap align-middle">
             <div className="d-flex">
               <Link
-                to={detailRoute.template(item[detailRoute.key])}
+                to={{
+                  pathname: detailRoute.template(item[detailRoute.key]),
+                  // state: { item },
+                }}
+                // data={item}
                 className="ml-auto"
                 styleName="link-unstyled"
               >

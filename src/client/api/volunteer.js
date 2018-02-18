@@ -6,5 +6,9 @@ export function apiTestVolunteer() {
 }
 
 export function getDogs() {
-  return apiCall('GET', '/api/dogs/', {});
+  return apiCall('GET', '/api/dogs/', null);
+}
+
+export function getDog(chipId) {
+  return apiCall('GET', `/api/dogs/${chipId}`, null);
 }

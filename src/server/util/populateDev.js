@@ -17,6 +17,7 @@ export default () => {
     shape: 'circle',
     gender: 'M',
     uri: 'https://s3.amazonaws.com/canine-assistants-assets/dogs/o9jaFsXt.jpg',
+    dob: new Date(),
   }).then((dog) => {
     // eslint-disable-next-line no-console
     console.log(`New dog created with name: ${dog.name}`);
@@ -32,6 +33,7 @@ export default () => {
     shape: 'triangle',
     gender: 'M',
     uri: 'https://s3.amazonaws.com/canine-assistants-assets/dogs/o9jaFsXt.jpg',
+    dob: new Date(),
   }).then((dog) => {
     // eslint-disable-next-line no-console
     console.log(`New dog created with name: ${dog.name}`);
@@ -47,6 +49,7 @@ export default () => {
     shape: 'circle',
     gender: 'F',
     uri: 'https://s3.amazonaws.com/canine-assistants-assets/dogs/o9jaFsXt.jpg',
+    dob: new Date(),
   }).then((dog) => {
     // eslint-disable-next-line no-console
     console.log(`New dog created with name: ${dog.name}`);

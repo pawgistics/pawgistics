@@ -13,7 +13,7 @@ const DogDetailTable = ({ dogs }: Props) => (
     keys={{ 'Dog Name': 'name', 'Dog ID': 'chipId', Custody: 'custody' }}
     items={_.map(dogs, dog => _.assign({}, dog, { custody: 'Canine Assistants' }))}
     detailRoute={{
-      template: chipId => `/dog/${chipId}`,
+      template: chipId => `/dogDetail/${chipId}`,
       key: 'chipId',
     }}
   />
