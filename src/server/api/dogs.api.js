@@ -1,21 +1,12 @@
 /* eslint-disable no-console */
 import express from 'express';
-import AWS from 'aws-sdk';
-import { awsConfig, s3Config } from '../config.json';
 import protectRoute from './auth/protectRoute';
 import models from '../models';
 import { createDog } from '../util/dog';
+import { ImageUploader } from '../util/imageUploader';
 
 const { Dog } = models;
 const dogsRouter = express.Router();
-AWS.config.update({
-  region: awsConfig.AWS_REGION,
-  accessKeyId: awsConfig.AWS_ACCESS_KEY_ID,
-  secretAccessKey: awsConfig.AWS_SECRET_ACCESS_KEY,
-});
-const s3 = new AWS.S3({
-  params: { Bucket: s3Config.BUCKET_NAME },
-});
 
 dogsRouter.get('/', protectRoute(), (req, res) => {
   Dog.scan().exec((err, dogs) => {
@@ -55,7 +46,7 @@ dogsRouter.get('/search/name/:name', protectRoute(), (req, res) => {
 });
 
 dogsRouter.post('/new/dog', protectRoute({ requireAdmin: true }), (req, res) => {
-  console.log(req.body);
+  const s3uri = `https://s3.amazonaws.com/canine-assistants-assets/${req.body.chipId}`;
   createDog({
     chipId: req.body.chipId,
     name: req.body.name,
@@ -65,18 +56,18 @@ dogsRouter.post('/new/dog', protectRoute({ requireAdmin: true }), (req, res) => 
     shape: req.body.shape,
     gender: req.body.gender,
     dob: req.body.dob,
-    uri: `https://s3.amazonaws.com/canine-assistants-assets/dogs/${req.body.chipId}`,
+    uri: s3uri,
   }).then((dog) => {
-    s3.upload({
-      Key: `dogs/${dog.chipId}`,
-      Body: req.body.image,
-      ACL: 'public-read',
-    }, (err) => {
-      if (err) {
-        return res.status(500).json({ success: false, message: err.message });
-      }
-      return res.status(200).json({ success: true, message: dog.chipId });
-    });
+    console.log('dog created');
+    ImageUploader({
+      filename: `${req.body.chipId}`,
+      file: req.body.data_uri,
+      filetype: req.body.filetype,
+    }).then(() => {
+      console.log('file uploaded');
+      res.status(200).json({ success: true, message: dog.chipId });
+    })
+      .catch(err => res.status(500).json({ success: false, message: err.message }));
   }).catch((err) => {
     res.status(500).json({ success: false, message: err.message });
   });

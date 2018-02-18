@@ -23,7 +23,6 @@ class AddDogPage extends React.Component {
       shape: 'circle',
       gender: 'M',
       dob: null,
-      // image: null,
       // eslint-disable-next-line
       fid: null,
     };
@@ -36,6 +35,7 @@ class AddDogPage extends React.Component {
     this.updateShape = this.updateShape.bind(this);
     this.updateGender = this.updateGender.bind(this);
     this.updateDOB = this.updateDOB.bind(this);
+    this.updateImage = this.updateImage.bind(this);
   }
 
   updateName(e) {
@@ -64,6 +64,22 @@ class AddDogPage extends React.Component {
 
   updateDOB(e) {
     this.setState({ dob: e.target.value });
+  }
+
+  updateImage(e) {
+    const reader = new FileReader();
+    const file = e.target.files[0];
+    reader.onload = (upload) => {
+      this.setState({
+        // eslint-disable-next-line
+        data_uri: upload.target.result,
+        // eslint-disable-next-line
+        filename: file.name,
+        // eslint-disable-next-line
+        filetype: file.type,
+      });
+    };
+    reader.readAsDataURL(file);
   }
 
   handleSubmit() {
@@ -96,6 +112,7 @@ class AddDogPage extends React.Component {
                 <Input
                   type="file"
                   name="profile"
+                  onChange={this.updateImage}
                   // ref={(file) => {
                   //   this.state.image = file;
                   // }}
