@@ -20,6 +20,9 @@ const DogSchema = new dynamoose.Schema({
   },
   fid: {
     type: String,
+    index: {
+      global: true,
+    },
   },
   color: {
     type: String,
@@ -36,6 +39,10 @@ const DogSchema = new dynamoose.Schema({
   },
   uri: {
     type: String,
+  },
+  dob: {
+    type: Date,
+    required: true,
   },
 }, {
   useNativeBooleans: true,

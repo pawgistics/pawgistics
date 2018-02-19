@@ -4,5 +4,8 @@
     "AWS_SECRET_ACCESS_KEY": "Your AWS Secret Access Key",
     "AWS_REGION":"Your AWS Region"
   },
+  "s3Config": {
+    "BUCKET_NAME": "Bucket Name"
+    },
   "jwtSecret": "AdmCsgpUvGBDaMGkS02a3yqfN12aHIVrH3Kw7XjKyeqXt8sqnNlU2cIEhi3djVkc"
 }

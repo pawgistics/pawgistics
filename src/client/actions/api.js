@@ -32,6 +32,6 @@ export default function apiCall(method, route, body) {
             reject(response);
           }
         // eslint-disable-next-line no-console
-        }).catch(err => console.log('Error: ', err));
+        });
     });
 }

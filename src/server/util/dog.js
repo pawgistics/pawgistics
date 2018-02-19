@@ -20,6 +20,7 @@ export const createDog = dog =>
           shape: dog.shape,
           gender: dog.gender,
           uri: dog.uri,
+          dob: dog.dob,
         }, (createErr, newDog) => {
           if (createErr) {
             reject(createErr);

@@ -46,6 +46,9 @@ const UserSchema = new dynamoose.Schema({
   },
   fid: {
     type: String,
+    index: {
+      global: true,
+    },
   },
 }, {
   useNativeBooleans: true,
