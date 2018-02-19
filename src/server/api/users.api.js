@@ -8,13 +8,23 @@ import models from '../models';
 const { User } = models;
 const userRouter = express.Router();
 
+userRouter.get('/', protectRoute(), (req, res) => {
+  User.scan().exec((err, users) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json({ success: false, message: 'An error occurred.' });
+    }
+    return res.status(200).json({ success: true, response: users });
+  });
+});
+
 userRouter.get('/:id', protectRoute(), (req, res) => {
   User.query('id').eq(req.params.id).exec((err, user) => {
     if (err) {
       console.log(err);
       return res.status(500).json({ success: false, message: 'An error occurred.' });
     }
-    return res.status(200).json({ success: true, response: user });
+    return res.status(200).json({ success: true, response: user[0] });
   });
 });
 
