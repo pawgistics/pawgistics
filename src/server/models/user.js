@@ -1,60 +1,72 @@
-import dynamoose from 'dynamoose';
+import argon2 from 'argon2';
 
-const UserSchema = new dynamoose.Schema({
-  id: {
-    type: String,
-    hashKey: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    trim: true,
-    set: (s => s.toLowerCase()),
-    index: {
-      global: true,
-      throughput: 1,
+export default (sequelize, Sequelize) => {
+  const User = sequelize.define('users', {
+    id: {
+      autoIncrement: true,
+      primaryKey: true,
+      type: Sequelize.INTEGER,
+      allowNull: false,
     },
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  admin: {
-    type: Boolean,
-    required: true,
-    default: false,
-  },
-  fname: {
-    type: String,
-    required: true,
-  },
-  lname: {
-    type: String,
-    required: true,
-  },
-  phone: {
-    type: String,
-    required: true,
-    validate: RegExp('[0-9]{3}-[0-9]{3}-[0-9]{4}'),
-  },
-  address: {
-    type: Object,
-    required: true,
-  },
-  uri: {
-    type: String,
-  },
-  fid: {
-    type: String,
-    index: {
-      global: true,
+    email: {
+      type: Sequelize.STRING,
+      notEmpty: true,
+      allowNull: false,
+      unique: true,
+      validate: {
+        isEmail: true,
+      },
     },
-  },
-}, {
-  useNativeBooleans: true,
-  useDocumentTypes: true,
-});
+    password: {
+      type: Sequelize.STRING,
+      notEmpty: true,
+      allowNull: false,
+    },
+    admin: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
+      notEmpty: true,
+      allowNull: false,
+    },
+    active: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: true,
+      notEmpty: true,
+      allowNull: false,
+    },
+    fname: {
+      type: Sequelize.STRING,
+      // notEmpty: true,
+      allowNull: false,
+    },
+    lname: {
+      type: Sequelize.STRING,
+      // notEmpty: true,
+      allowNull: false,
+    },
+    phone_number: {
+      type: Sequelize.STRING,
+      // notEmpty: true,
+      allowNull: false,
+    },
+    uri: {
+      type: Sequelize.STRING,
+      // notEmpty: true,
+      allowNull: true,
+    },
+  }, {
+    hooks: {
+      beforeSave: (user) => {
+        if (user.changed()) {
+          return argon2.hash(user.password, { type: argon2.argon2id })
+            // eslint-disable-next-line no-param-reassign
+            .then((hash) => { user.password = hash; });
+        }
+        // eslint-disable-next-line compat/compat
+        return Promise.resolve();
+      },
+    },
+  });
 
-const User = dynamoose.model('User', UserSchema);
-
-export default User;
+  return User;
+};

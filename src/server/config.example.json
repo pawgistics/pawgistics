@@ -7,5 +7,18 @@
   "s3Config": {
     "BUCKET_NAME": "Bucket Name"
     },
+  "mySQLConfig": {
+    "HOST": "127.0.0.1",
+    "PORT": 12345,
+    "DATABASE": "DB",
+    "USER_NAME": "root",
+    "PASSWORD": "",
+    "POOL": {
+      "max": 5,
+      "min": 0,
+      "acquire": 30000,
+      "idle": 10000
+    }
+  },
   "jwtSecret": "AdmCsgpUvGBDaMGkS02a3yqfN12aHIVrH3Kw7XjKyeqXt8sqnNlU2cIEhi3djVkc"
 }

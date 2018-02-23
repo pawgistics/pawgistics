@@ -1,54 +1,55 @@
-import dynamoose from 'dynamoose';
+import User from './user';
+import Litter from './litter';
 
-const DogSchema = new dynamoose.Schema({
-  chipId: {
-    type: Number,
-    hashKey: true,
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-  litter: {
-    type: String,
-    required: true,
-    index: {
-      global: true,
-      rangeKey: 'name',
-      throughput: 1,
+export default (sequelize, Sequelize) => {
+  const Dog = sequelize.define('dogs', {
+    id: {
+      autoIncrement: true,
+      primaryKey: true,
+      type: Sequelize.INTEGER,
+      allowNull: false,
     },
-  },
-  fid: {
-    type: String,
-    index: {
-      global: true,
+    chip: {
+      type: Sequelize.INTEGER,
+      notEmpty: true,
+      allowNull: false,
+      unique: true,
     },
-  },
-  color: {
-    type: String,
-    required: true,
-  },
-  shape: {
-    type: String,
-    required: true,
-  },
-  gender: {
-    type: String,
-    required: true,
-    validate: RegExp('M|F'),
-  },
-  uri: {
-    type: String,
-  },
-  dob: {
-    type: Date,
-    required: true,
-  },
-}, {
-  useNativeBooleans: true,
-  useDocumentTypes: true,
-});
+    active: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: true,
+      notEmpty: true,
+      allowNull: false,
+    },
+    name: {
+      type: Sequelize.STRING,
+      // notEmpty: true,
+      allowNull: false,
+    },
+    gender: {
+      type: Sequelize.ENUM,
+      values: ['M', 'F'],
+    },
+    litter_id: {
+      type: Sequelize.INTEGER,
+      references: {
+        model: Litter,
+        key: 'id',
+      },
+    },
+    instructor_id: {
+      type: Sequelize.INTEGER,
+      references: {
+        model: User,
+        key: 'id',
+      },
+    },
+    uri: {
+      type: Sequelize.STRING,
+      // notEmpty: true,
+      allowNull: true,
+    },
+  });
 
-const Dog = dynamoose.model('Dog', DogSchema);
-
-export default Dog;
+  return Dog;
+};

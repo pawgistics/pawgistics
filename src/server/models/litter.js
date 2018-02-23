@@ -1,15 +1,15 @@
-import dynamoose from 'dynamoose';
-
-const LitterSchema = new dynamoose.Schema({
-  name: {
-    type: String,
-    hashKey: true,
-  },
-}, {
-  useNativeBooleans: true,
-  useDocumentTypes: true,
-});
-
-const Litter = dynamoose.model('Litter', LitterSchema);
-
-export default Litter;
+export default (sequelize, Sequelize) => {
+  const Litter = sequelize.define('litters', {
+    id: {
+      autoIncrement: true,
+      primaryKey: true,
+      type: Sequelize.INTEGER,
+      allowNull: false,
+    },
+    name: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+  });
+  return Litter;
+};
