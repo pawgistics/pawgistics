@@ -42,7 +42,6 @@ class UserDetailPage extends React.Component<Props> {
           <br />
           <Row>
             <Col xs="3">
-              <dt>Profile picture</dt>
               <img src={this.state.user.uri} alt={this.state.user.fname} className="border rounded" />
             </Col>
             <Col xs="4">
@@ -50,21 +49,20 @@ class UserDetailPage extends React.Component<Props> {
                 <ListGroupItem className="justify-content-between">Name: {this.state.user.fname} {this.state.user.lname}</ListGroupItem>
                 <ListGroupItem className="justify-content-between">Email: {this.state.user.email} </ListGroupItem>
                 <ListGroupItem className="justify-content-between">Phone #: {this.state.user.phone} </ListGroupItem>
-                {/* <ListGroupItem className="justify-content-between">Gender: Female </ListGroupItem> */}
-                <ListGroupItem className="justify-content-between">Member since: 2015 </ListGroupItem>
+
               </ListGroup>
             </Col>
             <Col xs="4">
               <ListGroup>
-                {/* <ListGroupItem className="justify-content-between">DoB<Badge pill>02/14/1860</Badge></ListGroupItem> */}
-                <ListGroupItem className="justify-content-between">User Type: Volunteer </ListGroupItem>
-                {/* <ListGroupItem className="justify-content-between">Years of experience: <Badge pill> 4 </Badge></ListGroupItem> */}
-                {/* <ListGroupItem className="justify-content-between">Address: {this.state.user.address.line1} {this.state.user.address.line2}, {this.state.user.address.city}, {this.state.user.address.state} {this.state.user.address.zip} </ListGroupItem> */}
-                {/* <ListGroupItem className="justify-content-between">Emergency Contact<Badge pill> 404-111-1111 </Badge></ListGroupItem> */}
+                <ListGroupItem className="justify-content-between">Gender: Male </ListGroupItem>
+                <ListGroupItem className="justify-content-between">User Type: Admin </ListGroupItem>
+                <ListGroupItem className="justify-content-between">Member since: 1890 </ListGroupItem>
               </ListGroup>
             </Col>
           </Row>
         </Form>
+        <br />
+        <br />
         <br />
         <br />
         <div>
@@ -110,13 +108,13 @@ class UserDetailPage extends React.Component<Props> {
             </tbody>
           </Table>
           <br />
-          <br />
         </div>
         <div className="footer">
           <h2>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <Button color="secondary" size="lg">BACK</Button>{' '}
-              <Button color="danger" size="lg">EDIT DETAILS</Button>
+              &nbsp;
+              <Button color="primary" size="lg">EDIT DETAILS</Button>
             </div>
           </h2>
         </div>

@@ -59,18 +59,13 @@ class DogDetailPage extends React.Component<Props> {
                 <ListGroup>
                   <ListGroupItem className="justify-content-between">Marking: {this.state.dog.color} {this.state.dog.shape}</ListGroupItem>
                   <ListGroupItem className="justify-content-between">Custody: Canine Assistants </ListGroupItem>
-                  <Form inline>
-                    <div className="form-group">
-                      <ListGroupItem className="justify-content-between">Status: Training </ListGroupItem>
-                      {/* <Link
-                        to={{
-                          pathname: `/dogEdit/${this.state.dog.chipId}`,
-                        }}
-                      > */}
-                      <Button>Edit</Button>{' '}
-                      {/* </Link> */}
-                    </div>
-                  </Form>
+                  <ListGroupItem className="justify-content-between">Status: Training </ListGroupItem>
+                  {/* <Link
+                    to={{
+                      pathname: `/dogEdit/${this.state.dog.chipId}`,
+                    }}
+                  > */}
+                  {/* </Link> */}
                 </ListGroup>
               </FormGroup>
             </Col>
@@ -127,12 +122,12 @@ class DogDetailPage extends React.Component<Props> {
           </tbody>
         </Table>
         <br />
-        <br />
-        <br />
         <div className="footer">
           <h2>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <Button color="secondary" size="lg">BACK</Button>{' '}
+              &nbsp;
+              <Button color="primary" size="lg">EDIT</Button>{' '}
             </div>
           </h2>
         </div>

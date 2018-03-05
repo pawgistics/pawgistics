@@ -70,7 +70,7 @@ export default () => {
       state: 'GA',
       zip: '30327',
     },
-    uri: 's3://canineassistants/assets/profilepics/*',
+    uri: 'https://s3.amazonaws.com/canine-assistants-assets/users/exampleman.jpg/',
   }).then((user) => {
     // eslint-disable-next-line no-console
     console.log(`New user created with email: ${user.email}`);
@@ -91,7 +91,7 @@ export default () => {
       state: 'GA',
       zip: '30327',
     },
-    uri: 's3://canineassistants/assets/profilepics/*',
+    uri: 'https://s3.amazonaws.com/canine-assistants-assets/users/exampleman.jpg/',
   }).then((user) => {
     // eslint-disable-next-line no-console
     console.log(`New user created with email: ${user.email}`);

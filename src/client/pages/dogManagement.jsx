@@ -1,12 +1,14 @@
 // @flow
 
 import React from 'react';
+import CSSModules from 'react-css-modules';
 import { connect } from 'react-redux';
 // import CSSModules from 'react-css-modules';
-import { Label, Container, Col, Row, InputGroup, InputGroupAddon, FormGroup, Input, Button } from 'reactstrap';
+import { Label, Form, Row, Col, InputGroup, InputGroupAddon, FormGroup, Input, Button } from 'reactstrap';
 
 import { getDogs } from '../api/volunteer';
 import DogDetailTable from '../containers/dog-detail-table';
+import styles from '../styles/pages/userDetail.m.scss';
 
 // import styles from '../styles/pages/dogManagement.m.scss';
 // need to change this later!!
@@ -37,40 +39,63 @@ class DogManagementPage extends React.Component<Props> {
 
   render() {
     return (
-      <Container>
-        <Col xl="8" lg="9" md="10" sm="11" xs="12">
+      <div>
+        <span styleName="my-class">Dog Managment Page </span>
+        <Form>
+          <br />
           <Row className="mb-2">
-            <h1>Dog Management Page</h1>
+            <Col xs="4" sm="1">
+              <FormGroup check inline>
+                <Label check>
+                  <Input type="checkbox" />Active
+                </Label>
+              </FormGroup>
+              &nbsp;
+            </Col>
+            <Col xs="4">
+              <FormGroup check inline>
+                <Label check>
+                  <Input type="checkbox" />Available for check out
+                </Label>
+              </FormGroup>
+            </Col>
           </Row>
-          <Row className="mb-2">
-            <FormGroup check inline>
-              <Label check>
-                <Input type="checkbox" />Active
-              </Label>
-            </FormGroup>
-            <FormGroup check inline>
-              <Label check>
-                <Input type="checkbox" />Available for check out
-              </Label>
-            </FormGroup>
-          </Row>
-          <Row className="mb-4">
+          <br />
+          <Col>
             <InputGroup>
               <Input type="text" className="form-control" placeholder="Search using keywords" id="inputGroup" />
               <InputGroupAddon addonType="append">
                 <Button>Search</Button>
               </InputGroupAddon>
             </InputGroup>
-          </Row>
-          <Row>
+          </Col>
+          <br />
+          <Col>
             <DogDetailTable dogs={this.state.dogs} />
-          </Row>
-        </Col>
-      </Container>
+          </Col>
+        </Form>
+        <Row>
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+        </Row>
+        <div className="footer">
+          <h2>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <Button color="secondary" size="lg">ADD DOG</Button>{' '}
+            </div>
+          </h2>
+        </div>
+      </div>
     );
   }
 }
 
 export default connect(null, dispatch => ({
   getDogs: () => dispatch(getDogs()),
-}))(DogManagementPage);
+}))(CSSModules(DogManagementPage, styles));

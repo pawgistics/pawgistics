@@ -1,6 +1,6 @@
 import React from 'react';
 import CSSModules from 'react-css-modules';
-import { Row, Col, Button, Form, FormGroup, ListGroup, ListGroupItem, Badge, Input, FormText, Table } from 'reactstrap';
+import { Row, Col, Button, Form, Label, FormGroup, ListGroup, Input, FormText, Table } from 'reactstrap';
 
 import styles from '../styles/pages/userEdit.m.scss';
 // must fix this later.
@@ -19,31 +19,35 @@ const UserEditPage = () => (
             <dt>Profile picture</dt>
             <Input type="file" name="picfile" id="examplePicFile" />
             <FormText color="muted">
-              Upload the picture of the dog.
+              Upload a picture.
             </FormText>
           </FormGroup>
         </Col>
         <Col xs="4">
           <ListGroup>
-            <ListGroupItem className="justify-content-between">Name: <Badge pill> Jessica Acissej </Badge></ListGroupItem>
-            <ListGroupItem className="justify-content-between">Email: <Badge pill size="lg"> JAcissej@gmail.com </Badge></ListGroupItem>
-            <ListGroupItem className="justify-content-between">Phone #: <Badge pill> 404-000-0000 </Badge></ListGroupItem>
-            <ListGroupItem className="justify-content-between">Gender: <Badge pill> Female </Badge></ListGroupItem>
-            <ListGroupItem className="justify-content-between">Member since: <Badge pill> 1890 </Badge></ListGroupItem>
+            <Label for="exampleName">Name: </Label>
+            <Input placeholder="John Doe" />
+            <Label for="exampleEmail">Email: </Label>
+            <Input placeholder="admin@pawgistics.com" />
+            <Label for="examplePhone">Phone #: </Label>
+            <Input placeholder="123-456-7890" />
           </ListGroup>
         </Col>
         <Col xs="4">
           <ListGroup>
-            <ListGroupItem className="justify-content-between">DoB<Badge pill>02/14/1860</Badge></ListGroupItem>
-            <ListGroupItem className="justify-content-between">User Type: <Badge pill> Volunteer </Badge></ListGroupItem>
-            <ListGroupItem className="justify-content-between">Years of experience: <Badge pill> 4 </Badge></ListGroupItem>
-            <ListGroupItem className="justify-content-between">Address: <Badge pill> 1212 Dolvin Drive, Johns Creek, GA </Badge></ListGroupItem>
-            <ListGroupItem className="justify-content-between">Emergency Contact<Badge pill> 404-111-1111 </Badge></ListGroupItem>
+            <Label for="exampleGender">Gender: </Label>
+            <Input type="select">
+              <option> Male </option>
+              <option> Female </option>
+            </Input>
+            <Label for="exampleUserType">User Type: </Label>
+            <Input placeholder="Admin" />
+            <Label for="exampleMember">Member since: </Label>
+            <Input placeholder="1890" />
           </ListGroup>
         </Col>
       </Row>
     </Form>
-    <br />
     <br />
     <div>
       <Table hover>
@@ -61,16 +65,10 @@ const UserEditPage = () => (
           </tr>
         </tbody>
       </Table>
-      <div>
-        <h2>
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <Button outline="secondary" size="lg">Add new training history</Button>{' '}
-          </div>
-        </h2>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <Button color="secondary" size="lg">Update training history</Button>{' '}
       </div>
     </div>
-    <br />
-    <br />
     <br />
     <div>
       <Table hover>
@@ -97,14 +95,15 @@ const UserEditPage = () => (
         </tbody>
       </Table>
       <br />
-      <br />
     </div>
     <div className="footer">
       <h2>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <Button outline="secondary" size="lg">Cancel</Button>{' '}
-          <Button outline="primary" size="lg">Save</Button>{' '}
-          <Button color="danger" size="lg">REMOVE USER</Button>
+          <Button outline="secondary" size="lg">BACK</Button>{' '}
+          &nbsp;
+          <Button color="secondary" size="lg">SAVE</Button>{' '}
+          &nbsp;
+          <Button color="primary" size="lg">REMOVE USER</Button>
         </div>
       </h2>
     </div>

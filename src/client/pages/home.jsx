@@ -13,7 +13,7 @@ type Props = {
 class HomePage extends React.Component<Props> {
   constructor() {
     super();
-    this.state = { message: 'Home Page' };
+    this.state = { message: 'Canine Assistants' };
 
     this.handleApiTest = this.handleApiTest.bind(this);
   }
@@ -32,7 +32,7 @@ class HomePage extends React.Component<Props> {
     return (
       <div>
         <p>{this.state.message}</p>
-        <Button onClick={this.handleApiTest}>Say hello to the server!</Button>
+        <Button onClick={this.handleApiTest}>Welcome to Canine Assistants!</Button>
       </div>
     );
   }

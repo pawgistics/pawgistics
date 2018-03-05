@@ -5,7 +5,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  height: 100vh;
+  height: 200vh;
   z-index: 999;
   background: lighten($secondary, 5%);
   color: #fff;
@@ -15,7 +15,7 @@
 .sidebar:global(.active) {
   margin-left: -$sidebar-width;
 }
- 
+
 .header {
   padding: 20px;
   background: $secondary;

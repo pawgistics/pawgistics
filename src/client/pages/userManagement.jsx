@@ -40,29 +40,28 @@ class UserManagementPage extends React.Component<Props> {
         {/* <button className="btn btn-primary">Back</button>
         <Button color="primary">Save</Button> */}
         <Form>
-          <Col>
-            <br />
-            <Form inline>
-              <Col xs="4">
-                <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-                  {/* <Label for="exampleGender">Gender</Label> */}
-                  <dt>User Type</dt>
-                  <Input type="select" name="gender" id="examplegender">
-                    <option>Volunteer</option>
-                    <option>Instructor</option>
-                  </Input>
-                </FormGroup>
-              </Col>
-              <Col xs="5">
-                <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-                  <Label check>
-                    <Input type="checkbox" id="checkbox2" />{' '}
-                              Has dog
-                  </Label>
-                </FormGroup>
-              </Col>
-            </Form>
-          </Col>
+          <br />
+          <Row className="mb-2">
+            <Col xs="7" sm="3">
+              <FormGroup check inline>
+                <Label>User Type: </Label>
+                <Input type="select">
+                  <option> Canine Assistants </option>
+                  <option> Volunteer </option>
+                  <option> Foster </option>
+                </Input>
+              </FormGroup>
+            </Col>
+            &nbsp;
+            <Col xs="4">
+              <FormGroup check inline>
+                <Label check>
+                  <Input type="checkbox" id="checkbox2" />{' '}
+                            Has dog
+                </Label>
+              </FormGroup>
+            </Col>
+          </Row>
           <br />
           <Col>
             <InputGroup>
@@ -72,8 +71,8 @@ class UserManagementPage extends React.Component<Props> {
               </InputGroupAddon>
             </InputGroup>
           </Col>
+          <br />
           <Col>
-            <br />
             <UserDetailTable users={this.state.users} />
           </Col>
         </Form>
@@ -86,13 +85,11 @@ class UserManagementPage extends React.Component<Props> {
           <br />
           <br />
           <br />
-          <br />
-          <br />
         </Row>
         <div className="footer">
           <h2>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <Button color="secondary" size="lg">Add User</Button>{' '}
+              <Button color="secondary" size="lg">ADD USER</Button>{' '}
             </div>
           </h2>
         </div>
