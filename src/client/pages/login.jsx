@@ -2,12 +2,11 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import CSSModules from 'react-css-modules';
 import { Form, FormGroup, Input, Button, Label } from 'reactstrap';
 // import PropTypes from 'prop-types';
 
 import { loginUser } from '../actions/auth';
-import styles from '../styles/pages/login.m.scss';
+import '../styles/pages/login.m.scss';
 
 type Props = {
   loginUser: ({ email: string, password: string }) => Promise,
@@ -121,4 +120,4 @@ class LoginPage extends React.Component<Props> {
 
 const mapDispatchToProps = dispatch => ({ loginUser: creds => dispatch(loginUser(creds)) });
 
-export default connect(null, mapDispatchToProps)(CSSModules(LoginPage, styles));
+export default connect(null, mapDispatchToProps)(LoginPage);

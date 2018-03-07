@@ -31,7 +31,9 @@ const App = ({ isAuthenticated }: Props) => (
 );
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.auth.get('isAuthenticated'),
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default withRouter(connect(mapStateToProps)(App));
+export default withRouter(connect(mapStateToProps)(process.env.NODE_ENV === 'production' ?
+  // eslint-disable-next-line global-require
+  App : require('react-hot-loader').hot(module)(App)));

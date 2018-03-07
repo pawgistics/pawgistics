@@ -20,7 +20,7 @@ const AdminRoute = ({ component: Component, isAdmin, ...rest }: Props) => (
 );
 
 const mapStateToProps = state => ({
-  isAdmin: state.auth.get('isAdmin'),
+  isAdmin: state.auth.isAdmin,
 });
 
 export default connect(mapStateToProps)(AdminRoute);

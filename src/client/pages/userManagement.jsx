@@ -1,13 +1,12 @@
 // @flow
 
 import React from 'react';
-import CSSModules from 'react-css-modules';
 import { Button, InputGroup, InputGroupAddon, Row, Form, Col, FormGroup, Label, Input } from 'reactstrap';
 import { connect } from 'react-redux';
 
 import { getUsers } from '../api/volunteer';
 import UserDetailTable from '../containers/user-detail-table';
-import styles from '../styles/pages/userManagement.m.scss';
+import '../styles/pages/userManagement.m.scss';
 // must change this later!
 
 type Props = {
@@ -103,5 +102,5 @@ class UserManagementPage extends React.Component<Props> {
 
 export default connect(null, dispatch => ({
   getUsers: () => dispatch(getUsers()),
-}))(CSSModules(UserManagementPage, styles));
+}))(UserManagementPage);
 // export default UserManagementPage;

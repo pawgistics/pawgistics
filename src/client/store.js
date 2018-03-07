@@ -2,27 +2,36 @@
 
 import { createStore, applyMiddleware, compose } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
-import immutableTransform from 'redux-persist-transform-immutable';
+import { seamlessImmutableReconciler, seamlessImmutableTransformer } from 'redux-persist-seamless-immutable';
 import storage from 'redux-persist/lib/storage';
 import thunkMiddleware from 'redux-thunk';
 
 import reducers from './reducers';
 
 const persistConfig = {
-  transforms: [immutableTransform()],
   key: 'root',
   storage,
+  transforms: [seamlessImmutableTransformer],
+  stateReconciler: seamlessImmutableReconciler,
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 
-// eslint-disable-next-line no-underscore-dangle
-const composeEnhancers = (PROD ? null : window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+const composeEnhancers = (process.env.NODE_ENV === 'production' ?
+  // eslint-disable-next-line no-underscore-dangle
+  null : window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
 export const store = createStore(
   persistedReducer,
-  // reducers,
   composeEnhancers(applyMiddleware(thunkMiddleware)),
 );
 
 export const persistor = persistStore(store);
+
+if (process.env.NODE_ENV !== 'production') {
+  module.hot.accept('./reducers', () => {
+    // eslint-disable-next-line global-require
+    const nextRootReducer = require('./reducers').default;
+    store.replaceReducer(nextRootReducer);
+  });
+}

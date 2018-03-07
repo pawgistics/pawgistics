@@ -1,11 +1,10 @@
 // @flow
 
 import React from 'react';
-import CSSModules from 'react-css-modules';
 import { Row, Col, Button, Form, FormGroup, Input, FormText } from 'reactstrap';
 import { connect } from 'react-redux';
 import { postDog } from '../api/admin';
-import styles from '../styles/pages/addDog.m.scss';
+import '../styles/pages/addDog.m.scss';
 
 // eslint-disable-next-line
 type Props = {
@@ -191,5 +190,5 @@ class AddDogPage extends React.Component {
 }
 export default connect(null, dispatch => ({
   postDog: vals => dispatch(postDog(vals)),
-}))(CSSModules(AddDogPage, styles));
+}))(AddDogPage);
 // export default AddDogPage;

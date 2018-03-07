@@ -1,12 +1,11 @@
 // @flow
 
 import React from 'react';
-import CSSModules from 'react-css-modules';
 
 import ChevronRight from 'react-icons/lib/fa/chevron-right';
 import { Row, ListGroup, ListGroupItem } from 'reactstrap';
 
-import styles from '../styles/components/list.m.scss';
+import '../styles/components/list.m.scss';
 
 type Props = {
   items: [],
@@ -26,4 +25,4 @@ const List = ({ items }: Props) => (
   </ListGroup>
 );
 
-export default CSSModules(List, styles);
+export default List;

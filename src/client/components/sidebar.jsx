@@ -4,7 +4,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { NavLink } from 'react-router-dom';
-import CSSModules from 'react-css-modules';
 import { Button } from 'reactstrap';
 
 import {
@@ -20,7 +19,7 @@ import {
   DOG_EDIT_PAGE_ROUTE,
 } from '../../shared/routes';
 import { logoutUser } from '../actions/auth';
-import styles from '../styles/components/sidebar.m.scss';
+import '../styles/components/sidebar.m.scss';
 
 type Props = {
   isAdmin: boolean,
@@ -60,7 +59,7 @@ const Sidebar = ({ isAdmin, handleLogout }: Props) => (
 );
 
 const mapStateToProps = state => ({
-  isAdmin: state.auth.get('isAdmin'),
+  isAdmin: state.auth.isAdmin,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -70,4 +69,4 @@ const mapDispatchToProps = dispatch => ({
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(CSSModules(Sidebar, styles)));
+)(Sidebar));

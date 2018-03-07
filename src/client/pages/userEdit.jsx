@@ -1,8 +1,7 @@
 import React from 'react';
-import CSSModules from 'react-css-modules';
 import { Row, Col, Button, Form, FormGroup, ListGroup, ListGroupItem, Badge, Input, FormText, Table } from 'reactstrap';
 
-import styles from '../styles/pages/userEdit.m.scss';
+import '../styles/pages/userEdit.m.scss';
 // must fix this later.
 
 const UserEditPage = () => (
@@ -111,5 +110,5 @@ const UserEditPage = () => (
   </div>
 );
 
-export default CSSModules(UserEditPage, styles);
+export default UserEditPage;
 // export default UserDetailPage;

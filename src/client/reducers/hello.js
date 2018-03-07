@@ -1,7 +1,7 @@
 // @flow
 
-import Immutable from 'immutable';
-import type { fromJS as Immut } from 'immutable';
+import Immutable from 'seamless-immutable';
+import type Immut from 'seamless-immutable';
 
 import {
   SAY_HELLO,
@@ -10,7 +10,7 @@ import {
   SAY_HELLO_ASYNC_FAILURE,
 } from '../actions/hello';
 
-const initialState = Immutable.fromJS({
+const initialState = Immutable({
   message: 'Initial reducer message',
   messageAsync: 'Initial reducer message for async call',
 });

@@ -1,0 +1,38 @@
+{
+	"presets": [
+    [
+      "@babel/preset-env",
+      {
+        "modules": false
+      }
+    ],
+    "@babel/preset-flow",
+    "@babel/preset-react"
+	],
+  "plugins": [
+    ["@babel/plugin-proposal-class-properties", {
+        "loose": false
+    }],
+    "flow-react-proptypes",
+    "@babel/plugin-proposal-object-rest-spread",
+    ["react-css-modules", {
+      "generateScopedName": "[name]-[local]-[hash:base64:6]",
+      "filetypes": {
+        ".scss": {
+          "syntax": "postcss-scss"
+        }
+      }
+    }],
+    "lodash",
+    ["@babel/plugin-transform-runtime", {
+      "useESModules": true,
+      "useBuiltIns": true
+    }],
+    ["transform-imports", {
+      "reactstrap": {
+          "transform": "reactstrap/lib/${member}",
+          "preventFullImport": true
+      }
+    }]
+  ]
+}

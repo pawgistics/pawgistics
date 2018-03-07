@@ -1,15 +1,15 @@
 // @flow
 
-import Immutable from 'immutable';
+import Immutable from 'seamless-immutable';
+import type Immut from 'seamless-immutable';
 import jwtDecode from 'jwt-decode';
-import type { fromJS as Immut } from 'immutable';
 
 import {
   LOGIN,
   LOGOUT,
 } from '../actions/auth';
 
-const initialState = Immutable.fromJS({
+const initialState = Immutable({
   isAuthenticated: false,
   token: null,
   isAdmin: false,

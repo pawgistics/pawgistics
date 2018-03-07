@@ -6,6 +6,6 @@
   },
   "s3Config": {
     "BUCKET_NAME": "Bucket Name"
-    },
+  },
   "jwtSecret": "AdmCsgpUvGBDaMGkS02a3yqfN12aHIVrH3Kw7XjKyeqXt8sqnNlU2cIEhi3djVkc"
 }

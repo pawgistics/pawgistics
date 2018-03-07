@@ -2,10 +2,9 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import CSSModules from 'react-css-modules';
 import { /* Link, */InputGroupAddon, InputGroup, Row, Col, Button, Form, FormGroup, ListGroup, ListGroupItem, Input, Table } from 'reactstrap';
 import { getDog } from '../api/volunteer';
-import styles from '../styles/pages/dogDetail.m.scss';
+import '../styles/pages/dogDetail.m.scss';
 // import { DOG_EDIT_PAGE_ROUTE } from '../../shared/routes';
 // must fix this later.
 
@@ -145,4 +144,4 @@ class DogDetailPage extends React.Component<Props> {
 // // export default DogDetailPage;
 export default connect(null, dispatch => ({
   getDog: id => dispatch(getDog(id)),
-}))(CSSModules(DogDetailPage, styles));
+}))(DogDetailPage);

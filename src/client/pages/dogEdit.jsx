@@ -1,8 +1,7 @@
 import React from 'react';
-import CSSModules from 'react-css-modules';
 import { InputGroupAddon, InputGroup, Row, Col, Button, Form, FormGroup, ListGroup, ListGroupItem, Badge, Input, FormText, Table } from 'reactstrap';
 
-import styles from '../styles/pages/addDog.m.scss';
+import '../styles/pages/addDog.m.scss';
 // must fix this later.
 
 const DogEditPage = () => (
@@ -111,5 +110,5 @@ const DogEditPage = () => (
   </div>
 );
 
-export default CSSModules(DogEditPage, styles);
+export default DogEditPage;
 // export default DogDetailPage;
