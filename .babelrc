@@ -1,12 +1,4 @@
 {
-	"presets": [
-		"env",
-    "flow",
-    "react"
-	],
-  "plugins": [
-    "flow-react-proptypes",
-    "transform-es2015-destructuring",
-    "transform-object-rest-spread"
-  ]
+  "presets": ["@babel/preset-env", "@babel/preset-flow"],
+  "plugins": []
 }

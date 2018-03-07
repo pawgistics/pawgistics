@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Switch, Route } from 'react-router';
-import CSSModules from 'react-css-modules';
 
 // import { APP_NAME } from '../../shared/config';
 import Sidebar from '../components/sidebar';
@@ -32,7 +31,7 @@ import {
   DOG_EDIT_PAGE_ROUTE,
 } from '../../shared/routes';
 
-import styles from '../styles/pages/dashboard.m.scss';
+import '../styles/pages/dashboard.m.scss';
 
 const Dashboard = () => (
   <div>
@@ -56,4 +55,4 @@ const Dashboard = () => (
   </div>
 );
 
-export default CSSModules(Dashboard, styles);
+export default Dashboard;

@@ -1,24 +1,24 @@
 // @flow
 
 import path from 'path';
-import webpack from 'webpack';
 import { getIfUtils, removeEmpty } from 'webpack-config-utils';
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
+import MinifyPlugin from 'babel-minify-webpack-plugin';
+import LodashModuleReplacementPlugin from 'lodash-webpack-plugin';
 import OptimizeJsPlugin from 'optimize-js-plugin';
 import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import ZopfliPlugin from 'zopfli-webpack-plugin';
 import BrotliPlugin from 'brotli-webpack-plugin';
 // import Visualizer from 'webpack-visualizer-plugin';
+// import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 import { WDS_PORT } from './src/shared/config';
-import { isProd } from './src/shared/util';
 
 const { ifProduction, ifDevelopment } = getIfUtils(process.env.NODE_ENV);
 
 export default {
   entry: removeEmpty([
-    ifDevelopment('react-hot-loader/patch'),
     './src/client',
   ]),
   output: {
@@ -28,20 +28,27 @@ export default {
   },
   module: {
     rules: [
-      { test: /\.jsx?$/, use: 'babel-loader', exclude: /node_modules/ },
+      {
+        test: /\.jsx?$/,
+        loader: 'babel-loader',
+        options: ifDevelopment({
+          plugins: ['react-hot-loader/babel'],
+        }),
+        exclude: /node_modules/,
+      },
       {
         test: /\.m\.s?css$/,
-        use: ifProduction(
+        loader: ifProduction(
           ExtractTextPlugin.extract({
             fallback: 'style-loader',
-            use: ['css-loader?modules,localIdentName="[name]-[local]-[hash:base64:6]"', 'postcss-loader', 'sass-loader'],
+            use: ['css-loader?modules,localIdentName=[name]-[local]-[hash:base64:6]', 'postcss-loader', 'sass-loader'],
           }),
-          ['style-loader', 'css-loader?modules,localIdentName="[name]-[local]-[hash:base64:6]"', 'postcss-loader', 'sass-loader'],
+          ['style-loader', 'css-loader?modules,localIdentName=[name]-[local]-[hash:base64:6]', 'postcss-loader', 'sass-loader'],
         ),
       },
       {
         test: /^((?!\.m).)*\.s?css$/,
-        use: ifProduction(
+        loader: ifProduction(
           ExtractTextPlugin.extract({
             fallback: 'style-loader',
             use: ['css-loader', 'postcss-loader', 'sass-loader'],
@@ -51,7 +58,7 @@ export default {
       },
     ],
   },
-  devtool: ifProduction(false, 'source-map'),
+  devtool: 'source-map',
   resolve: {
     extensions: ['.js', '.jsx'],
   },
@@ -62,10 +69,27 @@ export default {
       'Access-Control-Allow-Origin': '*',
     },
   },
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        uglifyOptions: {
+          parse: { ecma: 6 },
+          compress: {
+            passes: 3,
+            drop_console: true,
+            hoist_funs: true,
+            unsafe: true,
+          },
+        },
+        sourceMap: true,
+      }),
+      new MinifyPlugin(),
+    ],
+  },
   plugins: removeEmpty([
-    ifProduction(new UglifyJsPlugin({
-      parallel: true,
-    })),
+    ifProduction(new LodashModuleReplacementPlugin()),
     ifProduction(new OptimizeJsPlugin({
       sourceMap: false,
     })),
@@ -73,14 +97,7 @@ export default {
     ifProduction(new ExtractTextPlugin({ filename: 'css/styles.css' })),
     ifProduction(new ZopfliPlugin()),
     ifProduction(new BrotliPlugin()),
-    ifDevelopment(new webpack.HotModuleReplacementPlugin()),
-    ifDevelopment(new webpack.NamedModulesPlugin()),
-    new webpack.DefinePlugin({
-      PROD: isProd,
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-    }),
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
     // new Visualizer(),
+    // new BundleAnalyzerPlugin(),
   ]),
 };

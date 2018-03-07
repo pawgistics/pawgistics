@@ -1,12 +1,11 @@
 // @flow
 
 import React from 'react';
-import CSSModules from 'react-css-modules';
 import { connect } from 'react-redux';
 import { Row, Col, Button, Form, ListGroup, ListGroupItem, Table } from 'reactstrap';
 
 import { getUser } from '../api/volunteer';
-import styles from '../styles/pages/userDetail.m.scss';
+import '../styles/pages/userDetail.m.scss';
 // must fix this later.
 
 type Props = {
@@ -126,4 +125,4 @@ class UserDetailPage extends React.Component<Props> {
 
 export default connect(null, dispatch => ({
   getUser: id => dispatch(getUser(id)),
-}))(CSSModules(UserDetailPage, styles));
+}))(UserDetailPage);

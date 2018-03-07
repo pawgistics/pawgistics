@@ -2,13 +2,12 @@
 
 import React from 'react';
 import _ from 'lodash';
-import CSSModules from 'react-css-modules';
 
 import ChevronRight from 'react-icons/lib/io/chevron-right';
 import { Table } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
-import styles from '../styles/components/detail-table.m.scss';
+import '../styles/components/detail-table.m.scss';
 
 type Props = {
   headings: [string],
@@ -66,4 +65,4 @@ const DetailTable = ({
   </Table>
 );
 
-export default CSSModules(DetailTable, styles);
+export default DetailTable;

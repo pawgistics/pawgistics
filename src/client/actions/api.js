@@ -13,7 +13,7 @@ export default function apiCall(method, route, body) {
         method,
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${getState().auth.get('token')}`,
+          Authorization: `Bearer ${getState().auth.token}`,
         },
         body,
       }).then(response =>
