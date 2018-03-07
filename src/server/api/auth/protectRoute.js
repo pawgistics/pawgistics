@@ -1,6 +1,6 @@
 // @flow
 
-import passport from 'passport';
+import passport from './passport.conf';
 
 export default (options: { requireAdmin: boolean } = { requireAdmin: false }): Array => [
   passport.authenticate('jwt', { session: false }),

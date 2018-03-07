@@ -1,8 +1,5 @@
-import User from './user';
-import Litter from './litter';
-
 export default (sequelize, Sequelize) => {
-  const Dog = sequelize.define('dogs', {
+  const Dog = sequelize.define('dog', {
     id: {
       autoIncrement: true,
       primaryKey: true,
@@ -23,33 +20,34 @@ export default (sequelize, Sequelize) => {
     },
     name: {
       type: Sequelize.STRING,
-      // notEmpty: true,
+      notEmpty: true,
       allowNull: false,
     },
     gender: {
       type: Sequelize.ENUM,
       values: ['M', 'F'],
     },
-    litter_id: {
-      type: Sequelize.INTEGER,
-      references: {
-        model: Litter,
-        key: 'id',
-      },
-    },
-    instructor_id: {
-      type: Sequelize.INTEGER,
-      references: {
-        model: User,
-        key: 'id',
-      },
-    },
     uri: {
       type: Sequelize.STRING,
-      // notEmpty: true,
+      notEmpty: true,
       allowNull: true,
     },
+  }, {
+    underscored: true,
   });
+
+  Dog.associate = (models) => {
+    Dog.Litter = models.dog.belongsTo(models.litter, {
+      foreignKey: { allowNull: false },
+      onDelete: 'RESTRICT',
+    });
+    Dog.Instructor = models.dog.belongsTo(models.user, {
+      foreignKey: { allowNull: false },
+      onDelete: 'RESTRICT',
+      as: 'instructor',
+    });
+    Dog.FosterGroup = models.dog.belongsTo(models.foster_group);
+  };
 
   return Dog;
 };

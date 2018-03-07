@@ -964,7 +964,7 @@ autoprefixer@^8.1.0:
     postcss "^6.0.19"
     postcss-value-parser "^3.2.3"
 
-aws-sdk@^2.80.0:
+aws-sdk@^2.205.0:
   version "2.205.0"
   resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.205.0.tgz#1a93730253e2be027a4bd3af9248cbda0573de80"
   dependencies:
@@ -3294,16 +3294,6 @@ duplexify@^3.4.2, duplexify@^3.5.3:
     readable-stream "^2.0.0"
     stream-shift "^1.0.0"
 
-dynamoose@^0.8.6:
-  version "0.8.6"
-  resolved "https://registry.yarnpkg.com/dynamoose/-/dynamoose-0.8.6.tgz#cc260f08d853447fcd9b43be731a82f7530d084b"
-  dependencies:
-    aws-sdk "^2.80.0"
-    debug "^2.6.8"
-    hooks "0.3.2"
-    lodash "^4.17.4"
-    q "^1.5.0"
-
 ecc-jsbn@~0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/ecc-jsbn/-/ecc-jsbn-0.1.1.tgz#0fc73a9ed5f0d53c38193398523ef7e543777505"
@@ -4667,10 +4657,6 @@ homedir-polyfill@^1.0.1:
   resolved "https://registry.yarnpkg.com/homedir-polyfill/-/homedir-polyfill-1.0.1.tgz#4c2bbc8a758998feebf5ed68580f76d46768b4bc"
   dependencies:
     parse-passwd "^1.0.0"
-
-hooks@0.3.2:
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/hooks/-/hooks-0.3.2.tgz#a31f060c2026cea6cf1ca3eb178430e718e1c4a3"
 
 hosted-git-info@^2.1.4:
   version "2.5.0"
@@ -7957,7 +7943,7 @@ punycode@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.0.tgz#5f863edc89b96db09074bad7947bf09056ca4e7d"
 
-q@^1.1.2, q@^1.5.0:
+q@^1.1.2:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
 

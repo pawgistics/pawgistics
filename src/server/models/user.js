@@ -1,7 +1,7 @@
 import argon2 from 'argon2';
 
 export default (sequelize, Sequelize) => {
-  const User = sequelize.define('users', {
+  const User = sequelize.define('user', {
     id: {
       autoIncrement: true,
       primaryKey: true,
@@ -34,12 +34,12 @@ export default (sequelize, Sequelize) => {
       notEmpty: true,
       allowNull: false,
     },
-    fname: {
+    first_name: {
       type: Sequelize.STRING,
       // notEmpty: true,
       allowNull: false,
     },
-    lname: {
+    last_name: {
       type: Sequelize.STRING,
       // notEmpty: true,
       allowNull: false,
@@ -55,6 +55,7 @@ export default (sequelize, Sequelize) => {
       allowNull: true,
     },
   }, {
+    underscored: true,
     hooks: {
       beforeSave: (user) => {
         if (user.changed()) {
@@ -67,6 +68,16 @@ export default (sequelize, Sequelize) => {
       },
     },
   });
+
+  User.associate = (models) => {
+    models.user.belongsTo(models.foster_group);
+    models.user.hasMany(models.dog, {
+      // foreignKey: { allowNull: false },
+      // onDelete: 'RESTRICT',
+      // as: 'dogs',
+      // foreignKey: 'instructor_id',
+    });
+  };
 
   return User;
 };
