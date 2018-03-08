@@ -31,9 +31,45 @@ export default {
       {
         test: /\.jsx?$/,
         loader: 'babel-loader',
-        options: ifDevelopment({
-          plugins: ['react-hot-loader/babel'],
-        }),
+        options: {
+          presets: [
+            [
+              '@babel/preset-env',
+              {
+                modules: false,
+              },
+            ],
+            '@babel/preset-react',
+          ],
+          plugins: removeEmpty([
+            ifDevelopment(['react-hot-loader/babel']),
+            ['@babel/plugin-proposal-class-properties', {
+              loose: false,
+            }],
+            'flow-react-proptypes',
+            '@babel/plugin-proposal-object-rest-spread',
+            ['react-css-modules', {
+              generateScopedName: '[name]-[local]-[hash:base64:6]',
+              filetypes: {
+                '.scss': {
+                  syntax: 'postcss-scss',
+                },
+              },
+            }],
+            'lodash',
+            ['@babel/plugin-transform-runtime', {
+              useESModules: true,
+              useBuiltIns: true,
+            }],
+            ['transform-imports', {
+              reactstrap: {
+                // eslint-disable-next-line no-template-curly-in-string
+                transform: 'reactstrap/lib/${member}',
+                preventFullImport: true,
+              },
+            }],
+          ]),
+        },
         exclude: /node_modules/,
       },
       {
