@@ -11,8 +11,8 @@ import '../styles/components/detail-table.m.scss';
 
 type Props = {
   headings: [string],
-  keys: {},
-  items: [],
+  keys: [string],
+  items: [{}],
   detailRoute: {
     template: (string | number) => string,
     key: string
@@ -40,9 +40,9 @@ const DetailTable = ({
           styleName="row"
           onClick={e => e.currentTarget.lastChild.firstChild.firstChild.click()}
         >
-          <th scope="row" className="col-auto text-nowrap align-middle">{item[keys[headings[0]]]}</th>
-          {_.map(_.drop(headings), (heading, hIndex) => (
-            <td className="col-auto text-nowrap align-middle" key={hIndex}>{item[keys[heading]]}</td>
+          <th scope="row" className="col-auto text-nowrap align-middle">{item[keys[0]]}</th>
+          {_.map(_.drop(keys), (key, kIndex) => (
+            <td className="col-auto text-nowrap align-middle" key={kIndex}>{item[key]}</td>
           ))}
           <td className="col text-nowrap align-middle">
             <div className="d-flex">

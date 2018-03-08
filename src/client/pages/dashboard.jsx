@@ -3,15 +3,13 @@
 import React from 'react';
 import { Switch, Route } from 'react-router';
 
-// import { APP_NAME } from '../../shared/config';
 import Sidebar from '../components/sidebar';
-import AdminRoute from '../components/admin-route';
+import AdminRoute from '../containers/admin-route';
 import HomePage from './home';
 import DogManagementPage from './dogManagement';
 import UserManagementPage from './userManagement';
 import DogDetailPage from './dogDetail';
 import DogsPage from './dogs';
-import AdminPanelPage from './admin-panel';
 import UserDetailPage from './userDetail';
 import AddDogPage from './addDog';
 import UserEditPage from './userEdit';
@@ -22,7 +20,6 @@ import {
   HOME_PAGE_ROUTE,
   DOG_DETAIL_PAGE_ROUTE,
   DOGS_PAGE_ROUTE,
-  ADMIN_PANEL_PAGE_ROUTE,
   DOG_MANAGEMENT_PAGE_ROUTE,
   USER_DETAIL_PAGE_ROUTE,
   USER_MANAGEMENT_PAGE_ROUTE,
@@ -35,7 +32,6 @@ import '../styles/pages/dashboard.m.scss';
 
 const Dashboard = () => (
   <div>
-    {/* <h1>{APP_NAME}</h1> */}
     <Sidebar />
     <div styleName="content">
       <Switch>
@@ -48,7 +44,6 @@ const Dashboard = () => (
         <AdminRoute path={ADD_DOG_PAGE_ROUTE} component={AddDogPage} />
         <AdminRoute path={USER_EDIT_PAGE_ROUTE} component={UserEditPage} />
         <AdminRoute path={DOG_EDIT_PAGE_ROUTE} component={DogEditPage} />
-        <AdminRoute path={ADMIN_PANEL_PAGE_ROUTE} component={AdminPanelPage} />
         <Route component={NotFoundPage} />
       </Switch>
     </div>

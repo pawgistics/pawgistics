@@ -15,7 +15,7 @@ class AddDogPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      chipId: null,
+      chip: null,
       name: null,
       litter: null,
       color: 'red',
@@ -28,7 +28,7 @@ class AddDogPage extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.updateName = this.updateName.bind(this);
-    this.updateChipId = this.updateChipId.bind(this);
+    this.updateChip = this.updateChip.bind(this);
     this.updateLitter = this.updateLitter.bind(this);
     this.updateColor = this.updateColor.bind(this);
     this.updateShape = this.updateShape.bind(this);
@@ -41,8 +41,8 @@ class AddDogPage extends React.Component {
     this.setState({ name: e.target.value });
   }
 
-  updateChipId(e) {
-    this.setState({ chipId: e.target.value });
+  updateChip(e) {
+    this.setState({ chip: e.target.value });
   }
 
   updateLitter(e) {
@@ -130,7 +130,7 @@ class AddDogPage extends React.Component {
               <FormGroup>
                 {/* <Label for="exampleDogID">Dog ID</Label> */}
                 <dt>Dog ID</dt>
-                <Input type="number" name="id" value={this.state.chipId} onChange={this.updateChipId} placeholder="Chip ID" />
+                <Input type="number" name="id" value={this.state.chip} onChange={this.updateChip} placeholder="Chip ID" />
               </FormGroup>
               <FormGroup>
                 {/* <Label for="exampleGender">Gender</Label> */}

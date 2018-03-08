@@ -27,11 +27,20 @@ export default function apiCall(method, route, body) {
           } else if (response.status === 401) {
             // Unauthorized, logout the user
             dispatch(logoutAction());
+            reject(Error('Unauthorized'));
           } else {
+            if (responseData) {
+              // Reject with error message from server
+              reject(Error(responseData.message));
+            } else {
+              // Server returned invalid JSON, reject
+              reject(Error('Invalid response from server.'));
+            }
             // Reject with raw response object
             reject(response);
           }
-        // eslint-disable-next-line no-console
-        });
+        })
+        // Reject with connection error
+        .catch(() => reject(Error('Failed to connect to server.')));
     });
 }

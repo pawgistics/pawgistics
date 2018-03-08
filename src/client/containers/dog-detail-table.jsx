@@ -9,12 +9,12 @@ type Props = { dogs: [{}] }
 
 const DogDetailTable = ({ dogs }: Props) => (
   <DetailTable
-    headings={['Dog Name', 'Dog ID', 'Custody']}
-    keys={{ 'Dog Name': 'name', 'Dog ID': 'chipId', Custody: 'custody' }}
+    headings={['Dog Name', 'Chip ID', 'Custody']}
+    keys={['name', 'chip', 'custody']}
     items={_.map(dogs, dog => _.assign({}, dog, { custody: 'Canine Assistants' }))}
     detailRoute={{
-      template: chipId => `/dogDetail/${chipId}`,
-      key: 'chipId',
+      template: id => `/dogDetail/${id}`,
+      key: 'id',
     }}
   />
 );

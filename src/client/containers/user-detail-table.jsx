@@ -10,8 +10,7 @@ type Props = { users: [{}] }
 const UserDetailTable = ({ users }: Props) => (
   <DetailTable
     headings={['First Name', 'Last Name', 'Email']}
-    // eslint-disable-next-line
-    keys={{ 'First Name': 'fname', 'Last Name': 'lname', 'Email': 'email' }}
+    keys={['first_name', 'last_name', 'email']}
     items={_.map(users, user => _.assign({}, user, { custody: '' }))}
     detailRoute={{
       template: id => `/userDetail/${id}`,

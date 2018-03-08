@@ -18,16 +18,11 @@ class UserDetailPage extends React.Component<Props> {
     super(props);
     this.state = { user: {} };
     this.props.getUser(props.match.params.id)
-      .then((response) => {
-        if (response.success) {
-          this.setState({ user: response.response });
-        } else {
-          // eslint-disable-next-line no-console
-          console.log(response.message);
-        }
-      }).catch(() => {
+      .then((user) => {
+        this.setState({ user });
+      }).catch((err) => {
         // eslint-disable-next-line no-console
-        console.log('Failed to get a resopnse from the server.');
+        console.log(err.message);
       });
   }
 
@@ -42,11 +37,11 @@ class UserDetailPage extends React.Component<Props> {
           <Row>
             <Col xs="3">
               <dt>Profile picture</dt>
-              <img src={this.state.user.uri} alt={this.state.user.fname} className="border rounded" />
+              <img src={this.state.user.uri} alt={this.state.user.first_name} className="border rounded" />
             </Col>
             <Col xs="4">
               <ListGroup>
-                <ListGroupItem className="justify-content-between">Name: {this.state.user.fname} {this.state.user.lname}</ListGroupItem>
+                <ListGroupItem className="justify-content-between">Name: {this.state.user.first_name} {this.state.user.last_name}</ListGroupItem>
                 <ListGroupItem className="justify-content-between">Email: {this.state.user.email} </ListGroupItem>
                 <ListGroupItem className="justify-content-between">Phone #: {this.state.user.phone} </ListGroupItem>
                 <ListGroupItem className="justify-content-between">Member since: 2015 </ListGroupItem>

@@ -5,14 +5,14 @@ import express from 'express';
 import protectRoute from './auth/protectRoute';
 import models from '../models';
 
-const fosterRouter = express.Router();
+const fostersRouter = express.Router();
 const { Dog } = models;
 // const { Foster } = models;
 const { User } = models;
 
-fosterRouter.get('/list', protectRoute(), (req, res) => {
+fostersRouter.get('/list', protectRoute(), (req, res) => {
   const toReturn = {};
-  User.scan('fid').not().null().attributes(['id', 'fname', 'lname', 'uri', 'fid'])
+  User.scan('fid').not().null().attributes(['id', 'first_name', 'last_name', 'uri', 'fid'])
     .exec((err, users) => {
       if (err) {
         console.log(err);
@@ -47,7 +47,7 @@ fosterRouter.get('/list', protectRoute(), (req, res) => {
     });
 });
 
-fosterRouter.get('/dogs/:fid', protectRoute(), (req, res) => {
+fostersRouter.get('/dogs/:fid', protectRoute(), (req, res) => {
   Dog.query('fid').eq(req.params.fid).attributes(['chipId', 'name', 'uri', 'fid'])
     .exec((err, dogs) => {
       if (err) {
@@ -58,8 +58,8 @@ fosterRouter.get('/dogs/:fid', protectRoute(), (req, res) => {
     });
 });
 
-fosterRouter.get('/users/:fid', protectRoute(), (req, res) => {
-  User.query('fid').eq(req.params.fid).attributes(['id', 'fname', 'lname', 'uri', 'fid'])
+fostersRouter.get('/users/:fid', protectRoute(), (req, res) => {
+  User.query('fid').eq(req.params.fid).attributes(['id', 'first_name', 'last_name', 'uri', 'fid'])
     .exec((err, users) => {
       if (err) {
         console.log(err);
@@ -69,9 +69,9 @@ fosterRouter.get('/users/:fid', protectRoute(), (req, res) => {
     });
 });
 
-fosterRouter.get('/:fid', protectRoute(), (req, res) => {
+fostersRouter.get('/:fid', protectRoute(), (req, res) => {
   const toReturn = {};
-  User.query('fid').eq(req.params.fid).attributes(['id', 'fname', 'lname', 'uri', 'fid'])
+  User.query('fid').eq(req.params.fid).attributes(['id', 'first_name', 'last_name', 'uri', 'fid'])
     .exec((err, users) => {
       if (err) {
         console.log(err);
@@ -106,4 +106,4 @@ fosterRouter.get('/:fid', protectRoute(), (req, res) => {
     });
 });
 
-export default fosterRouter;
+export default fostersRouter;

@@ -4,10 +4,10 @@ import express from 'express';
 import protectRoute from './auth/protectRoute';
 import models from '../models';
 
-const litterRouter = express.Router();
+const littersRouter = express.Router();
 const { Dog } = models;
 
-litterRouter.get('/list', protectRoute(), (req, res) => {
+littersRouter.get('/list', protectRoute(), (req, res) => {
   Dog.scan().attributes(['chipId', 'name', 'uri', 'litter']).exec((err, dogs) => {
     if (err) {
       console.log(err);
@@ -24,7 +24,7 @@ litterRouter.get('/list', protectRoute(), (req, res) => {
   });
 });
 
-litterRouter.get('/:litterName', protectRoute(), (req, res) => {
+littersRouter.get('/:litterName', protectRoute(), (req, res) => {
   Dog.query('litter').eq(req.params.litterName).attributes(['chipId', 'name', 'uri', 'litter']).exec((err, dogs) => {
     if (err) {
       console.log(err);
@@ -35,7 +35,7 @@ litterRouter.get('/:litterName', protectRoute(), (req, res) => {
   });
 });
 
-litterRouter.get('/search/:litterName', protectRoute(), (req, res) => {
+littersRouter.get('/search/:litterName', protectRoute(), (req, res) => {
   Dog.scan('litter').contains(req.params.litterName).attributes(['chipId', 'name', 'uri', 'litter']).exec((err, dogs) => {
     if (err) {
       console.log(err);
@@ -52,6 +52,6 @@ litterRouter.get('/search/:litterName', protectRoute(), (req, res) => {
   });
 });
 
-// litterRouter.post('/add/:litterName', )
+// littersRouter.post('/add/:litterName', )
 
-export default litterRouter;
+export default littersRouter;
