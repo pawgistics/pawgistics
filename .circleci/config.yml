@@ -25,7 +25,9 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            sudo apt install gcc python-pip libpython-dev
+            sudo add-apt-repository ppa:jonathonf/gcc-7.2
+            sudo apt-get update
+            sudo apt install gcc-7 python-pip libpython-dev
             sudo pip install awsebcli
             yarn install
 
