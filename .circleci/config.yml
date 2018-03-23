@@ -25,6 +25,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
+            sudo apt install software-properties-common
             sudo add-apt-repository ppa:jonathonf/gcc-7.2
             sudo apt-get update
             sudo apt install gcc-7 python-pip libpython-dev
