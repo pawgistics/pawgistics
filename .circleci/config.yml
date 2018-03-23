@@ -26,7 +26,7 @@ jobs:
           name: Install dependencies
           command: |
             sudo apt install gcc python-pip
-            pip install awsebcli
+            sudo pip install awsebcli
             yarn install
 
       - run:
