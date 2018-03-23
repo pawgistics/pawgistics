@@ -41,8 +41,20 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-deployment:
-  staging:
-    branch: master
-    commands:
-      - eb deploy --process Staging
+  deploy:
+    steps:
+      - run:
+          name: Deploy to Elastic Beanstalk
+          command: eb deploy --process Staging
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
