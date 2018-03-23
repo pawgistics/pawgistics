@@ -27,10 +27,15 @@ jobs:
           - v1-dependencies-
 
       - run:
-          name: Install dependencies and build
+          name: Install dependencies
           command: |
+            pip install awsebcli
+            apt install gcc
             yarn install
-            yarn prod:build
+
+      - run:
+          name: Build project
+          command: yarn prod:build
 
       - save_cache:
           paths:
