@@ -4,10 +4,6 @@
 #
 version: 2
 
-dependencies:
-  pre:
-    - sudo pip install awsebcli
-
 jobs:
   build:
     docker:
@@ -29,7 +25,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apt install gcc python-pip
+            sudo apt install gcc python-pip
             pip install awsebcli
             yarn install
 
