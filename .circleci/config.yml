@@ -42,6 +42,8 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
   deploy:
+    docker:
+      - image: circleci/node:8
     steps:
       - run:
           name: Deploy to Elastic Beanstalk
