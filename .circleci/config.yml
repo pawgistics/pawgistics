@@ -29,8 +29,8 @@ jobs:
       - run:
           name: Install dependencies
           command: |
+            apt install gcc python-pip
             pip install awsebcli
-            apt install gcc
             yarn install
 
       - run:
