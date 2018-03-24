@@ -34,7 +34,9 @@ jobs:
 
       - run:
           name: Build project
-          command: yarn prod:build
+          command: |
+            yarn prod:build
+            cp -R /public/* /dist
 
       - run:
           name: Deploy to Elastic Beanstalk
