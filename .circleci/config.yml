@@ -18,9 +18,9 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-build-deps-{{ checksum "package.json" }}
           # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+          - v1-build-deps-
 
       - run:
           name: Install dependencies
@@ -32,11 +32,32 @@ jobs:
             sudo pip install awsebcli
             yarn install
 
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-build-deps-{{ checksum "package.json" }}
+
       - run:
           name: Build project
           command: |
             yarn prod:build
             cp -R public/* dist
+
+      - restore_cache:
+          keys:
+          - v1-prod-deps-{{ checksum "package.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-prod-deps-
+
+      - run:
+          name: Prune bundle
+          command: |
+            yarn install --prod
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-prod-deps-{{ checksum "package.json" }}
 
       - run:
           name: Deploy to Elastic Beanstalk
@@ -44,8 +65,3 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
             eb deploy --process Staging
             fi
-
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
