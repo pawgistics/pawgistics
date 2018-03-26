@@ -7,5 +7,20 @@
   "s3Config": {
     "BUCKET_NAME": "Bucket Name"
   },
+  "mySQLConfig": {
+    "username": "root",
+    "password": null,
+    "database": "pawgistics",
+    "host": "localhost",
+    "dialect": "mysql",
+    "operatorsAliases": false,
+    "logging": false
+  },
+  "hashidsSalts": {
+    "dogs": "XoGyq0UfxwVTS1HS",
+    "users": "qW0BxcKLCc16dzPx",
+    "litters": "vXLISOgsTWmlYNdz",
+    "fosters": "uucQdELKbad7I2qU"
+  },
   "jwtSecret": "AdmCsgpUvGBDaMGkS02a3yqfN12aHIVrH3Kw7XjKyeqXt8sqnNlU2cIEhi3djVkc"
 }

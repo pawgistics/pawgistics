@@ -11,7 +11,7 @@ import '../styles/pages/dogDetail.m.scss';
 type Props = {
   // data: Object,
   match: Object,
-  getDog(chipId): Promise,
+  getDog(id): Promise,
 }
 
 class DogDetailPage extends React.Component<Props> {
@@ -20,16 +20,12 @@ class DogDetailPage extends React.Component<Props> {
     this.state = { dog: {} };
     this.state.id = props.match.params.id;
     this.props.getDog(this.state.id)
-      .then((response) => {
-        if (response.success) {
-          this.setState({ dog: response.response });
-        } else {
-          // eslint-disable-next-line no-console
-          console.log(response.message);
-        }
-      }).catch(() => {
+      .then((dog) => {
+        this.setState({ dog });
+      })
+      .catch((err) => {
         // eslint-disable-next-line no-console
-        console.log('Failed to get a resopnse from the server.');
+        console.log(err.message);
       });
   }
 
@@ -48,7 +44,7 @@ class DogDetailPage extends React.Component<Props> {
             <Col xs="4">
               <ListGroup>
                 <ListGroupItem className="justify-content-between">Name: {this.state.dog.name} </ListGroupItem>
-                <ListGroupItem className="justify-content-between">ID: {this.state.dog.chipId} </ListGroupItem>
+                <ListGroupItem className="justify-content-between">Chip ID: {this.state.dog.chip} </ListGroupItem>
                 <ListGroupItem className="justify-content-between">Gender: {this.state.dog.gender} </ListGroupItem>
                 <ListGroupItem className="justify-content-between">DoB: {this.state.dog.dob} </ListGroupItem>
               </ListGroup>
@@ -63,7 +59,7 @@ class DogDetailPage extends React.Component<Props> {
                       <ListGroupItem className="justify-content-between">Status: Training </ListGroupItem>
                       {/* <Link
                         to={{
-                          pathname: `/dogEdit/${this.state.dog.chipId}`,
+                          pathname: `/dogEdit/${this.state.dog.chip}`,
                         }}
                       > */}
                       <Button>Edit</Button>{' '}

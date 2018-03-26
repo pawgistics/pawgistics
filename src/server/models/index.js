@@ -2,33 +2,50 @@
 
 import fs from 'fs';
 import path from 'path';
-import dynamoose from 'dynamoose';
-// import User from './user';
-// Should I read the environment variable or is the import below best/acceptable practice?
+import Sequelize from 'sequelize';
+
+import populateDev from '../util/populateDev';
 import { isProd } from '../util/prod';
-// import populateDev from './sampleData';
-// const env = process.env.NODE_ENV || 'development';
-const { awsConfig } = require('../config.json');
 
-dynamoose.AWS.config.update({
-  accessKeyId: awsConfig.AWS_ACCESS_KEY_ID,
-  secretAccessKey: awsConfig.AWS_SECRET_ACCESS_KEY,
-  region: awsConfig.AWS_REGION,
-});
+import { mySQLConfig } from '../config.json';
 
-if (!isProd) {
-  dynamoose.local();
-}
+const sequelize = new Sequelize(
+  mySQLConfig.database,
+  mySQLConfig.username,
+  mySQLConfig.password,
+  mySQLConfig,
+);
 
 const models = {};
 
 fs.readdirSync(__dirname)
   .filter(file => (file.indexOf('.') !== 0) && (file !== 'index.js'))
   .forEach((file) => {
-    // eslint-disable-next-line
-    const model = require(path.join(__dirname, file)).default;
-    // eslint-disable-next-line
-    models[model.$__.name] = model;
+    const model = sequelize.import(path.join(__dirname, file));
+    models[model.name] = model;
   });
+
+Object.keys(models).forEach((modelName) => {
+  if ('associate' in models[modelName]) {
+    models[modelName].associate(models);
+  }
+});
+
+models.sequelize = sequelize;
+models.Sequelize = Sequelize;
+
+models.sequelize.sync()
+  // eslint-disable-next-line consistent-return
+  .then(() => {
+    // eslint-disable-next-line no-console
+    console.log('Sync\'d database.');
+    if (!isProd) {
+      populateDev(models);
+      return null;
+    }
+  })
+  // eslint-disable-next-line no-console
+  .catch(err => console.log(err));
+
 
 export default models;

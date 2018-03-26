@@ -18,16 +18,11 @@ class UserDetailPage extends React.Component<Props> {
     super(props);
     this.state = { user: {} };
     this.props.getUser(props.match.params.id)
-      .then((response) => {
-        if (response.success) {
-          this.setState({ user: response.response });
-        } else {
-          // eslint-disable-next-line no-console
-          console.log(response.message);
-        }
-      }).catch(() => {
+      .then((user) => {
+        this.setState({ user });
+      }).catch((err) => {
         // eslint-disable-next-line no-console
-        console.log('Failed to get a resopnse from the server.');
+        console.log(err.message);
       });
   }
 
@@ -42,24 +37,23 @@ class UserDetailPage extends React.Component<Props> {
           <Row>
             <Col xs="3">
               <dt>Profile picture</dt>
-              <img src={this.state.user.uri} alt={this.state.user.fname} className="border rounded" />
+              <img src={this.state.user.uri} alt={this.state.user.first_name} className="border rounded" />
             </Col>
             <Col xs="4">
               <ListGroup>
-                <ListGroupItem className="justify-content-between">Name: {this.state.user.fname} {this.state.user.lname}</ListGroupItem>
+                <ListGroupItem className="justify-content-between">Name: {this.state.user.first_name} {this.state.user.last_name}</ListGroupItem>
                 <ListGroupItem className="justify-content-between">Email: {this.state.user.email} </ListGroupItem>
                 <ListGroupItem className="justify-content-between">Phone #: {this.state.user.phone} </ListGroupItem>
-                {/* <ListGroupItem className="justify-content-between">Gender: Female </ListGroupItem> */}
                 <ListGroupItem className="justify-content-between">Member since: 2015 </ListGroupItem>
               </ListGroup>
             </Col>
             <Col xs="4">
               <ListGroup>
-                {/* <ListGroupItem className="justify-content-between">DoB<Badge pill>02/14/1860</Badge></ListGroupItem> */}
                 <ListGroupItem className="justify-content-between">User Type: Volunteer </ListGroupItem>
-                {/* <ListGroupItem className="justify-content-between">Years of experience: <Badge pill> 4 </Badge></ListGroupItem> */}
-                {/* <ListGroupItem className="justify-content-between">Address: {this.state.user.address.line1} {this.state.user.address.line2}, {this.state.user.address.city}, {this.state.user.address.state} {this.state.user.address.zip} </ListGroupItem> */}
-                {/* <ListGroupItem className="justify-content-between">Emergency Contact<Badge pill> 404-111-1111 </Badge></ListGroupItem> */}
+                {/* <ListGroupItem className="justify-content-between">Address:
+                  {this.state.user.address.line1}
+                  {this.state.user.address.line2}, {this.state.user.address.city},
+                  {this.state.user.address.state} {this.state.user.address.zip} </ListGroupItem> */}
               </ListGroup>
             </Col>
           </Row>

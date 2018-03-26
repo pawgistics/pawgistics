@@ -1,60 +1,106 @@
-import dynamoose from 'dynamoose';
+import argon2 from 'argon2';
+import { hashidsUsers, hashidsFosters } from '../util/hashids';
 
-const UserSchema = new dynamoose.Schema({
-  id: {
-    type: String,
-    hashKey: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    trim: true,
-    set: (s => s.toLowerCase()),
-    index: {
-      global: true,
-      throughput: 1,
+export default (sequelize, Sequelize) => {
+  const User = sequelize.define('user', {
+    id: {
+      autoIncrement: true,
+      primaryKey: true,
+      type: Sequelize.INTEGER,
+      allowNull: false,
     },
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  admin: {
-    type: Boolean,
-    required: true,
-    default: false,
-  },
-  fname: {
-    type: String,
-    required: true,
-  },
-  lname: {
-    type: String,
-    required: true,
-  },
-  phone: {
-    type: String,
-    required: true,
-    validate: RegExp('[0-9]{3}-[0-9]{3}-[0-9]{4}'),
-  },
-  address: {
-    type: Object,
-    required: true,
-  },
-  uri: {
-    type: String,
-  },
-  fid: {
-    type: String,
-    index: {
-      global: true,
+    email: {
+      type: Sequelize.STRING,
+      notEmpty: true,
+      allowNull: false,
+      unique: true,
+      validate: {
+        isEmail: true,
+      },
     },
-  },
-}, {
-  useNativeBooleans: true,
-  useDocumentTypes: true,
-});
+    password: {
+      type: Sequelize.STRING,
+      notEmpty: true,
+      allowNull: false,
+    },
+    admin: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
+      notEmpty: true,
+      allowNull: false,
+    },
+    active: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: true,
+      notEmpty: true,
+      allowNull: false,
+    },
+    first_name: {
+      type: Sequelize.STRING,
+      // notEmpty: true,
+      allowNull: false,
+    },
+    last_name: {
+      type: Sequelize.STRING,
+      // notEmpty: true,
+      allowNull: false,
+    },
+    phone_number: {
+      type: Sequelize.STRING,
+      // notEmpty: true,
+      allowNull: false,
+    },
+    uri: {
+      type: Sequelize.STRING,
+      // notEmpty: true,
+      allowNull: true,
+    },
+  }, {
+    underscored: true,
+    hooks: {
+      beforeSave: (user) => {
+        if (user.changed('password')) {
+          return argon2.hash(user.password, { type: argon2.argon2id })
+            // eslint-disable-next-line no-param-reassign
+            .then((hash) => { user.password = hash; });
+        }
+        // eslint-disable-next-line compat/compat
+        return Promise.resolve();
+      },
+    },
+    getterMethods: {
+      hashid() { return hashidsUsers.encode(this.getDataValue('id')); },
+    },
+    defaultScope: {
+      attributes: {
+        exclude: ['password'],
+        include: ['foster_group_id'],
+      },
+    },
+    scopes: {
+      login: {
+        attributes: ['id', 'password', 'admin'],
+      },
+    },
+  });
 
-const User = dynamoose.model('User', UserSchema);
+  User.associate = (models) => {
+    models.user.belongsTo(models.foster_group);
+    models.user.hasMany(models.dog, {
+      foreignKey: 'instructor_id',
+    });
+  };
 
-export default User;
+  User.findByHashid = hashid => User.findById(hashidsUsers.decode(hashid)[0]);
+
+  User.prototype.toJSON = function toJSON() {
+    const user = this.dataValues;
+
+    if (user.id) user.id = hashidsUsers.encode(user.id);
+    if (user.foster_group_id) user.foster_group_id = hashidsFosters.encode(user.foster_group_id);
+
+    return user;
+  };
+
+  return User;
+};

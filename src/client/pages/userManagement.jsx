@@ -18,17 +18,12 @@ class UserManagementPage extends React.Component<Props> {
     super(props);
     this.state = { users: [] };
     this.props.getUsers()
-      .then((response) => {
-        if (response.success) {
-          this.setState({ users: response.response });
-        } else {
-          // eslint-disable-next-line no-console
-          console.log(response.message);
-        }
+      .then((users) => {
+        this.setState({ users });
       })
-      .catch(() => {
+      .catch((err) => {
         // eslint-disable-next-line no-console
-        console.log('Failed to get response from server.');
+        console.log(err.message);
       });
   }
 

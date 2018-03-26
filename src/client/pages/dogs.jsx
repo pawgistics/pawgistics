@@ -16,17 +16,12 @@ class DogsPage extends React.Component<Props> {
     super(props);
     this.state = { dogs: [] };
     this.props.getDogs()
-      .then((response) => {
-        if (response.success) {
-          this.setState({ dogs: response.response });
-        } else {
-          // eslint-disable-next-line no-console
-          console.log(response.message);
-        }
+      .then((dogs) => {
+        this.setState({ dogs });
       })
-      .catch(() => {
+      .catch((err) => {
         // eslint-disable-next-line no-console
-        console.log('Failed to get response from server.');
+        console.log(err.message);
       });
   }
 

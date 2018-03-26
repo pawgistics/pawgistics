@@ -5,45 +5,59 @@ import protectRoute from './auth/protectRoute';
 import models from '../models';
 // import createUser from '../util/user';
 
-const { User } = models;
-const userRouter = express.Router();
+const User = models.user;
+const { Op } = models.Sequelize;
 
-userRouter.get('/', protectRoute(), (req, res) => {
-  User.scan().exec((err, users) => {
-    if (err) {
-      console.log(err);
-      return res.status(500).json({ success: false, message: 'An error occurred.' });
-    }
-    return res.status(200).json({ success: true, response: users });
+const usersRouter = express.Router();
+
+usersRouter.route('/')
+  .get(protectRoute(), (req, res) => {
+    User.all()
+      .then(users => res.status(200).json(users))
+      .catch(() => res.status(500).json({ message: 'An error occurred.' }));
+  })
+  .post(protectRoute({ requireAdmin: true }), (req, res) => {
+    User.create(req.body, {
+      fields: [
+        'email',
+        'password',
+        'admin',
+        'first_name',
+        'last_name',
+        'phone_number',
+      ],
+    }).then(() => {
+      res.status(201).json({ success: true, message: 'Successfully created new user.' });
+    }).catch((err) => {
+      // TODO: Catch actual errors
+      res.status(400).json({ success: false, message: err });
+    });
   });
+
+usersRouter.get('/:id', protectRoute(), (req, res) => {
+  User.findByHashid(req.params.id)
+    .then(user => res.status(200).json(user))
+    .catch(() => res.status(500).json({ message: 'An error occurred.' }));
 });
 
-userRouter.get('/:id', protectRoute(), (req, res) => {
-  User.query('id').eq(req.params.id).exec((err, user) => {
-    if (err) {
-      console.log(err);
-      return res.status(500).json({ success: false, message: 'An error occurred.' });
-    }
-    return res.status(200).json({ success: true, response: user[0] });
-  });
+usersRouter.get('/search/name/:name', protectRoute(), (req, res) => {
+  User.findAll({
+    where: {
+      [Op.or]: [
+        {
+          first_name: {
+            [Op.like]: `%${req.params.name}%`,
+          },
+        },
+        {
+          last_name: {
+            [Op.like]: `%${req.params.name}%`,
+          },
+        },
+      ],
+    },
+  }).then(users => res.status(200).json(users))
+    .catch(() => res.status(500).json({ message: 'An error occurred.' }));
 });
 
-userRouter.get('/search/fname/:name', protectRoute(), (req, res) => {
-  User.scan('fname').contains(req.params.name).or().exec((err, users) => {
-    if (err) {
-      return res.status(500).json({ success: false, message: 'An error occurred.' });
-    }
-    return res.status(200).json({ success: true, response: users });
-  });
-});
-
-userRouter.get('/search/lname/:name', protectRoute(), (req, res) => {
-  User.scan('lname').contains(req.params.name).or().exec((err, users) => {
-    if (err) {
-      return res.status(500).json({ success: false, message: 'An error occurred.' });
-    }
-    return res.status(200).json({ success: true, response: users });
-  });
-});
-
-export default userRouter;
+export default usersRouter;

@@ -1,15 +1,28 @@
-import dynamoose from 'dynamoose';
+export default (sequelize, Sequelize) => {
+  const Litter = sequelize.define('litter', {
+    id: {
+      autoIncrement: true,
+      primaryKey: true,
+      type: Sequelize.INTEGER,
+      allowNull: false,
+    },
+    name: {
+      type: Sequelize.STRING,
+      notEmpty: true,
+      unique: true,
+      allowNull: false,
+    },
+  }, {
+    underscored: true,
+    tableName: 'litters',
+  });
 
-const LitterSchema = new dynamoose.Schema({
-  name: {
-    type: String,
-    hashKey: true,
-  },
-}, {
-  useNativeBooleans: true,
-  useDocumentTypes: true,
-});
+  Litter.associate = (models) => {
+    Litter.Dog = models.litter.hasMany(models.dog, {
+      // foreignKey: { allowNull: false },
+      // onDelete: 'RESTRICT',
+    });
+  };
 
-const Litter = dynamoose.model('Litter', LitterSchema);
-
-export default Litter;
+  return Litter;
+};
