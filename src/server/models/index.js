@@ -7,7 +7,7 @@ import Sequelize from 'sequelize';
 import populateDev from '../util/populateDev';
 import { isProd } from '../../shared/util';
 
-const { mySQLConfig } = require('../config.json');
+import { mySQLConfig } from '../config.json';
 
 const sequelize = new Sequelize(
   mySQLConfig.database,

@@ -37,14 +37,6 @@ export default (models) => {
         first_name: 'John',
         last_name: 'Doe',
         phone_number: '123-456-7890',
-        address: {
-          line1: '123 FooBar Rd',
-          line2: 'Suite 34',
-          city: 'Atlanta',
-          state: 'GA',
-          zip: '30327',
-        },
-        uri: 's3://canineassistants/assets/profilepics/*',
         foster_group: null,
       },
       {
@@ -54,14 +46,6 @@ export default (models) => {
         first_name: 'Jane',
         last_name: 'Doe',
         phone_number: '123-456-7890',
-        address: {
-          line1: '123 FooBar Rd',
-          line2: 'Suite 34',
-          city: 'Atlanta',
-          state: 'GA',
-          zip: '30327',
-        },
-        uri: 's3://canineassistants/assets/profilepics/*',
         foster_group: fosterGroups[1],
       },
     ].map(user => User.findOrCreate({
@@ -74,8 +58,6 @@ export default (models) => {
         first_name: user.first_name,
         last_name: user.last_name,
         phone_number: user.phone_number,
-        address: user.address,
-        uri: user.uri,
         foster_group_id: user.foster_group ? user.foster_group.id : null,
       },
     })))).reduce((map, user) => {

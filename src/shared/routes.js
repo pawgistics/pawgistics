@@ -11,6 +11,5 @@ export const USER_DETAIL_PAGE_ROUTE = '/userDetail/:id';
 export const ADD_DOG_PAGE_ROUTE = '/addDog';
 export const DOG_EDIT_PAGE_ROUTE = '/dogEdit/:id';
 
-export const helloEndpointRoute = (num: ?number) => `/ajax/hello/${num || ':num'}`;
 export const apiRegisterRoute = '/api/auth/register';
 export const apiLoginRoute = '/api/auth/login';

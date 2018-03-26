@@ -5,11 +5,11 @@ import argon2 from 'argon2';
 
 import { ExtractJwt, Strategy as JwtStrategy } from 'passport-jwt';
 import { Strategy as LocalStrategy } from 'passport-local';
+import { jwtSecret } from '../../config.json';
+
 import models from '../../models';
 
 const User = models.user;
-
-const { jwtSecret } = require('../../config.json');
 
 passport.use(new JwtStrategy({
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -22,7 +22,7 @@ passport.use(new LocalStrategy({
   usernameField: 'email',
   session: false,
 }, (email, password, done) => {
-  User.findOne({ where: { email } }).then((user) => {
+  User.scope('login').findOne({ where: { email } }).then((user) => {
     if (user) {
       return argon2.verify(user.password, password).then((match) => {
         if (match) {

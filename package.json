@@ -11,11 +11,11 @@
     "start": "yarn dev:start",
     "dev:start": "cross-env NODE_ENV=development nodemon -e js,jsx --ignore build --ignore dist --exec babel-node src/server",
     "dev:wds": "cross-env NODE_ENV=development webpack-dev-server --hot --mode development --progress",
-    "prod:build": "rimraf build dist && babel src/server -d build/server --copy-files --ignore .test.js,.example.json && babel src/shared -d build/shared --copy-files --ignore .test.js,.example.json && cross-env NODE_ENV=production webpack --mode production --progress",
+    "prod:build": "rimraf build dist && babel src/server -d build/server --copy-files --ignore .example.json && babel src/shared -d build/shared --copy-files --ignore .example.json && cross-env NODE_ENV=production webpack --mode production --progress",
     "prod:start": "cross-env NODE_ENV=production pm2 start build/server && pm2 logs",
     "prod:stop": "pm2 delete server",
     "lint": "eslint src webpack.config.babel.js --ext .js,.jsx",
-    "test": "yarn lint && flow && jest --coverage",
+    "test": "yarn lint && flow",
     "precommit": "yarn test",
     "prepush": "yarn test && yarn prod:build"
   },
@@ -34,7 +34,6 @@
     "autoprefixer": "^8.1.0",
     "babel-core": "^7.0.0-0",
     "babel-eslint": "^8.2.1",
-    "babel-jest": "^22.4.1",
     "babel-loader": "8.0.0-beta.2",
     "babel-minify-webpack-plugin": "^0.3.0",
     "babel-plugin-flow-react-proptypes": "^19.1.0",
@@ -54,9 +53,9 @@
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "fetch-mock": "^6.0.0-beta.7",
     "flow-bin": "^0.66.0",
+    "hashids": "^1.1.4",
     "husky": "^0.14.3",
     "isomorphic-fetch": "^2.2.1",
-    "jest": "^22.4.2",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.5",
     "lodash-webpack-plugin": "^0.11.4",
@@ -109,7 +108,6 @@
     "passport-jwt": "^3.0.1",
     "passport-local": "^1.0.0",
     "pm2": "^2.9.1",
-    "sequelize": "^4.33.4",
-    "shortid": "^2.2.8"
+    "sequelize": "^4.33.4"
   }
 }

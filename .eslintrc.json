@@ -17,8 +17,7 @@
     }]
   },
   "env": {
-    "browser": true,
-    "jest": true
+    "browser": true
   },
   "settings": {
     "polyfills": ["fetch"]

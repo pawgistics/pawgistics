@@ -14,6 +14,7 @@ export default (sequelize, Sequelize) => {
     },
   }, {
     underscored: true,
+    tableName: 'litters',
   });
 
   Litter.associate = (models) => {

@@ -1,4 +1,5 @@
 import argon2 from 'argon2';
+import { hashidsUsers, hashidsFosters } from '../util/hashids';
 
 export default (sequelize, Sequelize) => {
   const User = sequelize.define('user', {
@@ -58,7 +59,7 @@ export default (sequelize, Sequelize) => {
     underscored: true,
     hooks: {
       beforeSave: (user) => {
-        if (user.changed()) {
+        if (user.changed('password')) {
           return argon2.hash(user.password, { type: argon2.argon2id })
             // eslint-disable-next-line no-param-reassign
             .then((hash) => { user.password = hash; });
@@ -67,16 +68,38 @@ export default (sequelize, Sequelize) => {
         return Promise.resolve();
       },
     },
+    getterMethods: {
+      hashid() { return hashidsUsers.encode(this.getDataValue('id')); },
+    },
+    defaultScope: {
+      attributes: {
+        exclude: ['password'],
+        include: ['foster_group_id'],
+      },
+    },
+    scopes: {
+      login: {
+        attributes: ['id', 'password', 'admin'],
+      },
+    },
   });
 
   User.associate = (models) => {
     models.user.belongsTo(models.foster_group);
     models.user.hasMany(models.dog, {
-      // foreignKey: { allowNull: false },
-      // onDelete: 'RESTRICT',
-      // as: 'dogs',
-      // foreignKey: 'instructor_id',
+      foreignKey: 'instructor_id',
     });
+  };
+
+  User.findByHashid = hashid => User.findById(hashidsUsers.decode(hashid)[0]);
+
+  User.prototype.toJSON = function toJSON() {
+    const user = this.dataValues;
+
+    if (user.id) user.id = hashidsUsers.encode(user.id);
+    if (user.foster_group_id) user.foster_group_id = hashidsFosters.encode(user.foster_group_id);
+
+    return user;
   };
 
   return User;

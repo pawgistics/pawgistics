@@ -15,10 +15,27 @@ usersRouter.route('/')
     User.all()
       .then(users => res.status(200).json(users))
       .catch(() => res.status(500).json({ message: 'An error occurred.' }));
+  })
+  .post(protectRoute({ requireAdmin: true }), (req, res) => {
+    User.create(req.body, {
+      fields: [
+        'email',
+        'password',
+        'admin',
+        'first_name',
+        'last_name',
+        'phone_number',
+      ],
+    }).then(() => {
+      res.status(201).json({ success: true, message: 'Successfully created new user.' });
+    }).catch((err) => {
+      // TODO: Catch actual errors
+      res.status(400).json({ success: false, message: err });
+    });
   });
 
 usersRouter.get('/:id', protectRoute(), (req, res) => {
-  User.findOne({ where: { id: req.params.id } })
+  User.findByHashid(req.params.id)
     .then(user => res.status(200).json(user))
     .catch(() => res.status(500).json({ message: 'An error occurred.' }));
 });

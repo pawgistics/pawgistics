@@ -5,32 +5,9 @@
 import express from 'express';
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
-
-import protectRoute from './auth/protectRoute';
-import { createUser } from '../util/user';
-
-const { jwtSecret } = require('../config.json');
+import { jwtSecret } from '../config.json';
 
 const authRouter = express.Router();
-
-// Register new users
-authRouter.post('/register', protectRoute({ requireAdmin: true }), (req, res) => {
-  createUser({
-    email: req.body.email,
-    password: req.body.password,
-    admin: req.body.admin,
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
-    phone: req.body.phone,
-    address: req.body.address,
-    uri: req.body.profile_picture,
-  }).then(() => {
-    res.status(201).json({ success: true, message: 'Successfully created new user.' });
-  }).catch(() => {
-    // TODO: Catch actual errors
-    res.status(400).json({ success: false, message: 'Email already in use.' });
-  });
-});
 
 // Authenticate the user and get a JSON Web Token to include in the header of future requests.
 authRouter.post('/login', (req, res) => {
@@ -40,6 +17,8 @@ authRouter.post('/login', (req, res) => {
       return res.status(500).json({ success: false, message: 'An error occurred.' });
     }
     if (user) {
+      console.log(user.id);
+      console.log(user.admin);
       const token = jwt.sign({ id: user.id, admin: user.admin }, jwtSecret, {
         expiresIn: 10800, // in seconds
       });
