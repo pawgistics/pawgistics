@@ -12,8 +12,7 @@
     "dev:start": "cross-env NODE_ENV=development nodemon -e js,jsx --ignore build --ignore dist --exec babel-node src/server",
     "dev:wds": "cross-env NODE_ENV=development webpack-dev-server --hot --mode development --progress",
     "prod:build": "rimraf build dist && babel src/server -d build/server --copy-files --ignore .test.js,.example.json && babel src/shared -d build/shared --copy-files --ignore .test.js,.example.json && cross-env NODE_ENV=production webpack --mode production --progress",
-    "prod:start": "cross-env NODE_ENV=production pm2 start build/server && pm2 logs",
-    "prod:stop": "pm2 delete server",
+    "prod:start": "cross-env NODE_ENV=production node build/server",
     "lint": "eslint src webpack.config.babel.js --ext .js,.jsx",
     "test": "yarn lint && flow && jest --coverage",
     "precommit": "yarn test",
@@ -43,6 +42,8 @@
     "babel-plugin-transform-imports": "^1.5.0",
     "bootstrap": "^4.0.0",
     "brotli-webpack-plugin": "^0.5.0",
+    "compression": "^1.7.2",
+    "cross-env": "^5.1.4",
     "css-loader": "^0.28.9",
     "eslint": "^4.15.0",
     "eslint-config-airbnb": "^16.1.0",
@@ -51,9 +52,11 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.4.0",
+    "express-static-gzip": "^0.3.2",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "fetch-mock": "^6.0.0-beta.7",
     "flow-bin": "^0.66.0",
+    "html-webpack-plugin": "^3.1.0",
     "husky": "^0.14.3",
     "isomorphic-fetch": "^2.2.1",
     "jest": "^22.4.2",
@@ -93,21 +96,17 @@
     "webpack-config-utils": "^2.3.0",
     "webpack-dev-server": "^3.1.0",
     "webpack-visualizer-plugin": "^0.1.11",
-    "zopfli-webpack-plugin": "^0.1.0"
+    "zopfli-webpack-plugin": "file:lib/zopfli-webpack-plugin.tgz"
   },
   "dependencies": {
     "argon2": "^0.17.0",
     "body-parser": "^1.18.2",
-    "compression": "^1.7.1",
-    "cross-env": "^5.1.3",
     "dynamoose": "^0.8.6",
     "express": "^4.16.2",
-    "express-static-gzip": "^0.3.2",
     "jsonwebtoken": "^8.1.0",
     "passport": "^0.4.0",
     "passport-jwt": "^3.0.1",
     "passport-local": "^1.0.0",
-    "pm2": "^2.9.1",
     "shortid": "^2.2.8"
   }
 }

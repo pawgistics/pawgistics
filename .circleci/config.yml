@@ -45,7 +45,7 @@ jobs:
           - v1-prod-deps-
 
       - run:
-          name: Prune bundle
+          name: Prune bundle deps
           command: |
             yarn install --prod
 

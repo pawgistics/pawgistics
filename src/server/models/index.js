@@ -5,7 +5,7 @@ import path from 'path';
 import dynamoose from 'dynamoose';
 // import User from './user';
 // Should I read the environment variable or is the import below best/acceptable practice?
-import { isProd } from '../../shared/util';
+import { isProd } from '../util/prod';
 // import populateDev from './sampleData';
 // const env = process.env.NODE_ENV || 'development';
 const { awsConfig } = require('../config.json');

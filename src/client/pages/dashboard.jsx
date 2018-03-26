@@ -3,7 +3,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router';
 
-// import { APP_NAME } from '../../shared/config';
 import Sidebar from '../components/sidebar';
 import AdminRoute from '../components/admin-route';
 import HomePage from './home';
@@ -35,7 +34,6 @@ import '../styles/pages/dashboard.m.scss';
 
 const Dashboard = () => (
   <div>
-    {/* <h1>{APP_NAME}</h1> */}
     <Sidebar />
     <div styleName="content">
       <Switch>

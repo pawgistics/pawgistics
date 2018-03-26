@@ -4,6 +4,7 @@ import path from 'path';
 import { getIfUtils, removeEmpty } from 'webpack-config-utils';
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 import MinifyPlugin from 'babel-minify-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 import LodashModuleReplacementPlugin from 'lodash-webpack-plugin';
 import OptimizeJsPlugin from 'optimize-js-plugin';
 import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
@@ -13,8 +14,6 @@ import BrotliPlugin from 'brotli-webpack-plugin';
 // import Visualizer from 'webpack-visualizer-plugin';
 // import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
-import { WDS_PORT } from './src/shared/config';
-
 const { ifProduction, ifDevelopment } = getIfUtils(process.env.NODE_ENV);
 
 export default {
@@ -22,9 +21,9 @@ export default {
     './src/client',
   ]),
   output: {
-    filename: 'js/bundle.js',
+    filename: 'js/bundle.[chunkhash].js',
     path: path.resolve(__dirname, 'dist'),
-    publicPath: ifProduction('/static/', `http://localhost:${WDS_PORT}/dist/`),
+    publicPath: ifProduction('/static/', 'http://localhost:7000/dist/'),
   },
   module: {
     rules: [
@@ -99,7 +98,7 @@ export default {
     extensions: ['.js', '.jsx'],
   },
   devServer: {
-    port: WDS_PORT,
+    port: 7000,
     hot: true,
     headers: {
       'Access-Control-Allow-Origin': '*',
@@ -125,12 +124,19 @@ export default {
     ],
   },
   plugins: removeEmpty([
+    ifProduction(new HtmlWebpackPlugin({
+      template: 'src/server/index.tpl.html',
+      minify: {
+        collapseWhitespace: true,
+        removeScriptTypeAttributes: true,
+      },
+    })),
     ifProduction(new LodashModuleReplacementPlugin()),
     ifProduction(new OptimizeJsPlugin({
       sourceMap: false,
     })),
     ifProduction(new OptimizeCssAssetsPlugin()),
-    ifProduction(new ExtractTextPlugin({ filename: 'css/styles.css' })),
+    ifProduction(new ExtractTextPlugin({ filename: 'css/styles.[contenthash:hex:20].css' })),
     ifProduction(new ZopfliPlugin()),
     ifProduction(new BrotliPlugin()),
     // new Visualizer(),

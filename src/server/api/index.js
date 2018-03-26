@@ -15,7 +15,7 @@ import dogsRouter from './dogs.api';
 import userRouter from './users.api';
 
 import populateDev from '../util/populateDev';
-import { isProd } from '../../shared/util';
+import { isProd } from '../util/prod';
 
 if (!isProd) {
   populateDev();

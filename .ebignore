@@ -1,4 +1,14 @@
-/src/
+/*.log
+/.git/
 /.circleci/
-/.elasticbeanstalk/
+/lib/
 /public/
+/src/
+/.babelrc
+/.eslintrc.json
+/.flowconfig
+/.gitignore
+/package.json
+/postcss.config.js
+/webpack.config.babel.js
+/yarn.lock

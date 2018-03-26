@@ -9,13 +9,12 @@ import viewportUnitsBuggyfill from 'viewport-units-buggyfill';
 
 import App from './app';
 import { store, persistor } from './store';
-import { APP_CONTAINER_SELECTOR } from '../shared/config';
 
 import './styles/global/styles.scss';
 
 viewportUnitsBuggyfill.init();
 
-const rootEl: Element = (document.querySelector(APP_CONTAINER_SELECTOR): any);
+const rootEl: Element = (document.querySelector('.app'): any);
 
 render(
   (
