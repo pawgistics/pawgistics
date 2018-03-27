@@ -24,7 +24,7 @@ export default {
     './src/client',
   ]),
   output: {
-    filename: 'js/bundle.[chunkhash].js',
+    filename: ifProduction('js/bundle.[chunkhash].js', 'js/bundle.js'),
     path: path.resolve(__dirname, 'dist'),
     publicPath: ifProduction('/static/', 'http://localhost:7000/dist/'),
   },
