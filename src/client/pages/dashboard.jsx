@@ -9,6 +9,7 @@ import HomePage from './home';
 import DogManagementPage from './dogManagement';
 import UserManagementPage from './userManagement';
 import DogDetailPage from './dogDetail';
+// import MyProfilePage from './myProfile';
 import DogsPage from './dogs';
 import UserDetailPage from './userDetail';
 import AddDogPage from './addDog';
@@ -20,6 +21,7 @@ import {
   HOME_PAGE_ROUTE,
   DOG_DETAIL_PAGE_ROUTE,
   DOGS_PAGE_ROUTE,
+  // MY_PROFILE_PAGE_ROUTE,
   DOG_MANAGEMENT_PAGE_ROUTE,
   USER_DETAIL_PAGE_ROUTE,
   USER_MANAGEMENT_PAGE_ROUTE,
@@ -40,6 +42,7 @@ const Dashboard = () => (
         <Route path={USER_MANAGEMENT_PAGE_ROUTE} component={UserManagementPage} />
         <Route path={DOG_DETAIL_PAGE_ROUTE} component={DogDetailPage} />
         <Route path={USER_DETAIL_PAGE_ROUTE} component={UserDetailPage} />
+        {/* <Route path={MY_PROFILE_PAGE_ROUTE} component={MyProfilePage} /> */}
         <Route path={DOGS_PAGE_ROUTE} component={DogsPage} />
         <AdminRoute path={ADD_DOG_PAGE_ROUTE} component={AddDogPage} />
         <AdminRoute path={USER_EDIT_PAGE_ROUTE} component={UserEditPage} />

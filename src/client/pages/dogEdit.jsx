@@ -1,5 +1,6 @@
 import React from 'react';
-import { InputGroupAddon, InputGroup, Row, Col, Button, Form, FormGroup, ListGroup, ListGroupItem, Badge, Input, FormText, Table } from 'reactstrap';
+
+import { InputGroupAddon, Label, InputGroup, Row, Col, Button, Form, FormGroup, ListGroup, Input, FormText, Table } from 'reactstrap';
 
 import '../styles/pages/addDog.m.scss';
 // must fix this later.
@@ -24,24 +25,34 @@ const DogEditPage = () => (
         </Col>
         <Col xs="4">
           <ListGroup>
-            <ListGroupItem className="justify-content-between">Name: <Badge pill> Fido </Badge></ListGroupItem>
-            <ListGroupItem className="justify-content-between">ID: <Badge pill> 01234 </Badge></ListGroupItem>
-            <ListGroupItem className="justify-content-between">Gender: <Badge pill> Male </Badge></ListGroupItem>
-            <ListGroupItem className="justify-content-between">DoB: <Badge pill> 07/24/2011 </Badge></ListGroupItem>
+            <Label for="exampleName">Name: </Label>
+            <Input placeholder="Fido" />
+            <Label for="exampleEmail">ID: </Label>
+            <Input placeholder="01234" />
+            <Label for="examplePhone">Gender: </Label>
+            <Input type="select">
+              <option> Male </option>
+              <option> Female </option>
+            </Input>
           </ListGroup>
         </Col>
         <Col xs="4">
-          <FormGroup>
-            <ListGroup>
-              <ListGroupItem className="justify-content-between">Custody: <Badge pill> C.Aa </Badge></ListGroupItem>
-              <Form inline>
-                <div className="form-group">
-                  <ListGroupItem className="justify-content-between">Status: <Badge pill> Training </Badge></ListGroupItem>
-                  <Button>Edit</Button>
-                </div>
-              </Form>
-            </ListGroup>
-          </FormGroup>
+          <ListGroup>
+            <Label for="exampleName">DoB: </Label>
+            <Input placeholder="07/24/2011" />
+            <Label for="exampleEmail">Custody: </Label>
+            <Input type="select">
+              <option> Canine Assistants </option>
+              <option> Volunteer </option>
+              <option> Foster </option>
+            </Input>
+            <Label for="examplePhone">Status: </Label>
+            <Input type="select">
+              <option> Training </option>
+              <option> On Outing </option>
+              <option> Housed </option>
+            </Input>
+          </ListGroup>
         </Col>
       </Row>
     </Form>
@@ -55,6 +66,11 @@ const DogEditPage = () => (
     </InputGroup>
     <br />
     <Table hover>
+      <thead>
+        <tr>
+          <th> Dog Interactive History</th>
+        </tr>
+      </thead>
       <thead>
         <tr>
           <th>Date</th>
@@ -83,27 +99,22 @@ const DogEditPage = () => (
           <td />
           <td />
         </tr>
-        <tr>
-          <th scope="row" />
-          <td />
-          <td />
-        </tr>
-        <tr>
-          <th scope="row" />
-          <td />
-          <td />
-        </tr>
       </tbody>
     </Table>
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <Button color="secondary" size="lg">Update interactive history</Button>{' '}
+    </div>
     <br />
     <br />
     <br />
     <div className="footer">
       <h2>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <Button outline="secondary" size="lg">Back</Button>{' '}
-          <Button outline="danger" size="lg">Save</Button>{' '}
-          <Button color="danger" size="lg">REMOVE DOG</Button>
+          <Button outline="secondary" size="lg">BACK</Button>{' '}
+          &nbsp;
+          <Button color="secondary" size="lg">SAVE</Button>{' '}
+          &nbsp;
+          <Button color="primary" size="lg">REMOVE DOG</Button>
         </div>
       </h2>
     </div>
