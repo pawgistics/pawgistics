@@ -8,7 +8,7 @@ import apiRouter from './api';
 
 const app = express();
 
-if (!isStaging) {
+if (!isStaging && isProd) {
   // eslint-disable-next-line global-require
   const compression = require('compression');
   app.use(compression());
@@ -32,9 +32,14 @@ if (!isStaging) {
     app.use('/static', expressStaticGzip('dist', {
       enableBrotli: true,
     }));
-  }
-  app.use('/static', express.static('public'));
-  if (!isProd) {
+
+    app.get('*', (req, res) => {
+      // eslint-disable-next-line global-require
+      res.sendFile(require('path').join(__dirname, '../../dist/index.html'));
+    });
+  } else {
+    app.use('/static', express.static('public'));
+
     app.get('*', (req, res) => {
       res.send('' +
         '<!DOCTYPE html>' +
@@ -48,11 +53,6 @@ if (!isStaging) {
           '<script src="http://localhost:7000/dist/js/bundle.js"></script>' +
         '</body>' +
       '</html>');
-    });
-  } else {
-    app.get('*', (req, res) => {
-      // eslint-disable-next-line global-require
-      res.sendFile(require('path').join(__dirname, '../../dist/index.html'));
     });
   }
 }
