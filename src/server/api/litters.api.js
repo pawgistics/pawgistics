@@ -4,54 +4,28 @@ import express from 'express';
 import protectRoute from './auth/protectRoute';
 import models from '../models';
 
+const Litter = models.litter;
+
 const littersRouter = express.Router();
-const { Dog } = models;
 
-littersRouter.get('/list', protectRoute(), (req, res) => {
-  Dog.scan().attributes(['chipId', 'name', 'uri', 'litter']).exec((err, dogs) => {
-    if (err) {
-      console.log(err);
-      return res.status(500).json({ success: false, message: 'An error occurred.' });
-    }
-    const toReturn = {};
-    dogs.forEach((dog) => {
-      if (!(dog.litter in toReturn)) {
-        toReturn[dog.litter] = [];
-      }
-      toReturn[dog.litter].push(dog);
-    });
-    return res.status(200).json({ success: true, response: toReturn });
+littersRouter.route('/')
+  .get(protectRoute(), (req, res) => {
+    Litter.all()
+      .then(fosters => res.status(200).json(fosters))
+      .catch(() => res.status(500).json({ message: 'An error occurred.' }));
+  })
+  .post(protectRoute({ requireAdmin: true }), (req, res) => {
+    res.sendStatus(501);
   });
-});
 
-littersRouter.get('/:litterName', protectRoute(), (req, res) => {
-  Dog.query('litter').eq(req.params.litterName).attributes(['chipId', 'name', 'uri', 'litter']).exec((err, dogs) => {
-    if (err) {
-      console.log(err);
-      return res.status(500).json({ success: false, message: 'An error occurred.' });
-    }
-    const toReturn = { dogs };
-    return res.status(200).json({ success: true, response: toReturn });
+littersRouter.route('/:id')
+  .get(protectRoute(), (req, res) => {
+    Litter.findByHashid(req.params.id)
+      .then(dog => res.status(200).json(dog))
+      .catch(() => res.status(500).json({ message: 'An error occurred.' }));
+  })
+  .put(protectRoute({ requireAdmin: true }), (req, res) => {
+    res.sendStatus(501);
   });
-});
-
-littersRouter.get('/search/:litterName', protectRoute(), (req, res) => {
-  Dog.scan('litter').contains(req.params.litterName).attributes(['chipId', 'name', 'uri', 'litter']).exec((err, dogs) => {
-    if (err) {
-      console.log(err);
-      return res.status(500).json({ success: false, message: 'An error occurred.' });
-    }
-    const toReturn = {};
-    dogs.forEach((dog) => {
-      if (!(dog.litter in toReturn)) {
-        toReturn[dog.litter] = [];
-      }
-      toReturn[dog.litter].push(dog);
-    });
-    return res.status(200).json({ success: true, response: toReturn });
-  });
-});
-
-// littersRouter.post('/add/:litterName', )
 
 export default littersRouter;

@@ -5,105 +5,28 @@ import express from 'express';
 import protectRoute from './auth/protectRoute';
 import models from '../models';
 
+const FosterGroup = models.foster_group;
+
 const fostersRouter = express.Router();
-const { Dog } = models;
-// const { Foster } = models;
-const { User } = models;
 
-fostersRouter.get('/list', protectRoute(), (req, res) => {
-  const toReturn = {};
-  User.scan('fid').not().null().attributes(['id', 'first_name', 'last_name', 'uri', 'fid'])
-    .exec((err, users) => {
-      if (err) {
-        console.log(err);
-        return res.status(500).json({ success: false, message: 'An error occurred.' });
-      }
-      users.forEach((user) => {
-        if (!(user.fid in toReturn)) {
-          toReturn[user.fid] = {
-            users: [],
-            dogs: [],
-          };
-        }
-        toReturn[user.fid].users.push(user);
-      });
-      return Dog.scan('fid').not().null().attributes(['chipId', 'name', 'uri', 'fid'])
-        .exec((err1, dogs) => {
-          if (err1) {
-            console.log(err);
-            return res.status(500).json({ success: false, message: 'An error occurred.' });
-          }
-          dogs.forEach((dog) => {
-            if (!(dog.fid in toReturn)) {
-              toReturn[dog.fid] = {
-                users: [],
-                dogs: [],
-              };
-            }
-            toReturn[dog.fid].dogs.push(dog);
-          });
-          return res.status(200).json({ success: true, response: toReturn });
-        });
-    });
-});
+fostersRouter.route('/')
+  .get(protectRoute(), (req, res) => {
+    FosterGroup.all()
+      .then(fosters => res.status(200).json(fosters))
+      .catch(() => res.status(500).json({ message: 'An error occurred.' }));
+  })
+  .post(protectRoute({ requireAdmin: true }), (req, res) => {
+    res.sendStatus(501);
+  });
 
-fostersRouter.get('/dogs/:fid', protectRoute(), (req, res) => {
-  Dog.query('fid').eq(req.params.fid).attributes(['chipId', 'name', 'uri', 'fid'])
-    .exec((err, dogs) => {
-      if (err) {
-        console.log(err);
-        return res.status(500).json({ success: false, message: 'An error occurred.' });
-      }
-      return res.status(200).json({ success: true, response: dogs });
-    });
-});
-
-fostersRouter.get('/users/:fid', protectRoute(), (req, res) => {
-  User.query('fid').eq(req.params.fid).attributes(['id', 'first_name', 'last_name', 'uri', 'fid'])
-    .exec((err, users) => {
-      if (err) {
-        console.log(err);
-        return res.status(500).json({ success: false, message: 'An error occurred.' });
-      }
-      return res.status(200).json({ success: true, response: users });
-    });
-});
-
-fostersRouter.get('/:fid', protectRoute(), (req, res) => {
-  const toReturn = {};
-  User.query('fid').eq(req.params.fid).attributes(['id', 'first_name', 'last_name', 'uri', 'fid'])
-    .exec((err, users) => {
-      if (err) {
-        console.log(err);
-        return res.status(500).json({ success: false, message: 'An error occurred.' });
-      }
-      users.forEach((user) => {
-        if (!(user.fid in toReturn)) {
-          toReturn[user.fid] = {
-            users: [],
-            dogs: [],
-          };
-        }
-        toReturn[user.fid].users.push(user);
-      });
-      return Dog.query('fid').eq(req.params.fid).attributes(['chipId', 'name', 'uri', 'fid'])
-        .exec((err1, dogs) => {
-          if (err1) {
-            console.log(err);
-            return res.status(500).json({ success: false, message: 'An error occurred.' });
-          }
-          dogs.forEach((dog) => {
-            if (!(dog.fid in toReturn)) {
-              toReturn[dog.fid] = {
-                users: [],
-                dogs: [],
-              };
-            }
-            toReturn[dog.fid].dogs.push(dog);
-          });
-          return res.status(200).json({ success: true, response: toReturn });
-        });
-    });
-});
+fostersRouter.route('/:id')
+  .get(protectRoute(), (req, res) => {
+    FosterGroup.findByHashid(req.params.id)
+      .then(dog => res.status(200).json(dog))
+      .catch(() => res.status(500).json({ message: 'An error occurred.' }));
+  })
+  .put(protectRoute({ requireAdmin: true }), (req, res) => {
+    res.sendStatus(501);
+  });
 
 export default fostersRouter;

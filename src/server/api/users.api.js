@@ -26,12 +26,9 @@ usersRouter.route('/')
         'last_name',
         'phone_number',
       ],
-    }).then(() => {
-      res.status(201).json({ success: true, message: 'Successfully created new user.' });
-    }).catch((err) => {
-      // TODO: Catch actual errors
-      res.status(400).json({ success: false, message: err });
-    });
+    })
+      .then(() => res.status(201).json({ success: true, message: 'Successfully created new user.' }))
+      .catch(err => res.status(400).json({ success: false, message: err }));
   });
 
 usersRouter.get('/:id', protectRoute(), (req, res) => {
@@ -56,7 +53,8 @@ usersRouter.get('/search/name/:name', protectRoute(), (req, res) => {
         },
       ],
     },
-  }).then(users => res.status(200).json(users))
+  })
+    .then(users => res.status(200).json(users))
     .catch(() => res.status(500).json({ message: 'An error occurred.' }));
 });
 

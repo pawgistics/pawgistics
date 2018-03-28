@@ -81,6 +81,9 @@ export default (sequelize, Sequelize) => {
       login: {
         attributes: ['id', 'password', 'admin'],
       },
+      association: {
+        attributes: ['id', 'first_name', 'last_name'],
+      },
     },
   });
 
@@ -89,9 +92,24 @@ export default (sequelize, Sequelize) => {
     models.user.hasMany(models.dog, {
       foreignKey: 'instructor_id',
     });
+
+    models.user.addScope('detail', {
+      attributes: {
+        exclude: ['password', 'foster_group_id'],
+      },
+      include: [
+        {
+          model: models.foster_group.scope('association'),
+          include: [
+            models.user.scope('association'),
+            models.dog.scope('association'),
+          ],
+        },
+      ],
+    });
   };
 
-  User.findByHashid = hashid => User.findById(hashidsUsers.decode(hashid)[0]);
+  User.findByHashid = hashid => User.scope('detail').findById(hashidsUsers.decode(hashid)[0]);
 
   User.prototype.toJSON = function toJSON() {
     const user = this.dataValues;
