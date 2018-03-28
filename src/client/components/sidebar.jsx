@@ -34,8 +34,8 @@ const Sidebar = ({ isAdmin, handleLogout }: Props) => (
     <ul styleName="pages">
       {[
         // { route: HOME_PAGE_ROUTE, label: 'Home' },
-        { route: DOG_MANAGEMENT_PAGE_ROUTE, label: 'Dog Management Page' },
-        { route: USER_MANAGEMENT_PAGE_ROUTE, label: 'User Management Page' },
+        { route: DOG_MANAGEMENT_PAGE_ROUTE, label: 'Dogs' },
+        { route: USER_MANAGEMENT_PAGE_ROUTE, label: 'Users' },
         // { route: MY_PROFILE_PAGE_ROUTE, label: 'My Profile Page' },
         // { route: DOG_DETAIL_PAGE_ROUTE, label: 'Dog Detail Page' },
         // { route: USER_DETAIL_PAGE_ROUTE, label: 'My Profile Page' },
