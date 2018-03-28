@@ -1,11 +1,11 @@
 // @flow
 
 import React from 'react';
+import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { /* Link, */InputGroupAddon, InputGroup, Row, Col, Button, Form, FormGroup, ListGroup, ListGroupItem, Input, Table } from 'reactstrap';
 import { getDog } from '../api/volunteer';
 import '../styles/pages/dogDetail.m.scss';
-// import { DOG_EDIT_PAGE_ROUTE } from '../../shared/routes';
 // must fix this later.
 
 type Props = {
@@ -29,6 +29,10 @@ class DogDetailPage extends React.Component<Props> {
       });
   }
 
+  // handleEdit() {
+  //   this.props.history.push(`/dogEdit/${this.state.id}`);
+  // }
+
   render() {
     return (
       <div>
@@ -44,15 +48,15 @@ class DogDetailPage extends React.Component<Props> {
             <Col xs="4">
               <ListGroup>
                 <ListGroupItem className="justify-content-between">Name: {this.state.dog.name} </ListGroupItem>
+                <ListGroupItem className="justify-content-between">Litter: {this.state.dog.litter_name} </ListGroupItem>
                 <ListGroupItem className="justify-content-between">Chip ID: {this.state.dog.chip} </ListGroupItem>
                 <ListGroupItem className="justify-content-between">Gender: {this.state.dog.gender} </ListGroupItem>
-                <ListGroupItem className="justify-content-between">DoB: {this.state.dog.dob} </ListGroupItem>
               </ListGroup>
             </Col>
             <Col xs="4">
               <FormGroup>
                 <ListGroup>
-                  <ListGroupItem className="justify-content-between">Marking: {this.state.dog.color} {this.state.dog.shape}</ListGroupItem>
+                  <ListGroupItem className="justify-content-between">Instructor: {this.state.dog.first_name} {this.state.dog.last_name}</ListGroupItem>
                   <ListGroupItem className="justify-content-between">Custody: Canine Assistants </ListGroupItem>
                   <ListGroupItem className="justify-content-between">Status: Training </ListGroupItem>
                   {/* <Link
@@ -122,7 +126,7 @@ class DogDetailPage extends React.Component<Props> {
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <Button color="secondary" size="lg">BACK</Button>{' '}
               &nbsp;
-              <Button color="primary" size="lg">EDIT</Button>{' '}
+              <Button color="primary" size="lg" onClick={this.handleEdit}>EDIT</Button>{' '}
             </div>
           </h2>
         </div>
@@ -134,4 +138,4 @@ class DogDetailPage extends React.Component<Props> {
 // export default DogDetailPage;
 export default connect(null, dispatch => ({
   getDog: id => dispatch(getDog(id)),
-}))(DogDetailPage);
+}))(withRouter(DogDetailPage));

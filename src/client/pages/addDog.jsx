@@ -28,6 +28,7 @@ class AddDogPage extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.updateName = this.updateName.bind(this);
+    this.updateInstructor = this.updateInstructor.bind(this);
     this.updateChip = this.updateChip.bind(this);
     this.updateLitter = this.updateLitter.bind(this);
     this.updateColor = this.updateColor.bind(this);
@@ -39,6 +40,10 @@ class AddDogPage extends React.Component {
 
   updateName(e) {
     this.setState({ name: e.target.value });
+  }
+
+  updateInstructor(e) {
+    this.setState({ instructor: e.target.value });
   }
 
   updateChip(e) {
@@ -87,7 +92,7 @@ class AddDogPage extends React.Component {
       .then(() => {
         // TODO: Proper window notification
       }).catch((err) => {
-        Window.alert(err.message);
+        alert(err.message);
       });
   }
 
@@ -148,6 +153,10 @@ class AddDogPage extends React.Component {
             </Col>
             <Col xs="4">
               <FormGroup>
+                <dt>Instructor</dt>
+                <Input type="text" name="instructor" value={this.state.instructor} onChange={this.updateInstructor} />
+              </FormGroup>
+              <FormGroup>
                 <dt>Litter</dt>
                 <Input type="text" name="litter" value={this.state.litter} onChange={this.updateLitter} />
               </FormGroup>
@@ -180,7 +189,8 @@ class AddDogPage extends React.Component {
           <h2>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <Button color="secondary" size="lg">BACK</Button>{' '}
-              <Button color="danger" size="lg" onClick={this.handleClick}>SAVE</Button>
+              &nbsp;
+              <Button color="primary" size="lg" onClick={this.handleClick}>SAVE</Button>
             </div>
           </h2>
         </div>

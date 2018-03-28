@@ -3,6 +3,7 @@ import express from 'express';
 import protectRoute from './auth/protectRoute';
 import models from '../models';
 import { ImageUploader } from '../util/imageUploader';
+import { hashidsDogs } from '../util/hashids';
 
 const Dog = models.dog;
 const { Op } = models.Sequelize;
@@ -47,8 +48,30 @@ dogsRouter.route('/')
   });
 
 dogsRouter.get('/:id', protectRoute(), (req, res) => {
-  Dog.findByHashid(req.params.id)
-    .then(dog => res.status(200).json(dog))
+  Dog.sequelize.query(`
+    SELECT 
+      dogs.id,
+      dogs.chip,
+      dogs.name,
+      dogs.gender,
+      dogs.uri,
+      dogs.instructor_id,
+      dogs.litter_id,
+      users.first_name,
+      users.last_name,
+      litters.name as litter_name
+  FROM
+      dogs,
+      users,
+      litters
+  WHERE
+      dogs.id = ${hashidsDogs.decode(req.params.id)}
+          AND users.id = dogs.instructor_id
+          AND litters.id = dogs.litter_id
+  `, { type: Dog.sequelize.QueryTypes.SELECT })
+    .then((dog) => {
+      res.status(200).json(dog[0]);
+    })
     .catch(() => res.status(500).json({ message: 'An error occurred.' }));
 });
 

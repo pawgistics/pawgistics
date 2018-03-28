@@ -3,7 +3,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Label, Form, Row, Col, InputGroup, InputGroupAddon, FormGroup, Input, Button } from 'reactstrap';
-
+import { Link } from 'react-router-dom';
 import { getDogs } from '../api/volunteer';
 import DogDetailTable from '../containers/dog-detail-table';
 import '../styles/pages/userDetail.m.scss';
@@ -76,7 +76,9 @@ class DogManagementPage extends React.Component<Props> {
         <div className="footer">
           <h2>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <Button color="secondary" size="lg">ADD DOG</Button>{' '}
+              <Link to="/addDog">
+                <Button color="secondary" size="lg">ADD DOG</Button>{' '}
+              </Link>
             </div>
           </h2>
         </div>
