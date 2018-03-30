@@ -19,19 +19,19 @@ dogsRouter.route('/')
   .post(protectRoute({ requireAdmin: true }), (req, res) => {
     (async () => {
       const dog = await Dog.createFromObject(req.body);
+      if (req.body.data_uri) {
+        const s3uri = `https://s3.amazonaws.com/canine-assistants-assets/${dog.hashid}`;
+        console.log(s3uri);
+        console.log('dog created');
 
-      const s3uri = `https://s3.amazonaws.com/canine-assistants-assets/${dog.hashid}`;
-      console.log(s3uri);
-      console.log('dog created');
-
-      await ImageUploader({
-        filename: `${dog.hashid}`,
-        file: req.body.data_uri,
-        filetype: req.body.filetype,
-      });
-
-      console.log('file uploaded');
-      await dog.update({ uri: s3uri });
+        await ImageUploader({
+          filename: `${dog.hashid}`,
+          file: req.body.data_uri,
+          filetype: req.body.filetype,
+        });
+        console.log('file uploaded');
+        await dog.update({ uri: s3uri });
+      }
 
       res.status(200).json({ success: true, message: dog });
     })()
@@ -45,7 +45,24 @@ dogsRouter.route('/:id')
       .catch(() => res.status(500).json({ message: 'An error occurred.' }));
   })
   .put(protectRoute({ requireAdmin: true }), (req, res) => {
-    res.sendStatus(501);
+    (async () => {
+      if (req.body.data_uri) {
+        const s3uri = `https://s3.amazonaws.com/canine-assistants-assets/${req.body.id}`;
+        console.log(s3uri);
+        console.log('dog created');
+
+        await ImageUploader({
+          filename: `${req.body.id}`,
+          file: req.body.data_uri,
+          filetype: req.body.filetype,
+        });
+        console.log('file uploaded');
+        req.body.uri = s3uri;
+      }
+      Dog.updateFromObject(req.body)
+        .then(res.status(200).json({ success: true }));
+    })
+      .catch(err => res.status(500).json({ success: false, message: err.message }));
   });
 
 dogsRouter.get('/search/:name', protectRoute(), (req, res) => {

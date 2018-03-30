@@ -9,13 +9,14 @@ import DogDetailTable from '../containers/dog-detail-table';
 import '../styles/pages/userDetail.m.scss';
 
 type Props = {
+  isAdmin: boolean,
   getDogs: () => Promise,
 }
 
 class DogManagementPage extends React.Component<Props> {
   constructor(props) {
     super(props);
-    this.state = { dogs: [] };
+    this.state = { dogs: [], auth: { isAdmin: false } };
     this.props.getDogs()
       .then((dogs) => {
         this.setState({ dogs });
@@ -76,6 +77,9 @@ class DogManagementPage extends React.Component<Props> {
         <div className="footer">
           <h2>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
+              {/* <Link to="/addDog">
+                <Button color="secondary" size="lg">ADD DOG</Button>{' '}
+              </Link> */}
               <Link to="/addDog">
                 <Button color="secondary" size="lg">ADD DOG</Button>{' '}
               </Link>
@@ -87,6 +91,11 @@ class DogManagementPage extends React.Component<Props> {
   }
 }
 
+const mapStateToProps = state => ({
+  isAdmin: state.auth.isAdmin,
+});
+
 export default connect(null, dispatch => ({
   getDogs: () => dispatch(getDogs()),
+  mapStateToProps,
 }))(DogManagementPage);

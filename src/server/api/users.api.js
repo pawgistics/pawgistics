@@ -31,6 +31,18 @@ usersRouter.route('/')
       .catch(err => res.status(400).json({ success: false, message: err }));
   });
 
+usersRouter.route('/admin')
+  .get(protectRoute(), (req, res) => {
+    User.findAll({
+      attributes: ['id', 'first_name', 'last_name'],
+      where: {
+        admin: true,
+      },
+    })
+      .then(users => res.status(200).json(users))
+      .catch(() => res.status(500).json({ message: 'An error occurred.' }));
+  });
+
 usersRouter.get('/:id', protectRoute(), (req, res) => {
   User.findByHashid(req.params.id)
     .then(user => res.status(200).json(user))

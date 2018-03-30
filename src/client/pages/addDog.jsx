@@ -3,38 +3,55 @@
 import React from 'react';
 import { Row, Col, Button, Form, FormGroup, Input, FormText } from 'reactstrap';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { postDog } from '../api/admin';
+import { getAdmins, getLitters } from '../api/volunteer';
+// import StrIdDropdown from '../components/str-id-dropdown';
 import '../styles/pages/addDog.m.scss';
 
 // eslint-disable-next-line
 type Props = {
   postDog(vals): Promise,
+  getAdmins: () => Promise,
+  getLitters: () => Promise,
 }
 
-class AddDogPage extends React.Component {
+class AddDogPage extends React.Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      chip: null,
-      name: null,
-      litter: null,
-      color: 'red',
-      shape: 'circle',
+      chip: '',
+      name: '',
+      instructor_id: '',
+      litter_id: '',
       gender: 'M',
-      dob: null,
-      // eslint-disable-next-line
-      fid: null,
+      fid: '',
+      admins: [],
+      litters: [],
     };
+    this.props.getAdmins()
+      .then((instructors) => {
+        this.setState({ admins: instructors });
+      })
+      .catch((err) => {
+        // eslint-disable-next-line no-console
+        console.log(err.message);
+      });
+    this.props.getLitters()
+      .then((litters) => {
+        this.setState({ litters });
+      })
+      .catch((err) => {
+        // eslint-disable-next-line no-console
+        console.log(err.message);
+      });
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.updateName = this.updateName.bind(this);
     this.updateInstructor = this.updateInstructor.bind(this);
     this.updateChip = this.updateChip.bind(this);
     this.updateLitter = this.updateLitter.bind(this);
-    this.updateColor = this.updateColor.bind(this);
-    this.updateShape = this.updateShape.bind(this);
     this.updateGender = this.updateGender.bind(this);
-    this.updateDOB = this.updateDOB.bind(this);
     this.updateImage = this.updateImage.bind(this);
   }
 
@@ -43,7 +60,7 @@ class AddDogPage extends React.Component {
   }
 
   updateInstructor(e) {
-    this.setState({ instructor: e.target.value });
+    this.setState({ instructor_id: e.target.value });
   }
 
   updateChip(e) {
@@ -51,23 +68,11 @@ class AddDogPage extends React.Component {
   }
 
   updateLitter(e) {
-    this.setState({ litter: e.target.value });
-  }
-
-  updateColor(e) {
-    this.setState({ color: e.target.value });
-  }
-
-  updateShape(e) {
-    this.setState({ shape: e.target.value });
+    this.setState({ litter_id: e.target.value });
   }
 
   updateGender(e) {
     this.setState({ gender: e.target.value });
-  }
-
-  updateDOB(e) {
-    this.setState({ dob: e.target.value });
   }
 
   updateImage(e) {
@@ -92,6 +97,7 @@ class AddDogPage extends React.Component {
       .then(() => {
         // TODO: Proper window notification
       }).catch((err) => {
+        // eslint-disable-next-line
         alert(err.message);
       });
   }
@@ -141,43 +147,35 @@ class AddDogPage extends React.Component {
                 {/* <Label for="exampleGender">Gender</Label> */}
                 <dt>Gender</dt>
                 <Input type="select" name="gender" value={this.state.gender} onChange={this.updateGender}>
+                  <option selected="selected">--</option>
                   <option value="M">Male</option>
                   <option value="F">Female</option>
                 </Input>
-              </FormGroup>
-              <FormGroup>
-                {/* <Label for="exampleDoB">DOB</Label> */}
-                <dt>DoB</dt>
-                <Input type="date" name="dob" value={this.state.dob} onChange={this.updateDOB} placeholder="Select date" />
               </FormGroup>
             </Col>
             <Col xs="4">
               <FormGroup>
                 <dt>Instructor</dt>
-                <Input type="text" name="instructor" value={this.state.instructor} onChange={this.updateInstructor} />
+                {/* <StrIdDropdown getitems={getAdmins()} title="instructor" displayValue="first_name" displayId="id" /> */}
+                {/* <Input type="text" name="instructor" value={this.state.instructor} onChange={this.updateInstructor} /> */}
+                <Input type="select" name="instructor" value={this.state.instructor_id} onChange={this.updateInstructor} >
+                  <option selected="selected">--</option>
+                  {this.state.admins.map(admin => (
+                    <option value={admin.id}>
+                      {admin.first_name} {admin.last_name}
+                    </option>))}
+                </Input>
               </FormGroup>
               <FormGroup>
                 <dt>Litter</dt>
-                <Input type="text" name="litter" value={this.state.litter} onChange={this.updateLitter} />
-              </FormGroup>
-              <FormGroup>
-                <dt>Marking Shape</dt>
-                <Input type="select" name="shape" value={this.state.shape} onChange={this.updateShape} >
-                  <option>square</option>
-                  <option>circle</option>
-                  <option>triangle</option>
+                <Input type="select" name="litter" value={this.state.litter_id} onChange={this.updateLitter} >
+                  <option selected="selected">--</option>
+                  {this.state.litters.map(litter => (
+                    <option value={litter.id}>
+                      {litter.name}
+                    </option>))}
                 </Input>
-              </FormGroup>
-              <FormGroup>
-                <dt>Marking Color</dt>
-                <Input type="select" name="color" value={this.state.color} onChange={this.updateColor}>
-                  <option>red</option>
-                  <option>blue</option>
-                  <option>orange</option>
-                  <option>green</option>
-                  <option>white</option>
-                  <option>black</option>
-                </Input>
+                {/* <Input type="text" name="litter" value={this.state.litter} onChange={this.updateLitter} /> */}
               </FormGroup>
             </Col>
           </Row>
@@ -188,7 +186,9 @@ class AddDogPage extends React.Component {
         <div className="footer">
           <h2>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <Button color="secondary" size="lg">BACK</Button>{' '}
+              <Link to="/dogManagement">
+                <Button color="secondary" size="lg">BACK</Button>{' '}
+              </Link>
               &nbsp;
               <Button color="primary" size="lg" onClick={this.handleClick}>SAVE</Button>
             </div>
@@ -200,5 +200,7 @@ class AddDogPage extends React.Component {
 }
 export default connect(null, dispatch => ({
   postDog: vals => dispatch(postDog(vals)),
+  getAdmins: () => dispatch(getAdmins()),
+  getLitters: () => dispatch(getLitters()),
 }))(AddDogPage);
 // export default AddDogPage;

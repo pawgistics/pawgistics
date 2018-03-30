@@ -1,9 +1,10 @@
 // @flow
 
 import React from 'react';
-import { withRouter } from 'react-router';
+// import { withRouter } from 'react-router';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { /* Link, */InputGroupAddon, InputGroup, Row, Col, Button, Form, FormGroup, ListGroup, ListGroupItem, Input, Table } from 'reactstrap';
+import { InputGroupAddon, InputGroup, Row, Col, Button, Form, FormGroup, ListGroup, ListGroupItem, Input, Table } from 'reactstrap';
 import { getDog } from '../api/volunteer';
 import '../styles/pages/dogDetail.m.scss';
 // must fix this later.
@@ -17,9 +18,20 @@ type Props = {
 class DogDetailPage extends React.Component<Props> {
   constructor(props) {
     super(props);
-    this.state = { dog: {} };
-    this.state.id = props.match.params.id;
-    this.props.getDog(this.state.id)
+    this.state = {
+      dog: {
+        instructor: {
+          id: '',
+          first_name: '',
+          last_name: '',
+        },
+        litter: {
+          id: '',
+          name: '',
+        },
+      },
+    };
+    this.props.getDog(props.match.params.id)
       .then((dog) => {
         this.setState({ dog });
       })
@@ -34,6 +46,7 @@ class DogDetailPage extends React.Component<Props> {
   // }
 
   render() {
+    const active = this.state.dog.active ? 'Active' : 'Inactive';
     return (
       <div>
         <span styleName="my-class">Dog Detail Page</span>
@@ -48,7 +61,7 @@ class DogDetailPage extends React.Component<Props> {
             <Col xs="4">
               <ListGroup>
                 <ListGroupItem className="justify-content-between">Name: {this.state.dog.name} </ListGroupItem>
-                <ListGroupItem className="justify-content-between">Litter: {this.state.dog.litter_name} </ListGroupItem>
+                <ListGroupItem className="justify-content-between">Litter: {this.state.dog.litter.name} </ListGroupItem>
                 <ListGroupItem className="justify-content-between">Chip ID: {this.state.dog.chip} </ListGroupItem>
                 <ListGroupItem className="justify-content-between">Gender: {this.state.dog.gender} </ListGroupItem>
               </ListGroup>
@@ -56,9 +69,9 @@ class DogDetailPage extends React.Component<Props> {
             <Col xs="4">
               <FormGroup>
                 <ListGroup>
-                  <ListGroupItem className="justify-content-between">Instructor: {this.state.dog.first_name} {this.state.dog.last_name}</ListGroupItem>
+                  <ListGroupItem className="justify-content-between">Instructor: {this.state.dog.instructor.first_name} {this.state.dog.instructor.last_name}</ListGroupItem>
                   <ListGroupItem className="justify-content-between">Custody: Canine Assistants </ListGroupItem>
-                  <ListGroupItem className="justify-content-between">Status: Training </ListGroupItem>
+                  <ListGroupItem className="justify-content-between">Status: {active} </ListGroupItem>
                   {/* <Link
                     to={{
                       pathname: `/dogEdit/${this.state.dog.chip}`,
@@ -124,9 +137,13 @@ class DogDetailPage extends React.Component<Props> {
         <div className="footer">
           <h2>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <Button color="secondary" size="lg">BACK</Button>{' '}
+              <Link to="/dogManagement">
+                <Button color="secondary" size="lg">BACK</Button>{' '}
+              </Link>
               &nbsp;
-              <Button color="primary" size="lg" onClick={this.handleEdit}>EDIT</Button>{' '}
+              <Link to={`/dogEdit/${this.state.dog.id}`}>
+                <Button color="primary" size="lg">EDIT</Button>{' '}
+              </Link>
             </div>
           </h2>
         </div>
@@ -138,4 +155,5 @@ class DogDetailPage extends React.Component<Props> {
 // export default DogDetailPage;
 export default connect(null, dispatch => ({
   getDog: id => dispatch(getDog(id)),
-}))(withRouter(DogDetailPage));
+// }))(withRouter(DogDetailPage));
+}))(DogDetailPage);

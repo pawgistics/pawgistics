@@ -104,7 +104,6 @@ export default (sequelize, Sequelize) => {
 
     if (dog.litter_id) dog.litter_id = hashidsLitters.decode(dog.litter_id);
     if (dog.instructor_id) dog.instructor_id = hashidsUsers.decode(dog.instructor_id);
-
     return Dog.create(dog, {
       fields: [
         'chip',
@@ -113,6 +112,31 @@ export default (sequelize, Sequelize) => {
         'litter_id',
         'instructor_id',
       ],
+    });
+  };
+
+  Dog.updateFromObject = (obj) => {
+    const dog = Object.assign({}, obj);
+
+    if (dog.id) dog.id = hashidsDogs.decode(dog.id);
+    if (dog.litter_id) dog.litter_id = hashidsLitters.decode(dog.litter_id);
+    if (dog.instructor_id) dog.instructor_id = hashidsUsers.decode(dog.instructor_id);
+    if (dog.foster_group_id) dog.foster_id = hashidsFosters.decode(dog.foster_id);
+    return Dog.update({
+      chip: dog.chip,
+      name: dog.name,
+      gender: dog.gender,
+      litter_id: dog.litter_id,
+      instructor_id: dog.instructor_id,
+      foster_group_id: dog.foster_group_id,
+      active: dog.active,
+      uri: dog.uri,
+    }, {
+      where: {
+        id: {
+          [Sequelize.Op.eq]: dog.id,
+        },
+      },
     });
   };
 
