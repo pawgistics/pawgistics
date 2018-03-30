@@ -156,8 +156,6 @@ class AddDogPage extends React.Component<Props> {
             <Col xs="4">
               <FormGroup>
                 <dt>Instructor</dt>
-                {/* <StrIdDropdown getitems={getAdmins()} title="instructor" displayValue="first_name" displayId="id" /> */}
-                {/* <Input type="text" name="instructor" value={this.state.instructor} onChange={this.updateInstructor} /> */}
                 <Input type="select" name="instructor" value={this.state.instructor_id} onChange={this.updateInstructor} >
                   <option selected="selected">--</option>
                   {this.state.admins.map(admin => (
@@ -175,7 +173,6 @@ class AddDogPage extends React.Component<Props> {
                       {litter.name}
                     </option>))}
                 </Input>
-                {/* <Input type="text" name="litter" value={this.state.litter} onChange={this.updateLitter} /> */}
               </FormGroup>
             </Col>
           </Row>

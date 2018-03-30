@@ -21,7 +21,6 @@ class StrIdDropdown extends React.Component<Props> {
     this.state = { items: {} };
     this.props.getitems()
       .then((items) => {
-        console.log(items);
         this.setState({ items });
       })
       .catch((err) => {
@@ -33,12 +32,14 @@ class StrIdDropdown extends React.Component<Props> {
   render() {
     return (
       <Input type="select" name={this.props.title} >
-        {this.state.items.map(item => <option value={item[this.props.displayId]}>{item[this.props.displayValue]}</option>)}
+        {this.state.items.map(item =>
+          <option value={item[this.props.displayId]}>{item[this.props.displayValue]}</option>)
+        }
       </Input>
     );
   }
 }
 export default connect(null, dispatch => ({
-  getitems: items => dispatch(getitems()),
+  getitems: items => dispatch(items()),
 }))(StrIdDropdown);
 // export default StrIdDropdown;
