@@ -35,27 +35,29 @@ class UserManagementPage extends React.Component<Props> {
         <Button color="primary">Save</Button> */}
         <Form>
           <br />
-          <Row className="mb-2">
-            <Col xs="7" sm="3">
-              <FormGroup check inline>
-                <Label>User Type: </Label>
-                <Input type="select">
-                  <option> Canine Assistants </option>
-                  <option> Volunteer </option>
-                  <option> Foster </option>
-                </Input>
-              </FormGroup>
-            </Col>
-            &nbsp;
-            <Col xs="4">
-              <FormGroup check inline>
-                <Label check>
-                  <Input type="checkbox" id="checkbox2" />{' '}
-                            Has dog
-                </Label>
-              </FormGroup>
-            </Col>
-          </Row>
+          <Col>
+            <Row className="mb-2">
+              <Col xs="7" sm="3">
+                <FormGroup check inline>
+                  <Label>User Type: </Label>
+                  <Input type="select">
+                    <option> Canine Assistants </option>
+                    <option> Volunteer </option>
+                    <option> Foster </option>
+                  </Input>
+                </FormGroup>
+              </Col>
+              &nbsp;
+              <Col xs="4">
+                <FormGroup check inline>
+                  <Label check>
+                    <Input type="checkbox" id="checkbox2" />{' '}
+                              Has dog
+                  </Label>
+                </FormGroup>
+              </Col>
+            </Row>
+          </Col>
           <br />
           <Col>
             <InputGroup>
@@ -71,8 +73,6 @@ class UserManagementPage extends React.Component<Props> {
           </Col>
         </Form>
         <Row>
-          <br />
-          <br />
           <br />
           <br />
           <br />

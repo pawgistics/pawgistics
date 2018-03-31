@@ -9,6 +9,7 @@ import { Button } from 'reactstrap';
 import {
   USER_MANAGEMENT_PAGE_ROUTE,
   DOG_MANAGEMENT_PAGE_ROUTE,
+  FOSTER_MANAGEMENT_PAGE_ROUTE,
   // MY_PROFILE_PAGE_ROUTE,
   USER_EDIT_PAGE_ROUTE,
   DOG_EDIT_PAGE_ROUTE,
@@ -16,7 +17,9 @@ import {
   // DOGS_PAGE_ROUTE,
   // ADMIN_PANEL_PAGE_ROUTE,
   // USER_DETAIL_PAGE_ROUTE,
-  // ADD_DOG_PAGE_ROUTE,
+  ADD_DOG_PAGE_ROUTE,
+  ADD_USER_PAGE_ROUTE,
+  RETURN_DOG_PAGE_ROUTE,
 } from '../../shared/routes';
 import { logoutUser } from '../actions/auth';
 import '../styles/components/sidebar.m.scss';
@@ -36,12 +39,15 @@ const Sidebar = ({ isAdmin, handleLogout }: Props) => (
         // { route: HOME_PAGE_ROUTE, label: 'Home' },
         { route: DOG_MANAGEMENT_PAGE_ROUTE, label: 'Dog Management Page' },
         { route: USER_MANAGEMENT_PAGE_ROUTE, label: 'User Management Page' },
+        { route: FOSTER_MANAGEMENT_PAGE_ROUTE, label: 'Foster Management Page' },
+        { route: RETURN_DOG_PAGE_ROUTE, label: 'Return Dog Page' },
         // { route: MY_PROFILE_PAGE_ROUTE, label: 'My Profile Page' },
         // { route: DOG_DETAIL_PAGE_ROUTE, label: 'Dog Detail Page' },
         // { route: USER_DETAIL_PAGE_ROUTE, label: 'My Profile Page' },
         // { route: DOGS_PAGE_ROUTE, label: 'Dogs' },
         ...(isAdmin ? [
-          // { route: ADD_DOG_PAGE_ROUTE, label: 'Add Dog Page' },
+          { route: ADD_DOG_PAGE_ROUTE, label: 'Add Dog Page' },
+          { route: ADD_USER_PAGE_ROUTE, label: 'Add User Page' },
           { route: USER_EDIT_PAGE_ROUTE, label: 'Edit User Page' },
           { route: DOG_EDIT_PAGE_ROUTE, label: 'Edit Dog Page' },
         ] : []),
