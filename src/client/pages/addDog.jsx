@@ -4,16 +4,15 @@ import React from 'react';
 import { Row, Col, Button, Form, FormGroup, Input, FormText } from 'reactstrap';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Select from '../components/select';
+import InstructorSelect from '../containers/instructor-select';
+import LitterSelect from '../containers/litter-select';
 import { postDog } from '../api/admin';
-import { getAdmins, getLitters } from '../api/volunteer';
-// import StrIdDropdown from '../components/str-id-dropdown';
 import '../styles/pages/addDog.m.scss';
 
 // eslint-disable-next-line
 type Props = {
   postDog(vals): Promise,
-  getAdmins: () => Promise,
-  getLitters: () => Promise,
 }
 
 class AddDogPage extends React.Component<Props> {
@@ -26,53 +25,34 @@ class AddDogPage extends React.Component<Props> {
       litter_id: '',
       gender: 'M',
       fid: '',
-      admins: [],
-      litters: [],
     };
-    this.props.getAdmins()
-      .then((instructors) => {
-        this.setState({ admins: instructors });
-      })
-      .catch((err) => {
-        // eslint-disable-next-line no-console
-        console.log(err.message);
-      });
-    this.props.getLitters()
-      .then((litters) => {
-        this.setState({ litters });
-      })
-      .catch((err) => {
-        // eslint-disable-next-line no-console
-        console.log(err.message);
-      });
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleClick = this.handleClick.bind(this);
     this.updateName = this.updateName.bind(this);
-    this.updateInstructor = this.updateInstructor.bind(this);
     this.updateChip = this.updateChip.bind(this);
-    this.updateLitter = this.updateLitter.bind(this);
     this.updateGender = this.updateGender.bind(this);
+    this.updateInstructorId = this.updateInstructorId.bind(this);
+    this.updateLitterId = this.updateLitterId.bind(this);
     this.updateImage = this.updateImage.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   updateName(e) {
     this.setState({ name: e.target.value });
   }
 
-  updateInstructor(e) {
-    this.setState({ instructor_id: e.target.value });
-  }
-
   updateChip(e) {
     this.setState({ chip: e.target.value });
   }
 
-  updateLitter(e) {
-    this.setState({ litter_id: e.target.value });
+  updateGender(value) {
+    this.setState({ gender: value });
   }
 
-  updateGender(e) {
-    this.setState({ gender: e.target.value });
+  updateInstructorId(value) {
+    this.setState({ instructor_id: value });
+  }
+
+  updateLitterId(value) {
+    this.setState({ litter_id: value });
   }
 
   updateImage(e) {
@@ -100,10 +80,6 @@ class AddDogPage extends React.Component<Props> {
         // eslint-disable-next-line
         alert(err.message);
       });
-  }
-
-  handleClick() {
-    this.handleSubmit();
   }
 
   render() {
@@ -146,33 +122,21 @@ class AddDogPage extends React.Component<Props> {
               <FormGroup>
                 {/* <Label for="exampleGender">Gender</Label> */}
                 <dt>Gender</dt>
-                <Input type="select" name="gender" value={this.state.gender} onChange={this.updateGender}>
-                  <option selected="selected">--</option>
-                  <option value="M">Male</option>
-                  <option value="F">Female</option>
-                </Input>
+                <Select
+                  options={[{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }]}
+                  onSelectValue={this.updateGender}
+                  isSearchable={false}
+                />
               </FormGroup>
             </Col>
             <Col xs="4">
               <FormGroup>
                 <dt>Instructor</dt>
-                <Input type="select" name="instructor" value={this.state.instructor_id} onChange={this.updateInstructor} >
-                  <option selected="selected">--</option>
-                  {this.state.admins.map(admin => (
-                    <option value={admin.id}>
-                      {admin.first_name} {admin.last_name}
-                    </option>))}
-                </Input>
+                <InstructorSelect onSelectValue={this.updateInstructorId} />
               </FormGroup>
               <FormGroup>
                 <dt>Litter</dt>
-                <Input type="select" name="litter" value={this.state.litter_id} onChange={this.updateLitter} >
-                  <option selected="selected">--</option>
-                  {this.state.litters.map(litter => (
-                    <option value={litter.id}>
-                      {litter.name}
-                    </option>))}
-                </Input>
+                <LitterSelect onSelectValue={this.updateLitterId} />
               </FormGroup>
             </Col>
           </Row>
@@ -187,7 +151,7 @@ class AddDogPage extends React.Component<Props> {
                 <Button color="secondary" size="lg">BACK</Button>{' '}
               </Link>
               &nbsp;
-              <Button color="primary" size="lg" onClick={this.handleClick}>SAVE</Button>
+              <Button color="primary" size="lg" onClick={this.handleSubmit}>SAVE</Button>
             </div>
           </h2>
         </div>
@@ -197,7 +161,5 @@ class AddDogPage extends React.Component<Props> {
 }
 export default connect(null, dispatch => ({
   postDog: vals => dispatch(postDog(vals)),
-  getAdmins: () => dispatch(getAdmins()),
-  getLitters: () => dispatch(getLitters()),
 }))(AddDogPage);
 // export default AddDogPage;

@@ -4,7 +4,7 @@ import React from 'react';
 import { Row, Col, Button, Form, FormGroup, Input, FormText } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { upDateDog } from '../api/admin';
+import { updateDog } from '../api/admin';
 import { getAdmins, getLitters, getDog } from '../api/volunteer';
 import '../styles/pages/addDog.m.scss';
 
@@ -237,7 +237,7 @@ class DogEditPage extends React.Component<Props> {
 }
 
 export default connect(null, dispatch => ({
-  updateDog: vals => dispatch(upDateDog(vals)),
+  updateDog: vals => dispatch(updateDog(vals)),
   getAdmins: () => dispatch(getAdmins()),
   getLitters: () => dispatch(getLitters()),
   getDog: id => dispatch(getDog(id)),
