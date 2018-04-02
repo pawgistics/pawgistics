@@ -4,42 +4,32 @@ import React from 'react';
 import { Row, Col, Button, Form, FormGroup, Input, FormText } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Select from '../components/select';
+import InstructorSelect from '../containers/instructor-select';
+import LitterSelect from '../containers/litter-select';
 import { updateDog } from '../api/admin';
-import { getAdmins, getLitters, getDog } from '../api/volunteer';
+import { getDog } from '../api/volunteer';
 import '../styles/pages/addDog.m.scss';
 
 type Props = {
   match: Object,
   getDog(id): Promise,
   updateDog(vals): Promise,
-  getAdmins: () => Promise,
-  getLitters: () => Promise,
 }
 
 class DogEditPage extends React.Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
+      id: props.match.params.id,
       chip: '',
       name: '',
       instructor_id: '',
       litter_id: '',
       gender: 'M',
-      dog: {
-        instructor: {
-          id: '',
-          first_name: '',
-          last_name: '',
-        },
-        litter: {
-          id: '',
-          name: '',
-        },
-      },
-      admins: [],
-      litters: [],
+      active: true,
     };
-    this.props.getDog(props.match.params.id)
+    this.props.getDog(this.state.id)
       .then((dog) => {
         this.setState({
           chip: dog.chip,
@@ -47,62 +37,46 @@ class DogEditPage extends React.Component<Props> {
           instructor_id: dog.instructor.id,
           litter_id: dog.litter.id,
           gender: dog.gender,
-          status: dog.status,
+          active: dog.active,
         });
       })
       .catch((err) => {
         // eslint-disable-next-line no-console
         console.log(err.message);
       });
-    this.props.getAdmins()
-      .then((instructors) => {
-        this.setState({ admins: instructors });
-      })
-      .catch((err) => {
-        // eslint-disable-next-line no-console
-        console.log(err.message);
-      });
-    this.props.getLitters()
-      .then((litters) => {
-        this.setState({ litters });
-      })
-      .catch((err) => {
-        // eslint-disable-next-line no-console
-        console.log(err.message);
-      });
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleClick = this.handleClick.bind(this);
     this.updateName = this.updateName.bind(this);
-    this.updateInstructor = this.updateInstructor.bind(this);
     this.updateChip = this.updateChip.bind(this);
-    this.updateLitter = this.updateLitter.bind(this);
-    this.updateStatus = this.updateStatus.bind(this);
+    this.updateGender = this.updateGender.bind(this);
+    this.updateInstructorId = this.updateInstructorId.bind(this);
+    this.updateLitterId = this.updateLitterId.bind(this);
+    this.updateActive = this.updateActive.bind(this);
     this.updateGender = this.updateGender.bind(this);
     this.updateImage = this.updateImage.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   updateName(e) {
     this.setState({ name: e.target.value });
   }
 
-  updateInstructor(e) {
-    this.setState({ instructor_id: e.target.value });
-  }
-
   updateChip(e) {
     this.setState({ chip: e.target.value });
   }
 
-  updateLitter(e) {
-    this.setState({ litter_id: e.target.value });
+  updateGender(value) {
+    this.setState({ gender: value });
   }
 
-  updateStatus(e) {
-    this.setState({ status: e.target.value });
+  updateInstructorId(value) {
+    this.setState({ instructor_id: value });
   }
 
-  updateGender(e) {
-    this.setState({ gender: e.target.value });
+  updateLitterId(value) {
+    this.setState({ litter_id: value });
+  }
+
+  updateActive(value) {
+    this.setState({ active: value });
   }
 
   updateImage(e) {
@@ -123,17 +97,13 @@ class DogEditPage extends React.Component<Props> {
 
   handleSubmit() {
     // eslint-disable-next-line
-    this.props.updateDog(JSON.stringify(this.state.dog))
+    this.props.updateDog(JSON.stringify(this.state))
       .then(() => {
         // TODO: Proper window notification
       }).catch((err) => {
         // eslint-disable-next-line
         alert(err.message);
       });
-  }
-
-  handleClick() {
-    this.handleSubmit();
   }
 
   render() {
@@ -176,41 +146,37 @@ class DogEditPage extends React.Component<Props> {
               <FormGroup>
                 {/* <Label for="exampleGender">Gender</Label> */}
                 <dt>Gender</dt>
-                <Input type="select" name="gender" value={this.state.gender} onChange={this.updateGender}>
-                  <option value="M">Male</option>
-                  <option value="F">Female</option>
-                </Input>
+                <Select
+                  options={[{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }]}
+                  onSelectValue={this.updateGender}
+                  isSearchable={false}
+                  value={this.state.gender}
+                />
               </FormGroup>
             </Col>
             <Col xs="4">
               <FormGroup>
                 <dt>Instructor</dt>
-                <Input type="select" name="instructor" value={this.state.instructor_id} onChange={this.updateInstructor} >
-                  {this.state.admins.map(admin => (
-                    <option value={admin.id}>
-                      {admin.first_name} {admin.last_name}
-                    </option>))}
-                </Input>
+                <InstructorSelect
+                  onSelectValue={this.updateInstructorId}
+                  value={this.state.instructor_id}
+                />
               </FormGroup>
               <FormGroup>
                 <dt>Litter</dt>
-                <Input type="select" name="litter" value={this.state.litter_id} onChange={this.updateLitter} >
-                  {this.state.litters.map(litter => (
-                    <option value={litter.id}>
-                      {litter.name}
-                    </option>))}
-                </Input>
+                <LitterSelect
+                  onSelectValue={this.updateLitterId}
+                  value={this.state.litter_id}
+                />
               </FormGroup>
               <FormGroup>
                 <dt>Status</dt>
-                <Input type="select" name="status" value={this.state.status} onChange={this.updateStatus} >
-                  <option>
-                    Active
-                  </option>
-                  <option value={false}>
-                    Inactive
-                  </option>
-                </Input>
+                <Select
+                  options={[{ value: true, label: 'Active' }, { value: false, label: 'Inactive' }]}
+                  onSelectValue={this.updateActive}
+                  isSearchable={false}
+                  value={this.state.active}
+                />
               </FormGroup>
             </Col>
           </Row>
@@ -222,7 +188,7 @@ class DogEditPage extends React.Component<Props> {
           <h2>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <Link to={`/dogDetail/${this.state.id}`}>
-                <Button outline="secondary" size="lg">BACK</Button>{' '}
+                <Button outline size="lg">BACK</Button>{' '}
               </Link>
               &nbsp;
               <Button color="secondary" size="lg">SAVE</Button>{' '}
@@ -238,8 +204,6 @@ class DogEditPage extends React.Component<Props> {
 
 export default connect(null, dispatch => ({
   updateDog: vals => dispatch(updateDog(vals)),
-  getAdmins: () => dispatch(getAdmins()),
-  getLitters: () => dispatch(getLitters()),
   getDog: id => dispatch(getDog(id)),
 }))(DogEditPage);
 // export default DogDetailPage;

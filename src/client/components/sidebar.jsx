@@ -17,19 +17,19 @@ import {
   // DOGS_PAGE_ROUTE,
   // ADMIN_PANEL_PAGE_ROUTE,
   // USER_DETAIL_PAGE_ROUTE,
-  ADD_DOG_PAGE_ROUTE,
-  ADD_USER_PAGE_ROUTE,
+  // ADD_DOG_PAGE_ROUTE,
+  // ADD_USER_PAGE_ROUTE,
   RETURN_DOG_PAGE_ROUTE,
 } from '../../shared/routes';
 import { logoutUser } from '../actions/auth';
 import '../styles/components/sidebar.m.scss';
 
 type Props = {
-  isAdmin: boolean,
+  // isAdmin: boolean,
   handleLogout: () => void,
 }
 
-const Sidebar = ({ isAdmin, handleLogout }: Props) => (
+const Sidebar = ({ /* isAdmin, */ handleLogout }: Props) => (
   <nav styleName="sidebar">
     <div styleName="header">
       <h3>Pawgistics</h3>
@@ -45,12 +45,12 @@ const Sidebar = ({ isAdmin, handleLogout }: Props) => (
         // { route: DOG_DETAIL_PAGE_ROUTE, label: 'Dog Detail Page' },
         // { route: USER_DETAIL_PAGE_ROUTE, label: 'My Profile Page' },
         // { route: DOGS_PAGE_ROUTE, label: 'Dogs' },
-        ...(isAdmin ? [
-          // { route: ADD_DOG_PAGE_ROUTE, label: 'Add Dog Page' },
-          // { route: ADD_USER_PAGE_ROUTE, label: 'Add User Page' },
-          // { route: USER_EDIT_PAGE_ROUTE, label: 'Edit User Page' },
-          // { route: DOG_EDIT_PAGE_ROUTE, label: 'Edit Dog Page' },
-        ] : []),
+        // ...(isAdmin ? [
+        //   // { route: ADD_DOG_PAGE_ROUTE, label: 'Add Dog Page' },
+        //   // { route: ADD_USER_PAGE_ROUTE, label: 'Add User Page' },
+        //   // { route: USER_EDIT_PAGE_ROUTE, label: 'Edit User Page' },
+        //   // { route: DOG_EDIT_PAGE_ROUTE, label: 'Edit Dog Page' },
+        // ] : []),
       ].map(link => (
         <li key={link.route}>
           <NavLink to={link.route} activeClassName="active" exact>{link.label}</NavLink>

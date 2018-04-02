@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Button, InputGroup, InputGroupAddon, Row, Form, Col, FormGroup, Label, Input } from 'reactstrap';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { getUsers } from '../api/volunteer';
@@ -83,7 +84,9 @@ class UserManagementPage extends React.Component<Props> {
         <div className="footer">
           <h2>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <Button color="secondary" size="lg">ADD USER</Button>{' '}
+              <Link to="/addUser">
+                <Button color="secondary" size="lg">ADD USER</Button>{' '}
+              </Link>
             </div>
           </h2>
         </div>

@@ -78,9 +78,6 @@ class DogManagementPage extends React.Component<Props> {
         <div className="footer">
           <h2>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              {/* <Link to="/addDog">
-                <Button color="secondary" size="lg">ADD DOG</Button>{' '}
-              </Link> */}
               <Link to="/addDog">
                 <Button color="secondary" size="lg">ADD DOG</Button>{' '}
               </Link>

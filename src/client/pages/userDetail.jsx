@@ -3,6 +3,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Button, Form, ListGroup, ListGroupItem, Table } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 import { getUser } from '../api/volunteer';
 import '../styles/pages/userDetail.m.scss';
@@ -105,9 +106,13 @@ class UserDetailPage extends React.Component<Props> {
         <div className="footer">
           <h2>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <Button color="secondary" size="lg">BACK</Button>{' '}
+              <Link to="/userManagement">
+                <Button color="secondary" size="lg">BACK</Button>{' '}
+              </Link>
               &nbsp;
-              <Button color="primary" size="lg">EDIT DETAILS</Button>
+              <Link to={`/userEdit/${this.state.user.id}`}>
+                <Button color="primary" size="lg">EDIT</Button>{' '}
+              </Link>
             </div>
           </h2>
         </div>

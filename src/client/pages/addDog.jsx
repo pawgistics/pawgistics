@@ -24,7 +24,6 @@ class AddDogPage extends React.Component<Props> {
       instructor_id: '',
       litter_id: '',
       gender: 'M',
-      fid: '',
     };
     this.updateName = this.updateName.bind(this);
     this.updateChip = this.updateChip.bind(this);

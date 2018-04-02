@@ -2,7 +2,9 @@
 
 import React from 'react';
 import { Row, Col, Button, Form, FormGroup, Input, FormText } from 'reactstrap';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Select from '../components/select';
 import { postDog } from '../api/admin';
 import '../styles/pages/addDog.m.scss';
 
@@ -15,24 +17,19 @@ class AddUserPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      chip: null,
       name: null,
-      litter: null,
-      color: 'red',
-      shape: 'circle',
+      email: null,
+      phone: null,
       gender: 'M',
+      admin: null,
       dob: null,
-      // eslint-disable-next-line
-      fid: null,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleClick = this.handleClick.bind(this);
     this.updateName = this.updateName.bind(this);
-    this.updateChip = this.updateChip.bind(this);
-    this.updateLitter = this.updateLitter.bind(this);
-    this.updateColor = this.updateColor.bind(this);
-    this.updateShape = this.updateShape.bind(this);
+    this.updateEmail = this.updateEmail.bind(this);
+    this.updatePhone = this.updatePhone.bind(this);
     this.updateGender = this.updateGender.bind(this);
+    this.updateAdmin = this.updateAdmin.bind(this);
     this.updateDOB = this.updateDOB.bind(this);
     this.updateImage = this.updateImage.bind(this);
   }
@@ -41,24 +38,20 @@ class AddUserPage extends React.Component {
     this.setState({ name: e.target.value });
   }
 
-  updateChip(e) {
-    this.setState({ chip: e.target.value });
+  updateEmail(e) {
+    this.setState({ email: e.target.value });
   }
 
-  updateLitter(e) {
-    this.setState({ litter: e.target.value });
+  updatePhone(e) {
+    this.setState({ phone: e.target.value });
   }
 
-  updateColor(e) {
-    this.setState({ color: e.target.value });
+  updateGender(value) {
+    this.setState({ gender: value });
   }
 
-  updateShape(e) {
-    this.setState({ shape: e.target.value });
-  }
-
-  updateGender(e) {
-    this.setState({ gender: e.target.value });
+  updateAdmin(value) {
+    this.setState({ admin: value });
   }
 
   updateDOB(e) {
@@ -91,10 +84,6 @@ class AddUserPage extends React.Component {
       });
   }
 
-  handleClick() {
-    this.handleSubmit();
-  }
-
   render() {
     return (
       <div>
@@ -117,7 +106,7 @@ class AddUserPage extends React.Component {
                   // }}
                 />
                 <FormText color="muted">
-                  Upload the picture of the dog.
+                  Upload the picture of the user.
                 </FormText>
               </FormGroup>
             </Col>
@@ -129,32 +118,34 @@ class AddUserPage extends React.Component {
               </FormGroup>
               <FormGroup>
                 <dt>Email</dt>
-                <Input type="text" name="email" value={this.state.chip} onChange={this.updateChip} placeholder="email@pawgistics.com" />
+                <Input type="text" name="email" value={this.state.email} onChange={this.updateEmail} placeholder="email@pawgistics.com" />
               </FormGroup>
               <FormGroup>
                 {/* <Label for="exampleGender">Gender</Label> */}
                 <dt>Phone #</dt>
-                <Input type="number" name="id" value={this.state.chip} onChange={this.updateChip} placeholder="###-###-####" />
+                <Input type="text" name="id" value={this.state.phone} onChange={this.updatePhone} placeholder="###-###-####" />
               </FormGroup>
             </Col>
             <Col xs="4">
               <FormGroup>
                 <dt>Gender</dt>
-                <Input type="select" name="gender" value={this.state.gender} onChange={this.updateGender}>
-                  <option value="M">Male</option>
-                  <option value="F">Female</option>
-                </Input>
+                <Select
+                  options={[{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }]}
+                  onSelectValue={this.updateGender}
+                  isSearchable={false}
+                />
               </FormGroup>
               <FormGroup>
                 <dt>User Type</dt>
-                <Input type="select" name="shape" value={this.state.shape} onChange={this.updateShape} >
-                  <option>Administrator</option>
-                  <option>Volunteer</option>
-                </Input>
+                <Select
+                  options={[{ value: true, label: 'Administrator' }, { value: false, label: 'Volunteer' }]}
+                  onSelectValue={this.updateAdmin}
+                  isSearchable={false}
+                />
               </FormGroup>
               <FormGroup>
                 <dt>Member Since: </dt>
-                <Input type="number" name="id" value={this.state.chip} onChange={this.updateChip} placeholder="2005" />
+                <Input type="number" name="id" value={this.state.dob} onChange={this.updateDOB} placeholder="2005" />
               </FormGroup>
             </Col>
           </Row>
@@ -165,8 +156,11 @@ class AddUserPage extends React.Component {
         <div className="footer">
           <h2>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <Button color="secondary" size="lg">BACK</Button>{' '}
-              <Button color="danger" size="lg" onClick={this.handleClick}>SAVE</Button>
+              <Link to="/userManagement">
+                <Button color="secondary" size="lg">BACK</Button>{' '}
+              </Link>
+              &nbsp;
+              <Button color="primary" size="lg" onClick={this.handleSubmit}>SAVE</Button>
             </div>
           </h2>
         </div>

@@ -2,28 +2,29 @@
 
 import React from 'react';
 import { Button, InputGroup, InputGroupAddon, Table, Form, Col, Input } from 'reactstrap';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
-import { getUsers } from '../api/volunteer';
-import UserDetailTable from '../containers/user-detail-table';
+// import { getUsers } from '../api/volunteer';
 import '../styles/pages/userManagement.m.scss';
 
-type Props = {
-  getUsers: () => Promise,
-}
+// type Props = {
+//   getUsers: () => Promise,
+// }
 
+// eslint-disable-next-line react/prefer-stateless-function
 class FosterManagementPage extends React.Component<Props> {
+  // eslint-disable-next-line no-useless-constructor
   constructor(props) {
     super(props);
-    this.state = { users: [] };
-    this.props.getUsers()
-      .then((users) => {
-        this.setState({ users });
-      })
-      .catch((err) => {
-        // eslint-disable-next-line no-console
-        console.log(err.message);
-      });
+    // this.state = { users: [] };
+    // this.props.getUsers()
+    //   .then((users) => {
+    //     this.setState({ users });
+    //   })
+    //   .catch((err) => {
+    //     // eslint-disable-next-line no-console
+    //     console.log(err.message);
+    //   });
   }
 
   render() {
@@ -121,16 +122,12 @@ class FosterManagementPage extends React.Component<Props> {
         </div>
         <br />
         <br />
-        I did not know how to take this table out by causing an error so i just kept it in.
-        <Col>
-          <UserDetailTable users={this.state.users} />
-        </Col>
       </Form>
     );
   }
 }
 
-export default connect(null, dispatch => ({
-  getUsers: () => dispatch(getUsers()),
-}))(FosterManagementPage);
-// export default UserManagementPage;
+// export default connect(null, dispatch => ({
+//   getUsers: () => dispatch(getUsers()),
+// }))(FosterManagementPage);
+export default FosterManagementPage;
