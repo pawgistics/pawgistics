@@ -32,23 +32,25 @@ class DogManagementPage extends React.Component<Props> {
         <span styleName="my-class">Dog Managment Page </span>
         <Form>
           <br />
-          <Row className="mb-2">
-            <Col xs="4" sm="1">
-              <FormGroup check inline>
-                <Label check>
-                  <Input type="checkbox" />Active
-                </Label>
-              </FormGroup>
-              &nbsp;
-            </Col>
-            <Col xs="4">
-              <FormGroup check inline>
-                <Label check>
-                  <Input type="checkbox" />Available for check out
-                </Label>
-              </FormGroup>
-            </Col>
-          </Row>
+          <Col>
+            <Row className="mb-2">
+              <Col xs="4" sm="1">
+                <FormGroup check inline>
+                  <Label check>
+                    <Input type="checkbox" />Active
+                  </Label>
+                </FormGroup>
+                &nbsp;
+              </Col>
+              <Col xs="4">
+                <FormGroup check inline>
+                  <Label check>
+                    <Input type="checkbox" />Available for check out
+                  </Label>
+                </FormGroup>
+              </Col>
+            </Row>
+          </Col>
           <br />
           <Col>
             <InputGroup>
