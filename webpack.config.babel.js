@@ -34,6 +34,7 @@ export default {
         test: /\.jsx?$/,
         loader: 'babel-loader',
         options: {
+          babelrc: false,
           presets: [
             [
               '@babel/preset-env',
@@ -42,6 +43,7 @@ export default {
               },
             ],
             '@babel/preset-react',
+            '@babel/preset-flow',
           ],
           plugins: removeEmpty([
             ifDevelopment(['react-hot-loader/babel']),
