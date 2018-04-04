@@ -17,12 +17,12 @@ class AddUserPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: null,
-      email: null,
-      phone: null,
-      gender: 'M',
-      admin: null,
-      dob: null,
+      name: '',
+      email: '',
+      phone: '',
+      gender: undefined,
+      admin: undefined,
+      dob: '',
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.updateName = this.updateName.bind(this);

@@ -24,10 +24,10 @@ class DogEditPage extends React.Component<Props> {
       id: props.match.params.id,
       chip: '',
       name: '',
-      instructor_id: '',
-      litter_id: '',
-      gender: 'M',
-      active: true,
+      instructor_id: undefined,
+      litter_id: undefined,
+      gender: undefined,
+      active: undefined,
     };
     this.props.getDog(this.state.id)
       .then((dog) => {

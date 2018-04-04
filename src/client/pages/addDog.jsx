@@ -19,11 +19,11 @@ class AddDogPage extends React.Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      chip: '',
-      name: '',
-      instructor_id: '',
-      litter_id: '',
-      gender: 'M',
+      chip: undefined,
+      name: undefined,
+      instructor_id: undefined,
+      litter_id: undefined,
+      gender: undefined,
     };
     this.updateName = this.updateName.bind(this);
     this.updateChip = this.updateChip.bind(this);
@@ -124,6 +124,7 @@ class AddDogPage extends React.Component<Props> {
                 <Select
                   options={[{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }]}
                   onSelectValue={this.updateGender}
+                  value={this.state.gender}
                   isSearchable={false}
                 />
               </FormGroup>
@@ -131,11 +132,17 @@ class AddDogPage extends React.Component<Props> {
             <Col xs="4">
               <FormGroup>
                 <dt>Instructor</dt>
-                <InstructorSelect onSelectValue={this.updateInstructorId} />
+                <InstructorSelect
+                  onSelectValue={this.updateInstructorId}
+                  value={this.state.instructor_id}
+                />
               </FormGroup>
               <FormGroup>
                 <dt>Litter</dt>
-                <LitterSelect onSelectValue={this.updateLitterId} />
+                <LitterSelect
+                  onSelectValue={this.updateLitterId}
+                  value={this.state.litter_id}
+                />
               </FormGroup>
             </Col>
           </Row>

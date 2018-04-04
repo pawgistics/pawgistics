@@ -14,22 +14,22 @@ class UserEditPage extends React.Component<Props> {
     super(props);
     this.state = {
       id: props.match.params.id,
-      name: null,
-      email: null,
-      phone: null,
-      gender: null,
-      admin: null,
-      dob: null,
+      name: '',
+      email: '',
+      phone: '',
+      gender: undefined,
+      admin: undefined,
+      dob: '',
     };
     this.props.getUser(this.state.id)
       .then((user) => {
         this.setState({
           name: `${user.first_name} ${user.last_name}`,
           email: user.email,
-          phone: user.phone,
+          phone: user.phone || '',
           gender: user.gender,
           admin: user.admin,
-          dob: user.dob,
+          dob: user.dob || '',
         });
       })
       .catch((err) => {
