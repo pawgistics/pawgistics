@@ -72,7 +72,7 @@ class AddDogPage extends React.Component<Props> {
 
   handleSubmit() {
     // eslint-disable-next-line
-    this.props.postDog(JSON.stringify(this.state))
+    this.props.postDog(this.state)
       .then(() => {
         // TODO: Proper window notification
       }).catch((err) => {
@@ -84,10 +84,10 @@ class AddDogPage extends React.Component<Props> {
   render() {
     return (
       <div>
-        <span styleName="my-class">Add Dog Page</span>
+        <span styleName="my-class">Add Dog</span>
         {/* <button className="btn btn-primary">Back</button>
         <Button color="primary">Save</Button> */}
-        <Form onSubmit={this.handleSubmit}>
+        <Form>
           <br />
           <Row>
             <Col xs="3">
@@ -147,7 +147,7 @@ class AddDogPage extends React.Component<Props> {
           <h2>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <Link to="/dogManagement">
-                <Button color="secondary" size="lg">BACK</Button>{' '}
+                <Button color="secondary" size="lg">BACK</Button>
               </Link>
               &nbsp;
               <Button color="primary" size="lg" onClick={this.handleSubmit}>SAVE</Button>

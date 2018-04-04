@@ -4,7 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Button, Form, ListGroup, ListGroupItem, Table } from 'reactstrap';
 import { Link } from 'react-router-dom';
-
+import AdminControl from '../containers/admin-control';
 import { getUser } from '../api/volunteer';
 import '../styles/pages/userDetail.m.scss';
 // must fix this later.
@@ -30,7 +30,7 @@ class UserDetailPage extends React.Component<Props> {
   render() {
     return (
       <div>
-        <span styleName="my-class">User Detail Page</span>
+        <span styleName="my-class">User Details</span>
         {/* <button className="btn btn-primary">Back</button>
         <Button color="primary">Save</Button> */}
         <Form>
@@ -107,12 +107,14 @@ class UserDetailPage extends React.Component<Props> {
           <h2>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <Link to="/userManagement">
-                <Button color="secondary" size="lg">BACK</Button>{' '}
+                <Button color="secondary" size="lg">BACK</Button>
               </Link>
               &nbsp;
-              <Link to={`/userEdit/${this.state.user.id}`}>
-                <Button color="primary" size="lg">EDIT</Button>{' '}
-              </Link>
+              <AdminControl>
+                <Link to={`/userEdit/${this.state.user.id}`}>
+                  <Button color="primary" size="lg">EDIT</Button>
+                </Link>
+              </AdminControl>
             </div>
           </h2>
         </div>

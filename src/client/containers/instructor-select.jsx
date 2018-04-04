@@ -13,13 +13,13 @@ type Props = {
   onSelectValue: (string) => void,
 };
 
-const InstructorSelect = ({ getAdmins, onSelectValue }: Props) => (
+const InstructorSelect = ({ getAdmins, ...rest }: Props) => (
   <PromiseOptionsSelect
-    optionsPromise={getAdmins().then(admins => _.map(admins, admin => ({
+    options={getAdmins().then(admins => _.map(admins, admin => ({
         value: admin.id,
         label: `${admin.first_name} ${admin.last_name}`,
       })))}
-    onSelectValue={onSelectValue}
+    {...rest}
   />
 );
 

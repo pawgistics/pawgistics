@@ -19,7 +19,7 @@ export function loginUser(creds) {
       fetch(apiLoginRoute, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(creds),
+        body: creds,
       }).then(response => response.json().then(responseData => ({ responseData, response })))
         .then(({ responseData, response }) => {
           if (response.ok) {

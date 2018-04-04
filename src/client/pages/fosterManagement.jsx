@@ -30,7 +30,7 @@ class FosterManagementPage extends React.Component<Props> {
   render() {
     return (
       <Form>
-        <span styleName="my-class">Foster Management Page</span>
+        <span styleName="my-class">Fosters</span>
         {/* <button className="btn btn-primary">Back</button>
         <Button color="primary">Save</Button> */}
         <div>
@@ -38,7 +38,7 @@ class FosterManagementPage extends React.Component<Props> {
             <br />
             <br />
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <Button color="secondary" size="lg" block>Create New Table</Button>{' '}
+              <Button color="secondary" size="lg" block>Create New Table</Button>
             </div>
             <br />
             <br />
@@ -76,8 +76,8 @@ class FosterManagementPage extends React.Component<Props> {
                 </tr>
                 <tr>
                   <th scope="row">Add more</th>
-                  <td><Button color="info" size="lg">Add User</Button>{' '}</td>
-                  <td><Button color="info" size="lg">Add Dog</Button>{' '}</td>
+                  <td><Button color="info" size="lg">Add User</Button></td>
+                  <td><Button color="info" size="lg">Add Dog</Button></td>
                 </tr>
               </tbody>
             </Table>
@@ -104,8 +104,8 @@ class FosterManagementPage extends React.Component<Props> {
                 </tr>
                 <tr>
                   <th scope="row">Add more</th>
-                  <td> <Button color="info" size="lg">Add User</Button>{' '}</td>
-                  <td> <Button color="info" size="lg">Add Dog</Button>{' '}</td>
+                  <td> <Button color="info" size="lg">Add User</Button></td>
+                  <td> <Button color="info" size="lg">Add Dog</Button></td>
                 </tr>
               </tbody>
             </Table>
@@ -117,7 +117,7 @@ class FosterManagementPage extends React.Component<Props> {
           <br />
           <br />
           <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <Button color="secondary" size="lg">ADD USER</Button>{' '}
+            <Button color="secondary" size="lg">ADD USER</Button>
           </div>
         </div>
         <br />

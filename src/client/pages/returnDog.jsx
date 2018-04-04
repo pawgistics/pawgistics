@@ -12,6 +12,7 @@ import '../styles/pages/userDetail.m.scss';
 //   getDogs: () => Promise,
 // }
 
+// eslint-disable-next-line react/prefer-stateless-function
 class ReturnDogPage extends React.Component<Props> {
   // constructor(props) {
   //   super(props);
@@ -29,10 +30,10 @@ class ReturnDogPage extends React.Component<Props> {
   render() {
     return (
       <div>
-        <span styleName="my-class">Return Dog Page</span>
+        <span styleName="my-class">Return Dog</span>
         {/* <button className="btn btn-primary">Back</button>
         <Button color="primary">Save</Button> */}
-        <Form onSubmit={this.handleSubmit}>
+        <Form>
           <br />
           <FormGroup row>
             <br />
@@ -56,21 +57,21 @@ class ReturnDogPage extends React.Component<Props> {
             <Col sm={10}>
               <FormGroup check>
                 <Label check>
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   YES - Hopped right in with no hesitation.
                 </Label>
               </FormGroup>
 
               <FormGroup check>
                 <Label check>
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   SORT OF - Used treats and dogs were fidgety.
                 </Label>
               </FormGroup>
 
               <FormGroup check>
                 <Label check>
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   NO - Had trouble getting in or staying in.
                 </Label>
               </FormGroup>
@@ -91,19 +92,19 @@ class ReturnDogPage extends React.Component<Props> {
             <Col sm={10}>
               <FormGroup check>
                 <Label check>
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   YES - Hopped right on table and did not try to leave.
                 </Label>
               </FormGroup>
               <FormGroup check>
                 <Label check>
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   SORT OF - Used treats and dogs were fidgety.
                 </Label>
               </FormGroup>
               <FormGroup check>
                 <Label check>
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   NO - Had trouble getting in and staying on table.
                 </Label>
               </FormGroup>
@@ -123,19 +124,19 @@ class ReturnDogPage extends React.Component<Props> {
             <Col sm={10}>
               <FormGroup check>
                 <Label check>
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   YES - Got right in.
                 </Label>
               </FormGroup>
               <FormGroup check>
                 <Label check>
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   SORT OF - Hesitated and took a while.
                 </Label>
               </FormGroup>
               <FormGroup check>
                 <Label check>
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   NO - Had to be lifted into the car.
                 </Label>
               </FormGroup>
@@ -155,19 +156,19 @@ class ReturnDogPage extends React.Component<Props> {
             <Col sm={10}>
               <FormGroup check>
                 <Label check>
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   YES - Settled nicely.
                 </Label>
               </FormGroup>
               <FormGroup check>
                 <Label check>
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   SORT OF - Needed a distraction (treat/toy/kong).
                 </Label>
               </FormGroup>
               <FormGroup check>
                 <Label check>
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   NO - Could not settle, distressed panting, hopping into front.
                 </Label>
               </FormGroup>
@@ -187,21 +188,21 @@ class ReturnDogPage extends React.Component<Props> {
             <Col sm={10}>
               <FormGroup check>
                 <Label check>
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   YES - Had loose leash the whole time.
                 </Label>
               </FormGroup>
               <FormGroup check>
                 <Label check>
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   SORT OF - Had loose leash sometimes. <br />
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   SORT OF - Stalls or lags.
                 </Label>
               </FormGroup>
               <FormGroup check>
                 <Label check>
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   NO - Pulls or dashes.
                 </Label>
               </FormGroup>
@@ -221,21 +222,21 @@ class ReturnDogPage extends React.Component<Props> {
             <Col sm={10}>
               <FormGroup check>
                 <Label check>
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   YES - On the phone the whole time.
                 </Label>
               </FormGroup>
               <FormGroup check>
                 <Label check>
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   SORT OF - Used treats but checked in.<br />
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   SORT OF - Kind of, rarely checked in with each other.
                 </Label>
               </FormGroup>
               <FormGroup check>
                 <Label check>
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   NO - Dog did not look at me the whole time we were out.
                 </Label>
               </FormGroup>
@@ -255,13 +256,13 @@ class ReturnDogPage extends React.Component<Props> {
             <Col sm={10}>
               <FormGroup check>
                 <Label check>
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   YES
                 </Label>
               </FormGroup>
               <FormGroup check>
                 <Label check>
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   NO
                 </Label>
               </FormGroup>
@@ -281,13 +282,13 @@ class ReturnDogPage extends React.Component<Props> {
             <Col sm={10}>
               <FormGroup check>
                 <Label check>
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   YES
                 </Label>
               </FormGroup>
               <FormGroup check>
                 <Label check>
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   NO
                 </Label>
               </FormGroup>
@@ -375,25 +376,25 @@ class ReturnDogPage extends React.Component<Props> {
             <Col sm={10}>
               <FormGroup check>
                 <Label check>
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   1) Presented the numbers one through five.
                 </Label>
               </FormGroup>
               <FormGroup check>
                 <Label check>
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   2) Posted numbers one through five on wall, board, etc.
                 </Label>
               </FormGroup>
               <FormGroup check>
                 <Label check>
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   3) Numbers one through five and said Bring me this many.
                 </Label>
               </FormGroup>
               <FormGroup check>
                 <Label check>
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   4) Numbers one through five applications to the real world.
                 </Label>
               </FormGroup>
@@ -407,19 +408,19 @@ class ReturnDogPage extends React.Component<Props> {
             <Col sm={10}>
               <FormGroup check>
                 <Label check>
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   1) Presented the letters A - E.
                 </Label>
               </FormGroup>
               <FormGroup check>
                 <Label check>
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   2) Posted the letters A - E on wall, board, etc.
                 </Label>
               </FormGroup>
               <FormGroup check>
                 <Label check>
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   3) Buttons and symbols.
                 </Label>
               </FormGroup>
@@ -433,25 +434,25 @@ class ReturnDogPage extends React.Component<Props> {
             <Col sm={10}>
               <FormGroup check>
                 <Label check>
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   Very gentle, not mouthy.
                 </Label>
               </FormGroup>
               <FormGroup check>
                 <Label check>
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   Pretty gentle, a bit mouthy.
                 </Label>
               </FormGroup>
               <FormGroup check>
                 <Label check>
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   Mouthy, hurts a bit.
                 </Label>
               </FormGroup>
               <FormGroup check>
                 <Label check>
-                  <Input type="radio" name="radio2" />{' '}
+                  <Input type="radio" name="radio2" />
                   Very mouthy, hurts a lot.
                 </Label>
               </FormGroup>
@@ -480,7 +481,7 @@ class ReturnDogPage extends React.Component<Props> {
           <br />
           <div className="footer">
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <Button color="secondary" size="lg">SUBMIT FORM</Button>{' '}
+              <Button color="secondary" size="lg">SUBMIT FORM</Button>
             </div>
           </div>
         </Form>

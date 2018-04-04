@@ -5,13 +5,15 @@ import React, { Component } from 'react';
 import SelectBase, { createFilter } from 'react-select';
 
 type Props = {
-  options: [],
-  onSelectValue: (string) => void,
-  isSearchable?: boolean,
+  options?: [],
+  value?: any,
+  onSelectValue?: (any) => void
 };
 
 type State = {
-  selection: {},
+  options: [],
+  optionsMap: Map,
+  value: ?{},
 };
 
 const customStyles = {
@@ -46,29 +48,70 @@ const customStyles = {
   }),
 };
 
-// TODO: bring styling in line with rest of app
 export default class Select extends Component<Props, State> {
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.options !== prevState.options) {
+      const newOptions = nextProps.options;
+      const optionsMap = new Map(newOptions.map(opt => [opt.value, opt.label]));
+      const label = optionsMap.get(nextProps.value);
+      let value;
+      if (!label) {
+        value = null;
+      } else {
+        value = { value: nextProps.value, label };
+      }
+      return {
+        options: nextProps.options,
+        optionsMap,
+        value,
+      };
+    }
+    if ((nextProps.value && !prevState.value) ||
+        (prevState.value && nextProps.value !== prevState.value.value)) {
+      const label = prevState.optionsMap.get(nextProps.value);
+      let value;
+      if (!label) {
+        value = null;
+      } else {
+        value = { value: nextProps.value, label };
+      }
+      return { value };
+    }
+    return null;
+  }
   constructor(props) {
     super(props);
     this.state = {
-      selection: null,
+      options: [],
+      // eslint-disable-next-line react/no-unused-state
+      optionsMap: new Map(),
+      value: null,
     };
 
     this.updateSelect = this.updateSelect.bind(this);
   }
-  updateSelect(selection) {
-    this.setState({ selection });
-    this.props.onSelectValue(selection.value);
+  updateSelect(value) {
+    if (this.props.onSelectValue) {
+      this.props.onSelectValue(value.value);
+    } else {
+      this.setState({ value });
+    }
   }
   render() {
+    const {
+      options,
+      value,
+      onSelectValue,
+      ...rest
+    } = this.props;
     return (
       <SelectBase
-        options={this.props.options}
-        value={this.state.selection}
+        options={this.state.options}
+        value={this.state.value}
         onChange={this.updateSelect}
-        isSearchable={this.props.isSearchable}
         filterOption={createFilter({ stringify: option => option.label })}
         styles={customStyles}
+        {...rest}
       />
     );
   }

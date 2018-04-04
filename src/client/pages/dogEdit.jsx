@@ -97,7 +97,7 @@ class DogEditPage extends React.Component<Props> {
 
   handleSubmit() {
     // eslint-disable-next-line
-    this.props.updateDog(JSON.stringify(this.state))
+    this.props.updateDog(this.state)
       .then(() => {
         // TODO: Proper window notification
       }).catch((err) => {
@@ -109,10 +109,10 @@ class DogEditPage extends React.Component<Props> {
   render() {
     return (
       <div>
-        <span styleName="my-class">Dog Edit Page</span>
+        <span styleName="my-class">Edit Dog</span>
         {/* <button className="btn btn-primary">Back</button>
         <Button color="primary">Save</Button> */}
-        <Form onSubmit={this.handleSubmit}>
+        <Form>
           <br />
           <Row>
             <Col xs="3">
@@ -149,8 +149,8 @@ class DogEditPage extends React.Component<Props> {
                 <Select
                   options={[{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }]}
                   onSelectValue={this.updateGender}
-                  isSearchable={false}
                   value={this.state.gender}
+                  isSearchable={false}
                 />
               </FormGroup>
             </Col>
@@ -188,10 +188,10 @@ class DogEditPage extends React.Component<Props> {
           <h2>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <Link to={`/dogDetail/${this.state.id}`}>
-                <Button outline size="lg">BACK</Button>{' '}
+                <Button outline size="lg">BACK</Button>
               </Link>
               &nbsp;
-              <Button color="secondary" size="lg">SAVE</Button>{' '}
+              <Button color="secondary" size="lg" onClick={this.handleSubmit}>SAVE</Button>
               &nbsp;
               <Button color="primary" size="lg">REMOVE DOG</Button>
             </div>

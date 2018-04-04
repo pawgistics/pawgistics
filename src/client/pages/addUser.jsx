@@ -76,7 +76,7 @@ class AddUserPage extends React.Component {
 
   handleSubmit() {
     // eslint-disable-next-line
-    this.props.postDog(JSON.stringify(this.state))
+    this.props.postDog(this.state)
       .then(() => {
         // TODO: Proper window notification
       }).catch((err) => {
@@ -87,10 +87,10 @@ class AddUserPage extends React.Component {
   render() {
     return (
       <div>
-        <span styleName="my-class">Add User Page</span>
+        <span styleName="my-class">Add User</span>
         {/* <button className="btn btn-primary">Back</button>
         <Button color="primary">Save</Button> */}
-        <Form onSubmit={this.handleSubmit}>
+        <Form>
           <br />
           <Row>
             <Col xs="3">
@@ -157,7 +157,7 @@ class AddUserPage extends React.Component {
           <h2>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <Link to="/userManagement">
-                <Button color="secondary" size="lg">BACK</Button>{' '}
+                <Button color="secondary" size="lg">BACK</Button>
               </Link>
               &nbsp;
               <Button color="primary" size="lg" onClick={this.handleSubmit}>SAVE</Button>

@@ -4,6 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Label, Form, Row, Col, InputGroup, InputGroupAddon, FormGroup, Input, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import AdminControl from '../containers/admin-control';
 import { getDogs } from '../api/volunteer';
 import DogDetailTable from '../containers/dog-detail-table';
 import '../styles/pages/userDetail.m.scss';
@@ -29,7 +30,7 @@ class DogManagementPage extends React.Component<Props> {
   render() {
     return (
       <div>
-        <span styleName="my-class">Dog Managment Page </span>
+        <span styleName="my-class">Dogs</span>
         <Form>
           <br />
           <Col>
@@ -78,9 +79,11 @@ class DogManagementPage extends React.Component<Props> {
         <div className="footer">
           <h2>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <Link to="/addDog">
-                <Button color="secondary" size="lg">ADD DOG</Button>{' '}
-              </Link>
+              <AdminControl>
+                <Link to="/addDog">
+                  <Button color="secondary" size="lg">ADD DOG</Button>
+                </Link>
+              </AdminControl>
             </div>
           </h2>
         </div>

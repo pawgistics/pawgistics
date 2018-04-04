@@ -5,6 +5,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { InputGroupAddon, InputGroup, Row, Col, Button, Form, FormGroup, ListGroup, ListGroupItem, Input, Table } from 'reactstrap';
+import AdminControl from '../containers/admin-control';
 import { getDog } from '../api/volunteer';
 import '../styles/pages/dogDetail.m.scss';
 // must fix this later.
@@ -49,7 +50,7 @@ class DogDetailPage extends React.Component<Props> {
     const active = this.state.dog.active ? 'Active' : 'Inactive';
     return (
       <div>
-        <span styleName="my-class">Dog Detail Page</span>
+        <span styleName="my-class">Dog Details</span>
         {/* <button className="btn btn-primary">Back</button>
         <Button color="primary">Save</Button> */}
         <Form>
@@ -138,12 +139,14 @@ class DogDetailPage extends React.Component<Props> {
           <h2>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <Link to="/dogManagement">
-                <Button color="secondary" size="lg">BACK</Button>{' '}
+                <Button color="secondary" size="lg">BACK</Button>
               </Link>
               &nbsp;
-              <Link to={`/dogEdit/${this.state.dog.id}`}>
-                <Button color="primary" size="lg">EDIT</Button>{' '}
-              </Link>
+              <AdminControl>
+                <Link to={`/dogEdit/${this.state.dog.id}`}>
+                  <Button color="primary" size="lg">EDIT</Button>
+                </Link>
+              </AdminControl>
             </div>
           </h2>
         </div>

@@ -17,7 +17,7 @@ class UserEditPage extends React.Component<Props> {
       name: null,
       email: null,
       phone: null,
-      gender: 'M',
+      gender: null,
       admin: null,
       dob: null,
     };
@@ -89,7 +89,7 @@ class UserEditPage extends React.Component<Props> {
   // eslint-disable-next-line
   handleSubmit() {
     // eslint-disable-next-line
-    // this.props.postDog(JSON.stringify(this.state))
+    // this.props.postDog(this.state)
     //   .then(() => {
     //     // TODO: Proper window notification
     //   }).catch((err) => {
@@ -100,10 +100,10 @@ class UserEditPage extends React.Component<Props> {
   render() {
     return (
       <div>
-        <span styleName="my-class">User Edit Page</span>
+        <span styleName="my-class">Edit User</span>
         {/* <button className="btn btn-primary">Back</button>
         <Button color="primary">Save</Button> */}
-        <Form onSubmit={this.handleSubmit}>
+        <Form>
           <br />
           <Row>
             <Col xs="3">
@@ -145,6 +145,7 @@ class UserEditPage extends React.Component<Props> {
                 <Select
                   options={[{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }]}
                   onSelectValue={this.updateGender}
+                  value={this.state.gender}
                   isSearchable={false}
                 />
               </FormGroup>
@@ -153,6 +154,7 @@ class UserEditPage extends React.Component<Props> {
                 <Select
                   options={[{ value: true, label: 'Administrator' }, { value: false, label: 'Volunteer' }]}
                   onSelectValue={this.updateAdmin}
+                  value={this.state.admin}
                   isSearchable={false}
                 />
               </FormGroup>
@@ -181,7 +183,7 @@ class UserEditPage extends React.Component<Props> {
             </tbody>
           </Table>
           <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <Button color="secondary" size="lg">Update training history</Button>{' '}
+            <Button color="secondary" size="lg">Update training history</Button>
           </div>
         </div>
         <br />
@@ -215,10 +217,10 @@ class UserEditPage extends React.Component<Props> {
           <h2>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <Link to={`/userDetail/${this.state.id}`}>
-                <Button outline size="lg">BACK</Button>{' '}
+                <Button outline size="lg">BACK</Button>
               </Link>
               &nbsp;
-              <Button color="secondary" size="lg">SAVE</Button>{' '}
+              <Button color="secondary" size="lg">SAVE</Button>
               &nbsp;
               <Button color="primary" size="lg">REMOVE USER</Button>
             </div>

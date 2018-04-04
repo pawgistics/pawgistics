@@ -122,6 +122,7 @@ export default (sequelize, Sequelize) => {
     if (dog.litter_id) dog.litter_id = hashidsLitters.decode(dog.litter_id);
     if (dog.instructor_id) dog.instructor_id = hashidsUsers.decode(dog.instructor_id);
     if (dog.foster_group_id) dog.foster_id = hashidsFosters.decode(dog.foster_id);
+
     return Dog.update({
       chip: dog.chip,
       name: dog.name,
@@ -133,9 +134,7 @@ export default (sequelize, Sequelize) => {
       uri: dog.uri,
     }, {
       where: {
-        id: {
-          [Sequelize.Op.eq]: dog.id,
-        },
+        id: dog.id,
       },
     });
   };

@@ -36,7 +36,7 @@ class MyProfilePage extends React.Component<Props> {
   render() {
     return (
       <div>
-        <span styleName="my-class">My Profile Page</span>
+        <span styleName="my-class">My Profile</span>
         {/* <button className="btn btn-primary">Back</button>
         <Button color="primary">Save</Button> */}
         <Form>
@@ -66,7 +66,7 @@ class MyProfilePage extends React.Component<Props> {
                           pathname: `/dogEdit/${this.state.dog.chipId}`,
                         }}
                       > */}
-                      <Button>Edit</Button>{' '}
+                      <Button>Edit</Button>
                       {/* </Link> */}
                     </div>
                   </Form>
@@ -131,7 +131,7 @@ class MyProfilePage extends React.Component<Props> {
         <div className="footer">
           <h2>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <Button color="secondary" size="lg">BACK</Button>{' '}
+              <Button color="secondary" size="lg">BACK</Button>
             </div>
           </h2>
         </div>

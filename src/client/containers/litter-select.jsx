@@ -13,13 +13,13 @@ type Props = {
   onSelectValue: (string) => void,
 };
 
-const LitterSelect = ({ getLitters, onSelectValue }: Props) => (
+const LitterSelect = ({ getLitters, ...rest }: Props) => (
   <PromiseOptionsSelect
-    optionsPromise={getLitters().then(litters => _.map(litters, litter => ({
+    options={getLitters().then(litters => _.map(litters, litter => ({
         value: litter.id,
         label: litter.name,
       })))}
-    onSelectValue={onSelectValue}
+    {...rest}
   />
 );
 

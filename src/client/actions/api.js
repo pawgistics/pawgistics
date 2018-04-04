@@ -15,7 +15,7 @@ export default function apiCall(method, route, body) {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${getState().auth.token}`,
         },
-        body,
+        body: body ? JSON.stringify(body) : undefined,
       }).then(response =>
         response.json()
           .then(responseData => ({ responseData, response }))

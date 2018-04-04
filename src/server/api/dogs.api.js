@@ -18,6 +18,7 @@ dogsRouter.route('/')
   })
   .post(protectRoute({ requireAdmin: true }), (req, res) => {
     (async () => {
+      console.log(req.body);
       const dog = await Dog.createFromObject(req.body);
       if (req.body.data_uri) {
         const s3uri = `https://s3.amazonaws.com/canine-assistants-assets/${dog.hashid}`;
@@ -44,8 +45,9 @@ dogsRouter.route('/:id')
       .then(dog => res.status(200).json(dog))
       .catch(() => res.status(500).json({ message: 'An error occurred.' }));
   })
-  .put(protectRoute({ requireAdmin: true }), (req, res) => {
+  .post(protectRoute({ requireAdmin: true }), (req, res) => {
     (async () => {
+      console.log(req.body);
       if (req.body.data_uri) {
         const s3uri = `https://s3.amazonaws.com/canine-assistants-assets/${req.body.id}`;
         console.log(s3uri);
@@ -61,7 +63,7 @@ dogsRouter.route('/:id')
       }
       Dog.updateFromObject(req.body)
         .then(res.status(200).json({ success: true }));
-    })
+    })()
       .catch(err => res.status(500).json({ success: false, message: err.message }));
   });
 

@@ -5,8 +5,7 @@ import React, { Component } from 'react';
 import Select from '../components/select';
 
 type Props = {
-  optionsPromise: Promise,
-  onSelectValue: (string) => void,
+  options: Promise,
 };
 
 type State = {
@@ -20,7 +19,7 @@ export default class PromiseOptionsSelect extends Component<Props, State> {
       options: [],
     };
 
-    this.props.optionsPromise.then((options) => {
+    this.props.options.then((options) => {
       this.setState({ options });
     }).catch((err) => {
       // eslint-disable-next-line no-console
@@ -28,11 +27,9 @@ export default class PromiseOptionsSelect extends Component<Props, State> {
     });
   }
   render() {
+    const { options, ...rest } = this.props;
     return (
-      <Select
-        options={this.state.options}
-        onSelectValue={this.props.onSelectValue}
-      />
+      <Select options={this.state.options} {...rest} />
     );
   }
 }
