@@ -3,7 +3,8 @@
 import _ from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Container, Label, Form, Row, Col, FormGroup, Input, Button } from 'reactstrap';
+// import NaviconRound from 'react-icons/lib/io/navicon-round';
+import { Label, Form, Row, Col, FormGroup, Input, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { getDogs } from '../api/volunteer';
 import AdminControl from '../containers/admin-control';
@@ -86,8 +87,8 @@ class DogsPage extends React.Component<Props> {
 
   render() {
     return (
-      <Container fluid>
-        <h1 className="display-4 mb-4">Dogs</h1>
+      <>
+        <h1 className="display-4 mb-4 d-inline-block align-middle">Dogs</h1>
         <Form>
           <Row className="align-items-center mb-2">
             <Col xs="auto" className="pr-0 text-nowrap">
@@ -134,14 +135,14 @@ class DogsPage extends React.Component<Props> {
         </Row>
         <AdminControl>
           <Row className="justify-content-center">
-            <Col sm="auto">
+            <Col xs="auto">
               <Link to={ADD_DOG_PAGE_ROUTE}>
                 <Button color="secondary" size="lg">ADD DOG</Button>
               </Link>
             </Col>
           </Row>
         </AdminControl>
-      </Container>
+      </>
     );
   }
 }

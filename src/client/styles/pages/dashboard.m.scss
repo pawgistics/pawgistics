@@ -1,23 +1,35 @@
 @import '../global/variables.scss';
 
+.overlay {
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 998;
+}
+
 .content {
     width: calc(100% - #{$sidebar-width});
-    padding: 20px;
+    padding: 20px 30px;
     min-height: 100vh;
     transition: all 0.3s;
-    position: absolute;
-    top: 0;
-    right: 0;
+    margin-left: $sidebar-width;
 }
-.content:global(.active) {
-    width: 100%;
+.sidebar_btn {
+  display: none
 }
 
 @media (max-width: 768px) {
   .content {
     width: 100%;
+    margin-left: 0;
   }
   .content:global(.active) {
-    width: calc(100% - #{$sidebar-width});
+    margin-left: $sidebar-width;
+  }
+  .sidebar_btn {
+    display: inline-block;
   }
 }

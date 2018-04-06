@@ -6,15 +6,15 @@ import { connect } from 'react-redux';
 
 import { getInstructors as _getInstructors } from '../api/volunteer';
 
-import PromiseOptionsSelect from './promise-options-select';
+import AsyncOptionsSelect from './async-options-select';
 
 type Props = {
   getInstructors: () => Promise,
 };
 
 const InstructorSelect = ({ getInstructors, ...rest }: Props) => (
-  <PromiseOptionsSelect
-    options={getInstructors().then(instructors => _.map(instructors, instructor => ({
+  <AsyncOptionsSelect
+    options={() => getInstructors().then(instructors => _.map(instructors, instructor => ({
         value: instructor.id,
         label: instructor.name,
       })))}

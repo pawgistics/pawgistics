@@ -29,7 +29,7 @@ class ReturnDogPage extends React.Component<Props> {
 
   render() {
     return (
-      <div>
+      <>
         <h1 className="display-4">Return Dog</h1>
         {/* <button className="btn btn-primary">Back</button>
         <Button color="primary">Save</Button> */}
@@ -485,7 +485,7 @@ class ReturnDogPage extends React.Component<Props> {
             </div>
           </div>
         </Form>
-      </div>
+      </>
     );
   }
 }

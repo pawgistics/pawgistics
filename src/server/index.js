@@ -49,7 +49,7 @@ if (!isStaging) {
           '<meta name="viewport" content="width=device-width,initial-scale=1">' +
         '</head>' +
         '<body>' +
-          '<div class="app container-fluid"></div>' +
+          '<div class="app"></div>' +
           '<script src="http://localhost:7000/dist/js/bundle.js"></script>' +
         '</body>' +
       '</html>');

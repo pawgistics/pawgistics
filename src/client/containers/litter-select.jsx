@@ -6,15 +6,15 @@ import { connect } from 'react-redux';
 
 import { getLitters as _getLitters } from '../api/volunteer';
 
-import PromiseOptionsSelect from './promise-options-select';
+import AsyncOptionsSelect from './async-options-select';
 
 type Props = {
   getLitters: () => Promise,
 };
 
 const LitterSelect = ({ getLitters, ...rest }: Props) => (
-  <PromiseOptionsSelect
-    options={getLitters().then(litters => _.map(litters, litter => ({
+  <AsyncOptionsSelect
+    options={() => getLitters().then(litters => _.map(litters, litter => ({
         value: litter.id,
         label: litter.name,
       })))}

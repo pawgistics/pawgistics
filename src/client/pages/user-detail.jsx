@@ -30,7 +30,7 @@ class UserDetailPage extends React.Component<Props> {
 
   render() {
     return (
-      <div>
+      <>
         <h1 className="display-4">User Details</h1>
         {/* <button className="btn btn-primary">Back</button>
         <Button color="primary">Save</Button> */}
@@ -119,7 +119,7 @@ class UserDetailPage extends React.Component<Props> {
             </div>
           </h2>
         </div>
-      </div>
+      </>
     );
   }
 }

@@ -5,21 +5,21 @@ import React, { Component } from 'react';
 import Select from '../components/select';
 
 type Props = {
-  options: Promise,
+  options: () => Promise,
 };
 
 type State = {
   options: [],
 };
 
-export default class PromiseOptionsSelect extends Component<Props, State> {
+export default class AsyncOptionsSelect extends Component<Props, State> {
   constructor(props) {
     super(props);
     this.state = {
       options: [],
     };
 
-    this.props.options.then((options) => {
+    this.props.options().then((options) => {
       this.setState({ options });
     }).catch((err) => {
       // eslint-disable-next-line no-console

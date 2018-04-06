@@ -25,11 +25,12 @@ import '../styles/components/sidebar.m.scss';
 
 type Props = {
   // isAdmin: boolean,
+  active: boolean,
   handleLogout: () => void,
 }
 
-const Sidebar = ({ /* isAdmin, */ handleLogout }: Props) => (
-  <nav styleName="sidebar">
+const Sidebar = ({ /* isAdmin, */ active, handleLogout }: Props) => (
+  <nav styleName="sidebar" className={active ? 'active' : ''}>
     <div styleName="header">
       <h3>Pawgistics</h3>
     </div>

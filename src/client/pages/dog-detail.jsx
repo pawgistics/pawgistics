@@ -46,7 +46,7 @@ class DogDetailPage extends React.Component<Props> {
   render() {
     const active = this.state.dog.active ? 'Active' : 'Inactive';
     return (
-      <div>
+      <>
         <h1 className="display-4">Dog Details</h1>
         {/* <button className="btn btn-primary">Back</button>
         <Button color="primary">Save</Button> */}
@@ -141,7 +141,7 @@ class DogDetailPage extends React.Component<Props> {
             </div>
           </h2>
         </div>
-      </div>
+      </>
     );
   }
 }

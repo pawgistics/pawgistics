@@ -29,7 +29,7 @@ const DetailTable = ({
     <thead>
       <tr>
         {headings.map(heading =>
-          <th className="col-auto text-nowrap align-middle" key={heading}>{heading}</th>)}
+          <th className="text-nowrap align-middle" key={heading}>{heading}</th>)}
         <th className="col text-nowrap align-middle" />
       </tr>
     </thead>
@@ -40,9 +40,9 @@ const DetailTable = ({
           styleName="row"
           onClick={e => e.currentTarget.lastChild.firstChild.firstChild.click()}
         >
-          <th scope="row" className="col-auto text-nowrap align-middle">{item[keys[0]]}</th>
+          <th scope="row" className="text-nowrap align-middle">{item[keys[0]]}</th>
           {_.map(_.drop(keys), (key, kIndex) => (
-            <td className="col-auto text-nowrap align-middle" key={kIndex}>{item[key]}</td>
+            <td className="text-nowrap align-middle" key={kIndex}>{item[key]}</td>
           ))}
           <td className="col text-nowrap align-middle">
             <div className="d-flex">

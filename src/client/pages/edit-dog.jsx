@@ -110,7 +110,7 @@ class EditDogPage extends React.Component<Props> {
 
   render() {
     return (
-      <div>
+      <>
         <h1 className="display-4">Edit Dog</h1>
         {/* <button className="btn btn-primary">Back</button>
         <Button color="primary">Save</Button> */}
@@ -150,8 +150,8 @@ class EditDogPage extends React.Component<Props> {
                 <dt>Gender</dt>
                 <Select
                   options={[{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }]}
-                  onSelectValue={this.updateGender}
                   value={this.state.gender}
+                  onSelectValue={this.updateGender}
                   isSearchable={false}
                 />
               </FormGroup>
@@ -160,15 +160,15 @@ class EditDogPage extends React.Component<Props> {
               <FormGroup>
                 <dt>Instructor</dt>
                 <InstructorSelect
-                  onSelectValue={this.updateInstructorId}
                   value={this.state.instructor_id}
+                  onSelectValue={this.updateInstructorId}
                 />
               </FormGroup>
               <FormGroup>
                 <dt>Litter</dt>
                 <LitterSelect
-                  onSelectValue={this.updateLitterId}
                   value={this.state.litter_id}
+                  onSelectValue={this.updateLitterId}
                 />
               </FormGroup>
               <FormGroup>
@@ -199,7 +199,7 @@ class EditDogPage extends React.Component<Props> {
             </div>
           </h2>
         </div>
-      </div>
+      </>
     );
   }
 }

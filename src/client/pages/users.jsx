@@ -3,7 +3,7 @@
 import _ from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Container, Label, Form, Row, Col, FormGroup, Input, Button } from 'reactstrap';
+import { Label, Form, Row, Col, FormGroup, Input, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { getUsers } from '../api/volunteer';
 import AdminControl from '../containers/admin-control';
@@ -71,7 +71,7 @@ class UsersPage extends React.Component<Props> {
 
   render() {
     return (
-      <Container fluid>
+      <>
         <h1 className="display-4 mb-4">Users</h1>
         <Form>
           <Row className="align-items-center mb-2">
@@ -109,14 +109,14 @@ class UsersPage extends React.Component<Props> {
         </Row>
         <AdminControl>
           <Row className="justify-content-center">
-            <Col sm="auto">
+            <Col xs="auto">
               <Link to={ADD_USER_PAGE_ROUTE}>
                 <Button color="secondary" size="lg">ADD USER</Button>
               </Link>
             </Col>
           </Row>
         </AdminControl>
-      </Container>
+      </>
     );
   }
 }
