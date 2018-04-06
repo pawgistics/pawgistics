@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Switch, Route, Redirect, withRouter } from 'react-router';
 import LoginPage from './pages/login';
 import DashboardPage from './pages/dashboard';
-import { LOGIN_PAGE_ROUTE } from '../shared/routes';
+import { LOGIN_PAGE_ROUTE } from './routes';
 
 type Props = {
   isAuthenticated: boolean,

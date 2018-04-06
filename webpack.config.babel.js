@@ -36,13 +36,8 @@ export default {
         options: {
           babelrc: false,
           presets: [
-            [
-              '@babel/preset-env',
-              {
-                modules: false,
-              },
-            ],
-            '@babel/preset-react',
+            ['@babel/preset-env', { modules: false }],
+            ['@babel/preset-react', { development: process.env.NODE_ENV === 'development' }],
             '@babel/preset-flow',
           ],
           plugins: removeEmpty([

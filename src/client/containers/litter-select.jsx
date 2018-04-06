@@ -10,7 +10,6 @@ import PromiseOptionsSelect from './promise-options-select';
 
 type Props = {
   getLitters: () => Promise,
-  onSelectValue: (string) => void,
 };
 
 const LitterSelect = ({ getLitters, ...rest }: Props) => (

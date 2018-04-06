@@ -7,7 +7,8 @@ import SelectBase, { createFilter } from 'react-select';
 type Props = {
   options?: [],
   value?: any,
-  onSelectValue?: (any) => void
+  onSelectValue?: (any) => void,
+  inline?: boolean,
 };
 
 type State = {
@@ -16,7 +17,7 @@ type State = {
   value: ?{},
 };
 
-const customStyles = {
+const customStyles = props => ({
   control: (base, { isDisabled, isFocused }) => ({
     ...base,
     backgroundColor: isDisabled ? '#e9ecef' : '#fff',
@@ -36,6 +37,7 @@ const customStyles = {
   }),
   container: base => ({
     ...base,
+    width: props.fixedWidth ? '200px' : undefined,
     color: '#495057',
   }),
   placeholder: base => ({
@@ -46,7 +48,7 @@ const customStyles = {
     ...base,
     color: 'inherit',
   }),
-};
+});
 
 export default class Select extends Component<Props, State> {
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -110,7 +112,7 @@ export default class Select extends Component<Props, State> {
         value={this.state.value}
         onChange={this.updateSelect}
         filterOption={createFilter({ stringify: option => option.label })}
-        styles={customStyles}
+        styles={customStyles(rest)}
         {...rest}
       />
     );

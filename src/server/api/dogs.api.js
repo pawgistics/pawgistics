@@ -3,16 +3,14 @@ import express from 'express';
 import protectRoute from './auth/protectRoute';
 import models from '../models';
 import { ImageUploader } from '../util/imageUploader';
-// import { hashidsDogs } from '../util/hashids';
 
 const Dog = models.dog;
-const { Op } = models.Sequelize;
 
 const dogsRouter = express.Router();
 
 dogsRouter.route('/')
   .get(protectRoute(), (req, res) => {
-    Dog.all()
+    Dog.listWithFilter(req.query)
       .then(dogs => res.status(200).json(dogs))
       .catch(() => res.status(500).json({ message: 'An error occurred.' }));
   })
@@ -65,17 +63,5 @@ dogsRouter.route('/:id')
     })()
       .catch(err => res.status(500).json({ success: false, message: err.message }));
   });
-
-dogsRouter.get('/search/:name', protectRoute(), (req, res) => {
-  Dog.findAll({
-    where: {
-      name: {
-        [Op.like]: `%${req.params.name}%`,
-      },
-    },
-  })
-    .then(dogs => res.status(200).json(dogs))
-    .catch(() => res.status(500).json({ message: 'An error occurred.' }));
-});
 
 export default dogsRouter;

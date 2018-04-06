@@ -4,25 +4,24 @@ import _ from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { getAdmins as _getAdmins } from '../api/volunteer';
+import { getInstructors as _getInstructors } from '../api/volunteer';
 
 import PromiseOptionsSelect from './promise-options-select';
 
 type Props = {
-  getAdmins: () => Promise,
-  onSelectValue: (string) => void,
+  getInstructors: () => Promise,
 };
 
-const InstructorSelect = ({ getAdmins, ...rest }: Props) => (
+const InstructorSelect = ({ getInstructors, ...rest }: Props) => (
   <PromiseOptionsSelect
-    options={getAdmins().then(admins => _.map(admins, admin => ({
-        value: admin.id,
-        label: `${admin.first_name} ${admin.last_name}`,
+    options={getInstructors().then(instructors => _.map(instructors, instructor => ({
+        value: instructor.id,
+        label: instructor.name,
       })))}
     {...rest}
   />
 );
 
 export default connect(null, dispatch => ({
-  getAdmins: () => dispatch(_getAdmins()),
+  getInstructors: () => dispatch(_getInstructors()),
 }))(InstructorSelect);

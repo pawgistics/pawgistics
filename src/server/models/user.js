@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import argon2 from 'argon2';
 import { hashidsUsers, hashidsFosters } from '../util/hashids';
 
@@ -110,6 +111,25 @@ export default (sequelize, Sequelize) => {
   };
 
   User.findByHashid = hashid => User.scope('detail').findById(hashidsUsers.decode(hashid)[0]);
+
+  User.listWithFilter = filter => User.findAll({
+    where: _.omitBy({
+      [sequelize.Op.or]: filter.name ? [
+        {
+          first_name: {
+            [sequelize.Op.like]: `%${filter.name}%`,
+          },
+        },
+        {
+          last_name: {
+            [sequelize.Op.like]: `%${filter.name}%`,
+          },
+        },
+      ] : undefined,
+      // eslint-disable-next-line no-nested-ternary
+      admin: filter.user_type === 'instructor' ? true : filter.user_type === 'volunteer' ? false : undefined,
+    }, _.isUndefined),
+  });
 
   User.prototype.toJSON = function toJSON() {
     const user = this.dataValues;

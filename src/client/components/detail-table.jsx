@@ -25,7 +25,7 @@ const DetailTable = ({
   items,
   detailRoute,
 }: Props) => (
-  <Table hover>
+  <Table hover className="mb-0">
     <thead>
       <tr>
         {headings.map(heading =>

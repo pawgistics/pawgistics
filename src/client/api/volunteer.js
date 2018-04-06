@@ -1,24 +1,31 @@
 import apiCall from '../actions/api';
+import {
+  dogsApiRoute,
+  dogApiRoute,
+  usersApiRoute,
+  userApiRoute,
+  INSTRUCTORS_API_ROUTE,
+} from '../routes';
 
 // eslint-disable-next-line import/prefer-default-export
-export function getDogs() {
-  return apiCall('GET', '/api/dogs', null);
+export function getDogs(filters) {
+  return apiCall('GET', dogsApiRoute(filters), null);
 }
 
 export function getDog(id) {
-  return apiCall('GET', `/api/dogs/${id}`, null);
+  return apiCall('GET', dogApiRoute(id), null);
 }
 
-export function getUsers() {
-  return apiCall('GET', '/api/users', null);
+export function getUsers(filters) {
+  return apiCall('GET', usersApiRoute(filters), null);
 }
 
 export function getUser(id) {
-  return apiCall('GET', `/api/users/${id}`, null);
+  return apiCall('GET', userApiRoute(id), null);
 }
 
-export function getAdmins() {
-  return apiCall('GET', '/api/users/admin', null);
+export function getInstructors() {
+  return apiCall('GET', INSTRUCTORS_API_ROUTE, null);
 }
 
 export function getLitters() {

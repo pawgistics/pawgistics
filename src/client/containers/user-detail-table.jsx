@@ -5,6 +5,8 @@ import _ from 'lodash';
 
 import DetailTable from '../components/detail-table';
 
+import { userDetailPageRoute } from '../routes';
+
 type Props = { users: [{}] }
 
 const UserDetailTable = ({ users }: Props) => (
@@ -13,7 +15,7 @@ const UserDetailTable = ({ users }: Props) => (
     keys={['first_name', 'last_name', 'email']}
     items={_.map(users, user => _.assign({}, user, { custody: '' }))}
     detailRoute={{
-      template: id => `/userDetail/${id}`,
+      template: userDetailPageRoute,
       key: 'id',
     }}
   />

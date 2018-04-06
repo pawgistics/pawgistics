@@ -1,18 +1,17 @@
 /* eslint-disable no-console */
+import _ from 'lodash';
 import express from 'express';
 
 import protectRoute from './auth/protectRoute';
 import models from '../models';
-// import createUser from '../util/user';
 
 const User = models.user;
-const { Op } = models.Sequelize;
 
 const usersRouter = express.Router();
 
 usersRouter.route('/')
   .get(protectRoute(), (req, res) => {
-    User.all()
+    User.listWithFilter(req.query)
       .then(users => res.status(200).json(users))
       .catch(() => res.status(500).json({ message: 'An error occurred.' }));
   })
@@ -31,7 +30,7 @@ usersRouter.route('/')
       .catch(err => res.status(400).json({ success: false, message: err }));
   });
 
-usersRouter.route('/admin')
+usersRouter.route('/instructors')
   .get(protectRoute(), (req, res) => {
     User.findAll({
       attributes: ['id', 'first_name', 'last_name'],
@@ -39,34 +38,19 @@ usersRouter.route('/admin')
         admin: true,
       },
     })
-      .then(users => res.status(200).json(users))
+      .then(instructors => res.status(200).json(_.map(instructors, (instructor) => {
+        const instructorJSON = instructor.toJSON();
+        return {
+          id: instructorJSON.id,
+          name: `${instructorJSON.first_name} ${instructorJSON.last_name}`,
+        };
+      })))
       .catch(() => res.status(500).json({ message: 'An error occurred.' }));
   });
 
 usersRouter.get('/:id', protectRoute(), (req, res) => {
   User.findByHashid(req.params.id)
     .then(user => res.status(200).json(user))
-    .catch(() => res.status(500).json({ message: 'An error occurred.' }));
-});
-
-usersRouter.get('/search/name/:name', protectRoute(), (req, res) => {
-  User.findAll({
-    where: {
-      [Op.or]: [
-        {
-          first_name: {
-            [Op.like]: `%${req.params.name}%`,
-          },
-        },
-        {
-          last_name: {
-            [Op.like]: `%${req.params.name}%`,
-          },
-        },
-      ],
-    },
-  })
-    .then(users => res.status(200).json(users))
     .catch(() => res.status(500).json({ message: 'An error occurred.' }));
 });
 

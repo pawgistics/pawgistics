@@ -4,14 +4,14 @@ import React from 'react';
 import { Redirect } from 'react-router';
 // import { connect } from 'react-redux';
 
-import { DOG_MANAGEMENT_PAGE_ROUTE } from '../../shared/routes';
+import { DOGS_PAGE_ROUTE } from '../routes';
 
 // type Props = {
 //   isAdmin: boolean,
 // }
 
 const HomePage = (/* { isAdmin }: Props */) => (
-  <Redirect to={DOG_MANAGEMENT_PAGE_ROUTE} />
+  <Redirect to={DOGS_PAGE_ROUTE} />
 );
 
 // const mapStateToProps = state => ({

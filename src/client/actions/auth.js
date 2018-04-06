@@ -3,7 +3,7 @@
 import 'isomorphic-fetch';
 
 import { createAction } from 'redux-actions';
-import { apiLoginRoute } from '../../shared/routes';
+import { LOGIN_API_ROUTE } from '../routes';
 
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
@@ -16,7 +16,7 @@ export function loginUser(creds) {
   return dispatch =>
     // eslint-disable-next-line compat/compat
     new Promise((resolve, reject) => {
-      fetch(apiLoginRoute, {
+      fetch(LOGIN_API_ROUTE, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(creds),

@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { hashidsDogs, hashidsUsers, hashidsLitters, hashidsFosters } from '../util/hashids';
 
 export default (sequelize, Sequelize) => {
@@ -87,6 +88,16 @@ export default (sequelize, Sequelize) => {
   };
 
   Dog.findByHashid = (hashid, ...rest) => Dog.scope('detail').findById(hashidsDogs.decode(hashid)[0], ...rest);
+
+  Dog.listWithFilter = filter => Dog.findAll({
+    where: _.pickBy({
+      name: filter.name ? {
+        [sequelize.Op.like]: `%${filter.name}%`,
+      } : undefined,
+      litter_id: filter.litter_id ? hashidsLitters.decode(filter.litter_id) : undefined,
+      instructor_id: filter.instructor_id ? hashidsUsers.decode(filter.instructor_id) : undefined,
+    }),
+  });
 
   // Dog.unHashids = (origDog) => {
   //   const dog = Object.assign({}, origDog);
