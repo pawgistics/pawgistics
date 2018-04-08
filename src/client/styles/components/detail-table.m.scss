@@ -1,8 +1,54 @@
-.link-unstyled, .link-unstyled:link, .link-unstyled:hover {
-  color: inherit;
-  text-decoration: inherit;
+.table {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: [header-start] auto [header-end] auto;
+  overflow: hidden;
+}
+
+.header, .row {
+  display: flex;
+  padding: 0.75rem;
+  white-space: nowrap;
+  align-items: center;
+  position: relative;
+  min-width: 0;
+
+  span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.header {
+  font-weight: bold;
+  border-top: 1px solid #dee2e6;
+  border-bottom: 2px solid #dee2e6;
+  grid-row: header;
 }
 
 .row {
-  cursor: pointer;
+  border-bottom: 1px solid #dee2e6;
+  
+  &.clickable {
+    cursor: pointer;
+    
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: -1000%;
+      left: -1000%;
+      z-index: -1;
+    }
+    
+    &:hover::before {
+      background-color: rgba(0,0,0,.075);
+    }
+  }
+}
+
+.link-unstyled, .link-unstyled:link, .link-unstyled:hover {
+  color: inherit;
+  text-decoration: inherit;
 }

@@ -17,7 +17,7 @@ type State = {
   value: ?{},
 };
 
-const customStyles = props => ({
+const customStyles = {
   control: (base, { isDisabled, isFocused }) => ({
     ...base,
     backgroundColor: isDisabled ? '#e9ecef' : '#fff',
@@ -37,7 +37,6 @@ const customStyles = props => ({
   }),
   container: base => ({
     ...base,
-    width: props.fixedWidth ? '200px' : undefined,
     color: '#495057',
   }),
   placeholder: base => ({
@@ -48,7 +47,7 @@ const customStyles = props => ({
     ...base,
     color: 'inherit',
   }),
-});
+};
 
 export default class Select extends Component<Props, State> {
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -112,7 +111,7 @@ export default class Select extends Component<Props, State> {
         value={this.state.value}
         onChange={this.updateSelect}
         filterOption={createFilter({ stringify: option => option.label })}
-        styles={customStyles(rest)}
+        styles={customStyles}
         {...rest}
       />
     );

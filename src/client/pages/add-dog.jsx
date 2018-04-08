@@ -85,7 +85,7 @@ class AddDogPage extends React.Component<Props> {
   render() {
     return (
       <>
-        <h1 className="display-4">Add Dog</h1>
+        <span className="title-text">Add Dog</span>
         {/* <button className="btn btn-primary">Back</button>
         <Button color="primary">Save</Button> */}
         <Form>

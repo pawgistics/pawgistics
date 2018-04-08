@@ -29,7 +29,7 @@ class FostersPage extends React.Component<Props> {
   render() {
     return (
       <Form>
-        <h1 className="display-4">Fosters</h1>
+        <span className="title-text">Fosters</span>
         {/* <button className="btn btn-primary">Back</button>
         <Button color="primary">Save</Button> */}
         <div>

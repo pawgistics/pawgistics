@@ -72,12 +72,11 @@ class UsersPage extends React.Component<Props> {
   render() {
     return (
       <>
-        <h1 className="display-4 mb-4">Users</h1>
+        <span className="title-text">Users</span>
         <Form>
-          <Row className="align-items-center mb-2">
-            <Col xs="auto" className="pr-0 text-nowrap">
+          <Row noGutters className="align-items-center mb-2">
+            <Col xs="12" sm="6" lg="4" xl="3" className="pr-sm-2 mb-2 text-nowrap">
               <Select
-                fixedWidth
                 options={[
                   { value: 'instructor', label: 'Instructors' },
                   { value: 'volunteer', label: 'Volunteers' },
@@ -88,7 +87,7 @@ class UsersPage extends React.Component<Props> {
                 isSearchable={false}
               />
             </Col>
-            <Col xs="auto" className="pr-0 text-nowrap">
+            <Col xs="auto" className="pl-sm-2 pr-3 mb-2 text-nowrap">
               <FormGroup check inline className="mr-0">
                 <Label check>
                   <Input type="checkbox" />Include inactive

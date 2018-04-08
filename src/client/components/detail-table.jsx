@@ -4,7 +4,6 @@ import React from 'react';
 import _ from 'lodash';
 
 import ChevronRight from 'react-icons/lib/io/chevron-right';
-import { Table } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 import '../styles/components/detail-table.m.scss';
@@ -13,7 +12,7 @@ type Props = {
   headings: [string],
   keys: [string],
   items: [{}],
-  detailRoute: {
+  detailRoute?: {
     template: (string | number) => string,
     key: string
   }
@@ -25,44 +24,36 @@ const DetailTable = ({
   items,
   detailRoute,
 }: Props) => (
-  <Table hover className="mb-0">
-    <thead>
-      <tr>
-        {headings.map(heading =>
-          <th className="text-nowrap align-middle" key={heading}>{heading}</th>)}
-        <th className="col text-nowrap align-middle" />
-      </tr>
-    </thead>
-    <tbody>
-      {_.map(items, (item, index) => (
-        <tr
-          key={index}
-          styleName="row"
-          onClick={e => e.currentTarget.lastChild.firstChild.firstChild.click()}
-        >
-          <th scope="row" className="text-nowrap align-middle">{item[keys[0]]}</th>
-          {_.map(_.drop(keys), (key, kIndex) => (
-            <td className="text-nowrap align-middle" key={kIndex}>{item[key]}</td>
-          ))}
-          <td className="col text-nowrap align-middle">
-            <div className="d-flex">
+  <div styleName="table">
+    {headings.map(heading =>
+      <div styleName="header" key={heading}><span>{heading}</span></div>)}
+    {detailRoute && <div styleName="header" />}
+    {_.map(items, (item, index) => {
+      let linkRef;
+      return _.concat(_.map(keys, (key, kIndex) => (
+          // eslint-disable-next-line
+          <div styleName={`row${detailRoute ? ' clickable' : ''}`} key={kIndex} onClick={detailRoute && ((e) => linkRef.handleClick(e))}><span>{item[key]}</span></div>
+        )), detailRoute && (
+          <div styleName={`row${detailRoute ? ' clickable' : ''}`} key={`${index}_`} className="d-flex">
+            <span className="ml-auto">
               <Link
+                ref={(link) => { linkRef = link; }}
                 to={{
                   pathname: detailRoute.template(item[detailRoute.key]),
-                  // state: { item },
                 }}
-                // data={item}
-                className="ml-auto"
                 styleName="link-unstyled"
               >
                 <ChevronRight size="2em" />
               </Link>
-            </div>
-          </td>
-        </tr>
-      ))}
-    </tbody>
-  </Table>
+            </span>
+          </div>
+        ));
+    })}
+  </div>
 );
+
+DetailTable.defaultProps = {
+  detailRoute: null,
+};
 
 export default DetailTable;

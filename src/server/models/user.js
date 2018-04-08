@@ -2,16 +2,16 @@ import _ from 'lodash';
 import argon2 from 'argon2';
 import { hashidsUsers, hashidsFosters } from '../util/hashids';
 
-export default (sequelize, Sequelize) => {
-  const User = sequelize.define('user', {
+export default (Sequelize, DataTypes) => {
+  const User = Sequelize.define('user', {
     id: {
       autoIncrement: true,
       primaryKey: true,
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     email: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       notEmpty: true,
       allowNull: false,
       unique: true,
@@ -20,39 +20,39 @@ export default (sequelize, Sequelize) => {
       },
     },
     password: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       notEmpty: true,
       allowNull: false,
     },
     admin: {
-      type: Sequelize.BOOLEAN,
+      type: DataTypes.BOOLEAN,
       defaultValue: false,
       notEmpty: true,
       allowNull: false,
     },
     active: {
-      type: Sequelize.BOOLEAN,
+      type: DataTypes.BOOLEAN,
       defaultValue: true,
       notEmpty: true,
       allowNull: false,
     },
     first_name: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       // notEmpty: true,
       allowNull: false,
     },
     last_name: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       // notEmpty: true,
       allowNull: false,
     },
     phone_number: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       // notEmpty: true,
       allowNull: false,
     },
     uri: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       // notEmpty: true,
       allowNull: true,
     },
@@ -74,7 +74,7 @@ export default (sequelize, Sequelize) => {
     },
     defaultScope: {
       attributes: {
-        exclude: ['password'],
+        exclude: ['password', 'hashid'],
         include: ['foster_group_id'],
       },
     },
@@ -114,15 +114,15 @@ export default (sequelize, Sequelize) => {
 
   User.listWithFilter = filter => User.findAll({
     where: _.omitBy({
-      [sequelize.Op.or]: filter.name ? [
+      [Sequelize.Op.or]: filter.name ? [
         {
           first_name: {
-            [sequelize.Op.like]: `%${filter.name}%`,
+            [Sequelize.Op.like]: `%${filter.name}%`,
           },
         },
         {
           last_name: {
-            [sequelize.Op.like]: `%${filter.name}%`,
+            [Sequelize.Op.like]: `%${filter.name}%`,
           },
         },
       ] : undefined,
@@ -132,9 +132,22 @@ export default (sequelize, Sequelize) => {
   });
 
   User.prototype.toJSON = function toJSON() {
-    const user = this.dataValues;
+    // console.log(this);
+    const user = Sequelize.Model.prototype.toJSON.call(this);
+    // console.log(user);
 
-    if (user.id) user.id = hashidsUsers.encode(user.id);
+    if (user.id) user.id = user.hashid;
+    delete user.hashid;
+
+    // #####   CHEESY HACK    #####
+    // ##### THANKS SEQUELIZE #####
+    // eslint-disable-next-line no-underscore-dangle
+    if (this._options.attributes === undefined) {
+      user.name = `${user.first_name} ${user.last_name}`;
+      delete user.first_name;
+      delete user.last_name;
+    }
+
     if (user.foster_group_id) user.foster_group_id = hashidsFosters.encode(user.foster_group_id);
 
     return user;

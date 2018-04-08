@@ -1,18 +1,18 @@
 // @flow
 
 import React from 'react';
-// import { withRouter } from 'react-router';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { InputGroupAddon, InputGroup, Row, Col, Button, Form, FormGroup, ListGroup, ListGroupItem, Input, Table } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import { Row, Col, Button, Input } from 'reactstrap';
+import ResponsiveListGroup from '../containers/responsive-list-group';
+import OutingDetailTable from '../containers/outing-detail-table';
 import AdminControl from '../containers/admin-control';
 import { getDog } from '../api/volunteer';
-import '../styles/pages/dog-detail.m.scss';
+import '../styles/pages/detail-page.m.scss';
 
 import { DOGS_PAGE_ROUTE, editDogPageRoute } from '../routes';
 
 type Props = {
-  // data: Object,
   match: Object,
   getDog(id): Promise,
 }
@@ -44,103 +44,61 @@ class DogDetailPage extends React.Component<Props> {
   }
 
   render() {
-    const active = this.state.dog.active ? 'Active' : 'Inactive';
     return (
       <>
-        <h1 className="display-4">Dog Details</h1>
-        {/* <button className="btn btn-primary">Back</button>
-        <Button color="primary">Save</Button> */}
-        <Form>
-          <br />
-          <Row>
-            <Col xs="3">
-              <img src={this.state.dog.uri} alt={this.state.dog.name} className="border rounded" />
-            </Col>
-            <Col xs="4">
-              <ListGroup>
-                <ListGroupItem className="justify-content-between">Name: {this.state.dog.name} </ListGroupItem>
-                <ListGroupItem className="justify-content-between">Litter: {this.state.dog.litter.name} </ListGroupItem>
-                <ListGroupItem className="justify-content-between">Chip ID: {this.state.dog.chip} </ListGroupItem>
-                <ListGroupItem className="justify-content-between">Gender: {this.state.dog.gender} </ListGroupItem>
-              </ListGroup>
-            </Col>
-            <Col xs="4">
-              <FormGroup>
-                <ListGroup>
-                  <ListGroupItem className="justify-content-between">Instructor: {this.state.dog.instructor.first_name} {this.state.dog.instructor.last_name}</ListGroupItem>
-                  <ListGroupItem className="justify-content-between">Custody: Canine Assistants </ListGroupItem>
-                  <ListGroupItem className="justify-content-between">Status: {active} </ListGroupItem>
-                </ListGroup>
-              </FormGroup>
-            </Col>
-          </Row>
-        </Form>
-        <br />
-        <br />
-        <InputGroup>
-          <Input type="text" className="form-control" placeholder="Search using keywords" id="inputGroup" />
-          <InputGroupAddon addonType="append">
-            <Button>Search</Button>
-          </InputGroupAddon>
-        </InputGroup>
-        <br />
-        <Table hover>
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Name of person</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">10/10/17</th>
-              <td>Steve</td>
-              <td>Requested to walk Fido</td>
-            </tr>
-            <tr>
-              <th scope="row">10/10/17</th>
-              <td>Adam</td>
-              <td>Approved Steve to walk Fido</td>
-            </tr>
-            <tr>
-              <th scope="row">10/10/17</th>
-              <td>Steve</td>
-              <td>Signed Fido back in</td>
-            </tr>
-            <tr>
-              <th scope="row" />
-              <td />
-              <td />
-            </tr>
-            <tr>
-              <th scope="row" />
-              <td />
-              <td />
-            </tr>
-            <tr>
-              <th scope="row" />
-              <td />
-              <td />
-            </tr>
-          </tbody>
-        </Table>
-        <br />
-        <div className="footer">
-          <h2>
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <Link to={DOGS_PAGE_ROUTE}>
-                <Button color="secondary" size="lg">BACK</Button>
+        <span className="title-text">Dog Details</span>
+        <Row noGutters>
+          <Col className="d-flex mb-3 mr-3" xs="12" sm="auto">
+            <img src={this.state.dog.uri} alt={this.state.dog.name} styleName="profile-img" className="border rounded mx-auto" />
+          </Col>
+          <Col className="mb-3" xs="12" sm="">
+            <ResponsiveListGroup items={[
+              `Name: ${this.state.dog.name}`,
+              `Litter: ${this.state.dog.litter.name}`,
+              `Chip ID: ${this.state.dog.chip}`,
+              `Gender: ${this.state.dog.gender === 'M' ? 'Male' : 'Female'}`,
+              `Instructor: ${this.state.dog.instructor.name}`,
+              'Custody: Canine Assistants',
+              `Status: ${this.state.dog.active ? 'Active' : 'Inactive'}`,
+            ]}
+            />
+          </Col>
+        </Row>
+        <Row className="mb-2">
+          <Col>
+            <h1 className="mb-0">Outings</h1>
+          </Col>
+        </Row>
+        <Row className="mb-2">
+          <Col>
+            <Input type="text" placeholder="Filter by volunteer name" />
+          </Col>
+        </Row>
+        <Row className="mb-3">
+          <Col>
+            <OutingDetailTable
+              subjectName="Volunteer"
+              outings={[
+              { name: 'John', date: '10/10/17', action: 'Took on a walk' },
+              { name: 'John', date: '10/10/17', action: 'Requested an outing' },
+              { name: 'Jane', date: '10/10/17', action: 'Signed back in' }]}
+            />
+          </Col>
+        </Row>
+        <Row noGutters className="justify-content-center">
+          <Col xs="auto" className="mx-2">
+            <Link to={DOGS_PAGE_ROUTE}>
+              <Button color="secondary" size="lg">BACK</Button>
+            </Link>
+          </Col>
+          <AdminControl>
+            <Col xs="auto" className="mx-2">
+              <Link to={editDogPageRoute(this.state.dog.id)}>
+                <Button color="primary" size="lg">EDIT</Button>
               </Link>
-              &nbsp;
-              <AdminControl>
-                <Link to={editDogPageRoute(this.state.dog.id)}>
-                  <Button color="primary" size="lg">EDIT</Button>
-                </Link>
-              </AdminControl>
-            </div>
-          </h2>
-        </div>
+            </Col>
+          </AdminControl>
+        </Row>
       </>
     );
   }
@@ -149,5 +107,4 @@ class DogDetailPage extends React.Component<Props> {
 // export default DogDetailPage;
 export default connect(null, dispatch => ({
   getDog: id => dispatch(getDog(id)),
-// }))(withRouter(DogDetailPage));
 }))(DogDetailPage);

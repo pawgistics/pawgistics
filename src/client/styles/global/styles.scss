@@ -4,3 +4,15 @@
 html, body, .app {
   min-height: 100%;
 }
+
+.title-text {
+  // ((2 (size of hamburger icon) + 0.75 (total inner button padding)) * 16 (rem scale in px) + 2 (button borders))
+  // / (3.5 (font size) * 16 (rem scale in px))
+  // I promise it's correct
+  line-height: 0.8214285714;
+  margin-bottom: 1.5rem;
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 3.5rem;
+  font-weight: 300;
+}

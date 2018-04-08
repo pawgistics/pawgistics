@@ -101,7 +101,7 @@ class EditUserPage extends React.Component<Props> {
   render() {
     return (
       <>
-        <h1 className="display-4">Edit User</h1>
+        <span className="title-text">Edit User</span>
         {/* <button className="btn btn-primary">Back</button>
         <Button color="primary">Save</Button> */}
         <Form>

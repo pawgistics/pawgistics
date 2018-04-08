@@ -1,11 +1,11 @@
 import { hashidsFosters } from '../util/hashids';
 
-export default (sequelize, Sequelize) => {
-  const FosterGroup = sequelize.define('foster_group', {
+export default (Sequelize, DataTypes) => {
+  const FosterGroup = Sequelize.define('foster_group', {
     id: {
       autoIncrement: true,
       primaryKey: true,
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
   }, {

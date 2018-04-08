@@ -6,7 +6,6 @@ import { Label, Form, Col, FormGroup, Input, Button } from 'reactstrap';
 
 import { getDogs } from '../api/volunteer';
 // import DogDetailTable from '../containers/dog-detail-table';
-import '../styles/pages/user-detail.m.scss';
 
 // type Props = {
 //   getDogs: () => Promise,
@@ -30,7 +29,7 @@ class ReturnDogPage extends React.Component<Props> {
   render() {
     return (
       <>
-        <h1 className="display-4">Return Dog</h1>
+        <span className="title-text">Return Dog</span>
         {/* <button className="btn btn-primary">Back</button>
         <Button color="primary">Save</Button> */}
         <Form>

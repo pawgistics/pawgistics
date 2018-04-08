@@ -1,37 +1,37 @@
 import _ from 'lodash';
 import { hashidsDogs, hashidsUsers, hashidsLitters, hashidsFosters } from '../util/hashids';
 
-export default (sequelize, Sequelize) => {
-  const Dog = sequelize.define('dog', {
+export default (Sequelize, DataTypes) => {
+  const Dog = Sequelize.define('dog', {
     id: {
       autoIncrement: true,
       primaryKey: true,
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     chip: {
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       notEmpty: true,
       allowNull: false,
       unique: true,
     },
     active: {
-      type: Sequelize.BOOLEAN,
+      type: DataTypes.BOOLEAN,
       defaultValue: true,
       notEmpty: true,
       allowNull: false,
     },
     name: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       notEmpty: true,
       allowNull: false,
     },
     gender: {
-      type: Sequelize.ENUM,
+      type: DataTypes.ENUM,
       values: ['M', 'F'],
     },
     uri: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       notEmpty: true,
       allowNull: true,
     },
@@ -92,7 +92,7 @@ export default (sequelize, Sequelize) => {
   Dog.listWithFilter = filter => Dog.findAll({
     where: _.pickBy({
       name: filter.name ? {
-        [sequelize.Op.like]: `%${filter.name}%`,
+        [Sequelize.Op.like]: `%${filter.name}%`,
       } : undefined,
       litter_id: filter.litter_id ? hashidsLitters.decode(filter.litter_id) : undefined,
       instructor_id: filter.instructor_id ? hashidsUsers.decode(filter.instructor_id) : undefined,

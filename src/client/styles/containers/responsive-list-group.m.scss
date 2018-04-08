@@ -1,0 +1,15 @@
+.cols {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+.group {
+  min-width: 0;
+  
+  &>li {
+    padding: 0.75rem 1.0rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

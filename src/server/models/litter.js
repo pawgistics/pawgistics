@@ -1,15 +1,15 @@
 import { hashidsLitters } from '../util/hashids';
 
-export default (sequelize, Sequelize) => {
-  const Litter = sequelize.define('litter', {
+export default (Sequelize, DataTypes) => {
+  const Litter = Sequelize.define('litter', {
     id: {
       autoIncrement: true,
       primaryKey: true,
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     name: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       notEmpty: true,
       unique: true,
       allowNull: false,

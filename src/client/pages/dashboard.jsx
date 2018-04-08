@@ -3,7 +3,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router';
 import NaviconRound from 'react-icons/lib/io/navicon-round';
-import { Button } from 'reactstrap';
+import { Button, Fade } from 'reactstrap';
 
 import Sidebar from '../components/sidebar';
 import AdminRoute from '../containers/admin-route';
@@ -57,10 +57,18 @@ class Dashboard extends React.Component {
     return (
       <>
         <Sidebar active={this.state.sidebarActive} />
-        { /* eslint-disable-next-line */}
-        {this.state.sidebarActive && <div styleName="overlay" onClick={this.toggleSidebar} />}
+        <Fade
+          in={this.state.sidebarActive}
+          mountOnEnter
+          unmountOnExit
+          timeout={{ enter: 0, exit: 300 }}
+          tag="div"
+          baseClass=""
+          styleName="overlay"
+          onClick={this.toggleSidebar}
+        />
         <div styleName="content">
-          <div styleName="sidebar_btn" className="display-4 mb-4 mr-3">
+          <div styleName="sidebar_btn">
             <Button outline onClick={this.toggleSidebar}>
               <NaviconRound size="2em" />
             </Button>

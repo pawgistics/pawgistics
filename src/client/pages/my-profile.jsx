@@ -34,7 +34,7 @@ class MyProfilePage extends React.Component<Props> {
   render() {
     return (
       <>
-        <h1 className="display-4">My Profile</h1>
+        <span className="title-text">My Profile</span>
         {/* <button className="btn btn-primary">Back</button>
         <Button color="primary">Save</Button> */}
         <Form>

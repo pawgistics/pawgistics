@@ -111,7 +111,7 @@ class EditDogPage extends React.Component<Props> {
   render() {
     return (
       <>
-        <h1 className="display-4">Edit Dog</h1>
+        <span className="title-text">Edit Dog</span>
         {/* <button className="btn btn-primary">Back</button>
         <Button color="primary">Save</Button> */}
         <Form>

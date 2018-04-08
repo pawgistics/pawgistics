@@ -88,33 +88,31 @@ class DogsPage extends React.Component<Props> {
   render() {
     return (
       <>
-        <h1 className="display-4 mb-4 d-inline-block align-middle">Dogs</h1>
+        <span className="title-text">Dogs</span>
         <Form>
-          <Row className="align-items-center mb-2">
-            <Col xs="auto" className="pr-0 text-nowrap">
+          <Row noGutters className="align-items-center mb-2">
+            <Col xs="12" sm="6" lg="4" xl="3" className="pr-sm-2 mb-2 text-nowrap">
               <LitterSelect
-                fixedWidth
                 value={this.state.filter.litter_id}
                 onSelectValue={this.updateLitterFilter}
                 placeholder="Filter by litter"
               />
             </Col>
-            <Col xs="auto" className="pr-0 text-nowrap">
+            <Col xs="12" sm="6" lg="4" xl="3" className="pl-sm-2 pr-lg-0 mb-2 text-nowrap">
               <InstructorSelect
-                fixedWidth
                 value={this.state.filter.instructor_id}
                 onSelectValue={this.updateInstructorFilter}
                 placeholder="Filter by instructor"
               />
             </Col>
-            <Col xs="auto" className="pr-0 text-nowrap">
+            <Col xs="auto" className="pl-lg-3 pr-3 pr-lg-0 mb-2 text-nowrap">
               <FormGroup check inline className="mr-0">
                 <Label check>
                   <Input type="checkbox" />Available for check out
                 </Label>
               </FormGroup>
             </Col>
-            <Col xs="auto" className="pr-0 text-nowrap">
+            <Col xs="auto" className="pl-xl-3 mb-2 text-nowrap">
               <FormGroup check inline className="mr-0">
                 <Label check>
                   <Input type="checkbox" />Include inactive
