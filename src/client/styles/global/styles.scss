@@ -1,10 +1,6 @@
 @import 'variables';
 @import '~bootstrap/scss/bootstrap';
 
-html, body, .app {
-  min-height: 100%;
-}
-
 .title-text {
   // ((2 (size of hamburger icon) + 0.75 (total inner button padding)) * 16 (rem scale in px) + 2 (button borders))
   // / (3.5 (font size) * 16 (rem scale in px))

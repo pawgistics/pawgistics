@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { Form, FormGroup, Input, Button, Label } from 'reactstrap';
+import { Form, /* FormGroup, */ Input, Button, Label } from 'reactstrap';
 // import PropTypes from 'prop-types';
 
 import { loginUser } from '../actions/auth';
@@ -88,20 +88,21 @@ class LoginPage extends React.Component<Props> {
             />
             <Label for="inputPassword">Password</Label>
           </div>
-          <FormGroup check className="mb-3">
+          {/* <FormGroup check className="mb-3">
             <Label check>
-              <Input type="checkbox" value="remember-me" disabled={this.state.loading} /> Remember me
+            <Input type="checkbox" value="remember-me" disabled={this.state.loading} /> Remember me
             </Label>
-          </FormGroup>
+          </FormGroup> */}
           <Button
             color="primary"
             size="lg"
             block
             disabled={this.state.loading}
+            className="mt-5"
             {...(this.state.loading ? { className: 'progress-bar-striped progress-bar-animated' } : {})}
           >Login
           </Button>
-          <p className="mt-5 mb-3 text-muted text-center">&copy; 2018</p>
+          {/* <p className="mt-5 mb-3 text-muted text-center">&copy; 2018</p> */}
         </Form>
       </div>
     );
