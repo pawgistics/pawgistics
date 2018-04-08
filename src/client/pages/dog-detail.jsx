@@ -3,17 +3,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Row, Col, Button, Input } from 'reactstrap';
+import { Row, Col, ListGroupItem, Button, Input } from 'reactstrap';
+
+import ListGroupItemLink from '../components/list-group-item-link';
 import ResponsiveListGroup from '../containers/responsive-list-group';
 import OutingDetailTable from '../containers/outing-detail-table';
 import AdminControl from '../containers/admin-control';
+
 import { getDog } from '../api/volunteer';
 import '../styles/pages/detail-page.m.scss';
 
-import { DOGS_PAGE_ROUTE, editDogPageRoute } from '../routes';
+import { userDetailPageRoute, editDogPageRoute } from '../routes';
 
 type Props = {
   match: Object,
+  history: Object,
   getDog(id): Promise,
 }
 
@@ -52,16 +56,17 @@ class DogDetailPage extends React.Component<Props> {
             <img src={this.state.dog.uri} alt={this.state.dog.name} styleName="profile-img" className="border rounded mx-auto" />
           </Col>
           <Col className="mb-3" xs="12" sm="">
-            <ResponsiveListGroup items={[
-              `Name: ${this.state.dog.name}`,
-              `Litter: ${this.state.dog.litter.name}`,
-              `Chip ID: ${this.state.dog.chip}`,
-              `Gender: ${this.state.dog.gender === 'M' ? 'Male' : 'Female'}`,
-              `Instructor: ${this.state.dog.instructor.name}`,
-              'Custody: Canine Assistants',
-              `Status: ${this.state.dog.active ? 'Active' : 'Inactive'}`,
-            ]}
-            />
+            <ResponsiveListGroup>
+              <ListGroupItem>Name: {this.state.dog.name}</ListGroupItem>
+              <ListGroupItem>Litter: {this.state.dog.litter.name}</ListGroupItem>
+              <ListGroupItem>Chip ID: {this.state.dog.chip}</ListGroupItem>
+              <ListGroupItem>Gender: {this.state.dog.gender === 'M' ? 'Male' : 'Female'}</ListGroupItem>
+              <ListGroupItemLink to={userDetailPageRoute(this.state.dog.instructor.id)}>
+                Instructor: {this.state.dog.instructor.name}
+              </ListGroupItemLink>
+              <ListGroupItem>Custody: Canine Assistants</ListGroupItem>
+              <ListGroupItem>Status: {this.state.dog.active ? 'Active' : 'Inactive'}</ListGroupItem>
+            </ResponsiveListGroup>
           </Col>
         </Row>
         <Row className="mb-2">
@@ -87,15 +92,11 @@ class DogDetailPage extends React.Component<Props> {
         </Row>
         <Row noGutters className="justify-content-center">
           <Col xs="auto" className="mx-2">
-            <Link to={DOGS_PAGE_ROUTE}>
-              <Button color="secondary" size="lg">BACK</Button>
-            </Link>
+            <Button color="secondary" size="lg" onClick={this.props.history.goBack}>BACK</Button>
           </Col>
           <AdminControl>
             <Col xs="auto" className="mx-2">
-              <Link to={editDogPageRoute(this.state.dog.id)}>
-                <Button color="primary" size="lg">EDIT</Button>
-              </Link>
+              <Link className="btn btn-primary btn-lg" to={editDogPageRoute(this.state.dog.id)}>EDIT</Link>
             </Col>
           </AdminControl>
         </Row>

@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Row, Col, Button, Form, FormGroup, Input, FormText } from 'reactstrap';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Select from '../components/select';
 import InstructorSelect from '../containers/instructor-select';
@@ -11,10 +10,9 @@ import { updateDog } from '../api/admin';
 import { getDog } from '../api/volunteer';
 import '../styles/pages/add-dog.m.scss';
 
-import { dogDetailPageRoute } from '../routes';
-
 type Props = {
   match: Object,
+  history: Object,
   getDog(id): Promise,
   updateDog(vals): Promise,
 }
@@ -189,9 +187,7 @@ class EditDogPage extends React.Component<Props> {
         <div className="footer">
           <h2>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <Link to={dogDetailPageRoute(this.state.id)}>
-                <Button outline size="lg">BACK</Button>
-              </Link>
+              <Button outline size="lg" onClick={this.props.history.goBack}>BACK</Button>
               &nbsp;
               <Button color="secondary" size="lg" onClick={this.handleSubmit}>SAVE</Button>
               &nbsp;

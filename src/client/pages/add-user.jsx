@@ -2,15 +2,13 @@
 
 import React from 'react';
 import { Row, Col, Button, Form, FormGroup, Input, FormText } from 'reactstrap';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Select from '../components/select';
 import { postDog } from '../api/admin';
 import '../styles/pages/add-dog.m.scss';
 
-import { USERS_PAGE_ROUTE } from '../routes';
-
 type Props = {
+  history: Object,
   postDog(vals): Promise,
 }
 
@@ -157,9 +155,7 @@ class AddUserPage extends React.Component<Props> {
         <div className="footer">
           <h2>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <Link to={USERS_PAGE_ROUTE}>
-                <Button color="secondary" size="lg">BACK</Button>
-              </Link>
+              <Button color="secondary" size="lg" onClick={this.props.history.goBack}>BACK</Button>
               &nbsp;
               <Button color="primary" size="lg" onClick={this.handleSubmit}>SAVE</Button>
             </div>

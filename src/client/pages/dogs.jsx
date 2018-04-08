@@ -4,7 +4,7 @@ import _ from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
 // import NaviconRound from 'react-icons/lib/io/navicon-round';
-import { Label, Form, Row, Col, FormGroup, Input, Button } from 'reactstrap';
+import { Label, Form, Row, Col, FormGroup, Input } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { getDogs } from '../api/volunteer';
 import AdminControl from '../containers/admin-control';
@@ -134,9 +134,7 @@ class DogsPage extends React.Component<Props> {
         <AdminControl>
           <Row className="justify-content-center">
             <Col xs="auto">
-              <Link to={ADD_DOG_PAGE_ROUTE}>
-                <Button color="secondary" size="lg">ADD DOG</Button>
-              </Link>
+              <Link className="btn btn-secondary btn-lg" to={ADD_DOG_PAGE_ROUTE}>ADD DOG</Link>
             </Col>
           </Row>
         </AdminControl>

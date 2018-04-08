@@ -3,18 +3,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Row, Col, Button, Input } from 'reactstrap';
+import { Row, Col, ListGroupItem, Button, Input } from 'reactstrap';
+
 import ResponsiveListGroup from '../containers/responsive-list-group';
-import DetailTable from '../components/detail-table';
 import OutingDetailTable from '../containers/outing-detail-table';
 import AdminControl from '../containers/admin-control';
+
 import { getUser } from '../api/volunteer';
 import '../styles/pages/detail-page.m.scss';
 
-import { USERS_PAGE_ROUTE, editUserPageRoute } from '../routes';
+import { editUserPageRoute } from '../routes';
 
 type Props = {
   match: Object,
+  history: Object,
   getUser(id): Promise,
 }
 
@@ -40,31 +42,13 @@ class UserDetailPage extends React.Component<Props> {
             <img src={this.state.user.uri} alt={this.state.user.first_name} styleName="profile-img" className="border rounded mx-auto" />
           </Col>
           <Col className="mb-3" xs="12" sm="">
-            <ResponsiveListGroup items={[
-              `First Name: ${this.state.user.first_name}`,
-              `Last Name: ${this.state.user.last_name}`,
-              `Email: ${this.state.user.email}`,
-              `Phone #: ${this.state.user.phone || ''}`,
-              `User Type: ${this.state.user.admin ? 'Instructor' : 'Volunteer'}`,
-            ]}
-            />
-          </Col>
-        </Row>
-        <Row className="mb-2">
-          <Col>
-            <h1 className="mb-0">Training</h1>
-          </Col>
-        </Row>
-        <Row className="mb-3">
-          <Col>
-            <DetailTable
-              headings={['Name', 'Date']}
-              keys={['name', 'date']}
-              items={[
-                { name: 'Volunteer, basic', date: '10/10/17' },
-                { name: 'Agility', date: '10/10/17' },
-              ]}
-            />
+            <ResponsiveListGroup>
+              <ListGroupItem>First Name: {this.state.user.first_name}</ListGroupItem>
+              <ListGroupItem>Last Name: {this.state.user.last_name}</ListGroupItem>
+              <ListGroupItem>Email: {this.state.user.email}</ListGroupItem>
+              <ListGroupItem>Phone #: {this.state.user.phone || ''}</ListGroupItem>
+              <ListGroupItem>User Type: {this.state.user.admin ? 'Instructor' : 'Volunteer'}</ListGroupItem>
+            </ResponsiveListGroup>
           </Col>
         </Row>
         <Row className="mb-2">
@@ -90,15 +74,11 @@ class UserDetailPage extends React.Component<Props> {
         </Row>
         <Row noGutters className="justify-content-center">
           <Col xs="auto" className="mx-2">
-            <Link to={USERS_PAGE_ROUTE}>
-              <Button color="secondary" size="lg">BACK</Button>
-            </Link>
+            <Button color="secondary" size="lg" onClick={this.props.history.goBack}>BACK</Button>
           </Col>
           <AdminControl>
             <Col xs="auto" className="mx-2">
-              <Link to={editUserPageRoute(this.state.user.id)}>
-                <Button color="primary" size="lg">EDIT</Button>
-              </Link>
+              <Link className="btn btn-primary btn-lg" to={editUserPageRoute(this.state.user.id)}>EDIT</Link>
             </Col>
           </AdminControl>
         </Row>

@@ -14,7 +14,7 @@ const ResponsiveForm = ({ children }: Props) => (
   <Media query="(min-width: 992px)">
     {(matches) => {
       if (matches) {
-        const children2 = React.Children.toArray(children);
+        const children2 = children.toArray();
         const children1 = children2.splice(0, Math.ceil(children2.length / 2));
         return (
           <div styleName="cols">

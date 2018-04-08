@@ -1,12 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Button, Form, /* Label, */ FormGroup, /* ListGroup, */ Input, FormText, Table } from 'reactstrap';
-import { Link } from 'react-router-dom';
 import Select from '../components/select';
 
 import { getUser } from '../api/volunteer';
-
-import { userDetailPageRoute } from '../routes';
 
 import '../styles/pages/edit-user.m.scss';
 
@@ -217,9 +214,7 @@ class EditUserPage extends React.Component<Props> {
         <div className="footer">
           <h2>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <Link to={userDetailPageRoute(this.state.id)}>
-                <Button outline size="lg">BACK</Button>
-              </Link>
+              <Button outline size="lg" onClick={this.props.history.goBack}>BACK</Button>
               &nbsp;
               <Button color="secondary" size="lg">SAVE</Button>
               &nbsp;

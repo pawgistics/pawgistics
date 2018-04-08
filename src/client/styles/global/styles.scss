@@ -12,3 +12,8 @@
   font-size: 3.5rem;
   font-weight: 300;
 }
+
+.link-unstyled, .link-unstyled:link, .link-unstyled:hover {
+  color: inherit;
+  text-decoration: inherit;
+}
