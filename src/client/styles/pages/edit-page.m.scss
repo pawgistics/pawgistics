@@ -1,0 +1,37 @@
+.alert {
+  width: 100%;
+  margin-top: -2rem;
+  z-index: 1;
+}
+
+.dropzone {
+  display: table;
+  border-width: 2px;
+  border-color: rgb(102, 102, 102);
+  border-style: dashed;
+  border-radius: calc(0.25rem + 2px);
+  &.hover {
+    &>.overlay-img{
+      background-color: rgba(0,0,0,.15);
+    }
+    border-style: solid;
+    border-color: #28a745;
+  }
+}
+.overlay-img {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-blend-mode: multiply;
+  &:hover {
+    background-color: rgba(0,0,0,.15);
+  }
+}
+
+.help-text {
+  text-align: center;
+  width: 12rem;
+  @media (max-width: 767px) {
+    width: 15rem;
+  }
+}

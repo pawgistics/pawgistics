@@ -14,7 +14,7 @@ if (!isStaging && isProd) {
   app.use(compression());
 }
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '10mb' }));
 app.use((err, req, res, next) => {
   if (err instanceof SyntaxError) {
     res.status(400).json({ success: false, message: 'Invalid JSON payload.' });

@@ -7,7 +7,6 @@ import {
   INSTRUCTORS_API_ROUTE,
 } from '../routes';
 
-// eslint-disable-next-line import/prefer-default-export
 export function getDogs(filters) {
   return apiCall('GET', dogsApiRoute(filters), null);
 }

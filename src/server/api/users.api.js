@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
 import _ from 'lodash';
 import express from 'express';
-
 import protectRoute from './auth/protectRoute';
 import models from '../models';
+import uploadImage from '../util/uploadImage';
 
 const User = models.user;
 
@@ -16,42 +16,73 @@ usersRouter.route('/')
       .catch(() => res.status(500).json({ message: 'An error occurred.' }));
   })
   .post(protectRoute({ requireAdmin: true }), (req, res) => {
-    User.create(req.body, {
-      fields: [
-        'email',
-        'password',
-        'admin',
-        'first_name',
-        'last_name',
-        'phone_number',
-      ],
-    })
-      .then(() => res.status(201).json({ success: true, message: 'Successfully created new user.' }))
-      .catch(err => res.status(400).json({ success: false, message: err }));
+    (async () => {
+      const user = await User.create(req.body, {
+        fields: [
+          'first_name',
+          'last_name',
+          'email',
+          'phone_number',
+          'admin',
+          'uri',
+        ],
+      });
+      if (req.body.new_img) {
+        try {
+          user.update({ uri: await uploadImage('user', user.hashid, req.body.new_img) });
+        } catch (err) {
+          return res.status(400).json({ success: false, message: err.message });
+        }
+      }
+      return res.status(200).json({ success: true, message: user });
+    })()
+      .catch(err => res.status(500).json({ success: false, message: err.message }));
   });
 
-usersRouter.route('/instructors')
-  .get(protectRoute(), (req, res) => {
-    User.findAll({
-      attributes: ['id', 'first_name', 'last_name'],
-      where: {
-        admin: true,
-      },
-    })
-      .then(instructors => res.status(200).json(_.map(instructors, (instructor) => {
-        const instructorJSON = instructor.toJSON();
-        return {
-          id: instructorJSON.id,
-          name: `${instructorJSON.first_name} ${instructorJSON.last_name}`,
-        };
-      })))
-      .catch(() => res.status(500).json({ message: 'An error occurred.' }));
-  });
-
-usersRouter.get('/:id', protectRoute(), (req, res) => {
-  User.findByHashid(req.params.id)
-    .then(user => res.status(200).json(user))
+usersRouter.get('/instructors', protectRoute(), (req, res) => {
+  User.findAll({
+    attributes: ['id', 'first_name', 'last_name'],
+    where: {
+      admin: true,
+    },
+  })
+    .then(instructors => res.status(200).json(_.map(instructors, (instructor) => {
+      const instructorJSON = instructor.toJSON();
+      return {
+        id: instructorJSON.id,
+        name: `${instructorJSON.first_name} ${instructorJSON.last_name}`,
+      };
+    })))
     .catch(() => res.status(500).json({ message: 'An error occurred.' }));
 });
+
+usersRouter.route('/:id')
+  .get(protectRoute(), (req, res) => {
+    User.findByHashid(req.params.id)
+      .then(user => res.status(200).json(user))
+      .catch(() => res.status(500).json({ message: 'An error occurred.' }));
+  })
+  .put(protectRoute({ requireAdmin: true }), (req, res) => {
+    (async () => {
+      delete req.body.uri;
+      if (req.body.new_img) {
+        try {
+          req.body.uri = await uploadImage('user', req.params.id, req.body.new_img);
+        } catch (err) {
+          return res.status(400).json({ success: false, message: err.message });
+        }
+      }
+
+      return User.updateWithHashid(req.params.id, req.body)
+        .then((result) => {
+          if (result[0]) {
+            res.status(200).json({ success: true });
+          } else {
+            res.status(404).json({ success: false, message: 'User not found.' });
+          }
+        });
+    })()
+      .catch(err => res.status(500).json({ success: false, message: err.message }));
+  });
 
 export default usersRouter;

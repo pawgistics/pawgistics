@@ -1,0 +1,13 @@
+.cols-auto {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+.cols-eq {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.col {
+  min-width: 0;
+}

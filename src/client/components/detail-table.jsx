@@ -52,7 +52,7 @@ const DetailTable = ({
               (() => history.push(detailRoute.template(item[detailRoute.key])))
             }
           >
-            <span className="ml-auto"><ChevronRight size="2em" /></span>
+            <span className="ml-auto"><ChevronRight size="2rem" /></span>
           </div>
         )))}
   </div>

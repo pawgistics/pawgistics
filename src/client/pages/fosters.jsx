@@ -37,7 +37,7 @@ class FostersPage extends React.Component<Props> {
             <br />
             <br />
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <Button color="secondary" size="lg" block>Create New Table</Button>
+              <Button size="lg" block>Create New Table</Button>
             </div>
             <br />
             <br />
@@ -116,7 +116,7 @@ class FostersPage extends React.Component<Props> {
           <br />
           <br />
           <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <Button color="secondary" size="lg">ADD USER</Button>
+            <Button size="lg">ADD USER</Button>
           </div>
         </div>
         <br />

@@ -4,12 +4,11 @@ import React from 'react';
 import { Row, Col, Button, Form, FormGroup, Input, FormText } from 'reactstrap';
 import { connect } from 'react-redux';
 import Select from '../components/select';
-import { postDog } from '../api/admin';
-import '../styles/pages/add-dog.m.scss';
+import { createDog } from '../api/admin';
 
 type Props = {
   history: Object,
-  postDog(vals): Promise,
+  createDog(vals): Promise,
 }
 
 class AddUserPage extends React.Component<Props> {
@@ -18,7 +17,7 @@ class AddUserPage extends React.Component<Props> {
     this.state = {
       name: '',
       email: '',
-      phone: '',
+      phone_number: '',
       gender: undefined,
       admin: undefined,
       dob: '',
@@ -26,7 +25,7 @@ class AddUserPage extends React.Component<Props> {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.updateName = this.updateName.bind(this);
     this.updateEmail = this.updateEmail.bind(this);
-    this.updatePhone = this.updatePhone.bind(this);
+    this.updatePhoneNumber = this.updatePhoneNumber.bind(this);
     this.updateGender = this.updateGender.bind(this);
     this.updateAdmin = this.updateAdmin.bind(this);
     this.updateDOB = this.updateDOB.bind(this);
@@ -41,8 +40,8 @@ class AddUserPage extends React.Component<Props> {
     this.setState({ email: e.target.value });
   }
 
-  updatePhone(e) {
-    this.setState({ phone: e.target.value });
+  updatePhoneNumber(e) {
+    this.setState({ phone_number: e.target.value });
   }
 
   updateGender(value) {
@@ -75,7 +74,7 @@ class AddUserPage extends React.Component<Props> {
 
   handleSubmit() {
     // eslint-disable-next-line
-    this.props.postDog(this.state)
+    this.props.createDog(this.state)
       .then(() => {
         // TODO: Proper window notification
       }).catch((err) => {
@@ -122,7 +121,7 @@ class AddUserPage extends React.Component<Props> {
               <FormGroup>
                 {/* <Label for="exampleGender">Gender</Label> */}
                 <dt>Phone #</dt>
-                <Input type="text" name="id" value={this.state.phone} onChange={this.updatePhone} placeholder="###-###-####" />
+                <Input type="text" name="id" value={this.state.phone_number} onChange={this.updatePhoneNumber} placeholder="###-###-####" />
               </FormGroup>
             </Col>
             <Col xs="4">
@@ -155,7 +154,7 @@ class AddUserPage extends React.Component<Props> {
         <div className="footer">
           <h2>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <Button color="secondary" size="lg" onClick={this.props.history.goBack}>BACK</Button>
+              <Button size="lg" onClick={this.props.history.goBack}>BACK</Button>
               &nbsp;
               <Button color="primary" size="lg" onClick={this.handleSubmit}>SAVE</Button>
             </div>
@@ -166,6 +165,6 @@ class AddUserPage extends React.Component<Props> {
   }
 }
 export default connect(null, dispatch => ({
-  postDog: vals => dispatch(postDog(vals)),
+  createDog: vals => dispatch(createDog(vals)),
 }))(AddUserPage);
 // export default AddUserPage;

@@ -6,12 +6,11 @@ import { connect } from 'react-redux';
 import Select from '../components/select';
 import InstructorSelect from '../containers/instructor-select';
 import LitterSelect from '../containers/litter-select';
-import { postDog } from '../api/admin';
-import '../styles/pages/add-dog.m.scss';
+import { createDog } from '../api/admin';
 
 type Props = {
   history: Object,
-  postDog(vals): Promise,
+  createDog(vals): Promise,
 }
 
 class AddDogPage extends React.Component<Props> {
@@ -71,7 +70,7 @@ class AddDogPage extends React.Component<Props> {
 
   handleSubmit() {
     // eslint-disable-next-line
-    this.props.postDog(this.state)
+    this.props.createDog(this.state)
       .then(() => {
         // TODO: Proper window notification
       }).catch((err) => {
@@ -152,7 +151,7 @@ class AddDogPage extends React.Component<Props> {
         <div className="footer">
           <h2>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <Button color="secondary" size="lg" onClick={this.props.history.goBack}>BACK</Button>
+              <Button size="lg" onClick={this.props.history.goBack}>BACK</Button>
               &nbsp;
               <Button color="primary" size="lg" onClick={this.handleSubmit}>SAVE</Button>
             </div>
@@ -163,6 +162,6 @@ class AddDogPage extends React.Component<Props> {
   }
 }
 export default connect(null, dispatch => ({
-  postDog: vals => dispatch(postDog(vals)),
+  createDog: vals => dispatch(createDog(vals)),
 }))(AddDogPage);
 // export default AddDogPage;

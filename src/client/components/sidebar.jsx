@@ -58,7 +58,7 @@ const Sidebar = ({ /* isAdmin, */ active, handleLogout }: Props) => (
       ))}
     </ul>
     <ul styleName="buttons">
-      <li><Button color="secondary" block onClick={handleLogout}>Log out</Button></li>
+      <li><Button block onClick={handleLogout}>Log out</Button></li>
     </ul>
   </nav>
 );

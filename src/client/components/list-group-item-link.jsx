@@ -15,7 +15,9 @@ type Props = {
 
 const ListGroupItemLink = ({ history, to, children }: Props) => (
   <ListGroupItem styleName="clickable" className="d-flex" onClick={() => history.push(to)}>
-    {children}
+    <span className="text-truncate">
+      {children}
+    </span>
     <span className="ml-auto">
       <ChevronRight size="1.3rem" />
     </span>

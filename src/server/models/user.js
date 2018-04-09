@@ -131,6 +131,24 @@ export default (Sequelize, DataTypes) => {
     }, _.isUndefined),
   });
 
+  User.updateWithHashid = (hashid, obj) => {
+    const user = Object.assign({}, obj);
+
+    return User.update({
+      first_name: user.first_name,
+      last_name: user.last_name,
+      email: user.email,
+      phone_number: user.phone_number,
+      admin: user.admin,
+      active: user.active,
+      uri: user.uri,
+    }, {
+      where: {
+        id: hashidsUsers.decode(hashid),
+      },
+    });
+  };
+
   User.prototype.toJSON = function toJSON() {
     // console.log(this);
     const user = Sequelize.Model.prototype.toJSON.call(this);

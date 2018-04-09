@@ -1,20 +1,24 @@
 // @flow
 
 import React from 'react';
-import { Row, Col, Button, Form, FormGroup, Input, FormText } from 'reactstrap';
+import { Row, Col, Button, Alert, Form, FormGroup, Input, FormText, Label } from 'reactstrap';
+import Dropzone from 'react-dropzone';
 import { connect } from 'react-redux';
+import ResponsiveCols from '../components/responsive-cols';
 import Select from '../components/select';
 import InstructorSelect from '../containers/instructor-select';
 import LitterSelect from '../containers/litter-select';
-import { updateDog } from '../api/admin';
+
 import { getDog } from '../api/volunteer';
-import '../styles/pages/add-dog.m.scss';
+import { updateDog } from '../api/admin';
+
+import '../styles/pages/edit-page.m.scss';
 
 type Props = {
   match: Object,
   history: Object,
   getDog(id): Promise,
-  updateDog(vals): Promise,
+  updateDog(id, dog): Promise,
 }
 
 class EditDogPage extends React.Component<Props> {
@@ -22,87 +26,86 @@ class EditDogPage extends React.Component<Props> {
     super(props);
     this.state = {
       id: props.match.params.id,
-      chip: '',
-      name: '',
-      instructor_id: '',
-      litter_id: '',
-      gender: '',
-      active: '',
+      dog: {
+        name: '',
+        litter_id: '',
+        chip: '',
+        gender: '',
+        instructor_id: '',
+        active: '',
+        uri: '',
+        new_img: undefined,
+      },
+      hovering_img: false,
+      alert: {
+        visible: false,
+        color: '',
+        text: '',
+      },
     };
+
+    this.showAlert = this.showAlert.bind(this);
+    this.hideAlert = this.hideAlert.bind(this);
+
+    this.updateDogState = this.updateDogState.bind(this);
+    this.fetchDog = this.fetchDog.bind(this);
+    this.fetchDog();
+
+    this.updateName = this.updateName.bind(this);
+    this.updateChip = this.updateChip.bind(this);
+    this.updateLitterId = this.updateLitterId.bind(this);
+    this.updateInstructorId = this.updateInstructorId.bind(this);
+    this.updateGender = this.updateGender.bind(this);
+    this.updateActive = this.updateActive.bind(this);
+
+    this.updateImage = this.updateImage.bind(this);
+
+    this.saveDog = this.saveDog.bind(this);
+  }
+
+  showAlert(color, text) { this.setState({ alert: { visible: true, color, text } }); }
+  hideAlert() { this.setState({ alert: { ...this.state.alert, visible: false } }); }
+
+  updateDogState(update) { this.setState({ dog: { ...this.state.dog, ...update } }); }
+  fetchDog() {
     this.props.getDog(this.state.id)
       .then((dog) => {
-        this.setState({
-          chip: dog.chip,
+        this.updateDogState({
           name: dog.name,
-          instructor_id: dog.instructor.id,
           litter_id: dog.litter.id,
+          chip: dog.chip,
+          instructor_id: dog.instructor.id,
           gender: dog.gender,
           active: dog.active,
+          uri: dog.uri,
         });
       })
       .catch((err) => {
-        // eslint-disable-next-line no-console
-        console.log(err.message);
+        this.showAlert('danger', err.message);
       });
-    this.updateName = this.updateName.bind(this);
-    this.updateChip = this.updateChip.bind(this);
-    this.updateGender = this.updateGender.bind(this);
-    this.updateInstructorId = this.updateInstructorId.bind(this);
-    this.updateLitterId = this.updateLitterId.bind(this);
-    this.updateActive = this.updateActive.bind(this);
-    this.updateGender = this.updateGender.bind(this);
-    this.updateImage = this.updateImage.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  updateName(e) {
-    this.setState({ name: e.target.value });
-  }
+  updateName(e) { this.updateDogState({ name: e.target.value }); }
+  updateChip(e) { this.updateDogState({ chip: e.target.value && +e.target.value }); }
+  updateLitterId(value) { this.updateDogState({ litter_id: value }); }
+  updateInstructorId(value) { this.updateDogState({ instructor_id: value }); }
+  updateGender(value) { this.updateDogState({ gender: value }); }
+  updateActive(value) { this.updateDogState({ active: value }); }
 
-  updateChip(e) {
-    this.setState({ chip: e.target.value });
-  }
-
-  updateGender(value) {
-    this.setState({ gender: value });
-  }
-
-  updateInstructorId(value) {
-    this.setState({ instructor_id: value });
-  }
-
-  updateLitterId(value) {
-    this.setState({ litter_id: value });
-  }
-
-  updateActive(value) {
-    this.setState({ active: value });
-  }
-
-  updateImage(e) {
+  updateImage(files) {
+    this.setState({ hovering_img: false });
     const reader = new FileReader();
-    const file = e.target.files[0];
-    reader.onload = (upload) => {
-      this.setState({
-        // eslint-disable-next-line
-        data_uri: upload.target.result,
-        // eslint-disable-next-line
-        filename: file.name,
-        // eslint-disable-next-line
-        filetype: file.type,
-      });
-    };
+    const file = files[0];
+    reader.onload = upload => this.updateDogState({ new_img: upload.target.result });
     reader.readAsDataURL(file);
   }
 
-  handleSubmit() {
-    // eslint-disable-next-line
-    this.props.updateDog(this.state)
+  saveDog() {
+    this.props.updateDog(this.state.id, this.state.dog)
       .then(() => {
-        // TODO: Proper window notification
+        this.showAlert('success', 'Dog saved successfully.');
       }).catch((err) => {
-        // eslint-disable-next-line
-        alert(err.message);
+        this.showAlert('danger', err.message);
       });
   }
 
@@ -110,98 +113,107 @@ class EditDogPage extends React.Component<Props> {
     return (
       <>
         <span className="title-text">Edit Dog</span>
-        {/* <button className="btn btn-primary">Back</button>
-        <Button color="primary">Save</Button> */}
         <Form>
-          <br />
-          <Row>
-            <Col xs="3">
-              <FormGroup>
-                {/* <Label for="examplePicFile">Profile picture</Label> */}
-                <dt>Profile picture</dt>
-                <Input
-                  type="file"
-                  name="profile"
-                  onChange={this.updateImage}
-                  // ref={(file) => {
-                  //   this.state.image = file;
-                  // }}
-                />
-                <FormText color="muted">
-                  Upload a new picture of the dog.
+          <Row noGutters>
+            <Col>
+              <Alert
+                style={{ position: 'absolute' }}
+                styleName="alert"
+                color={this.state.alert.color}
+                isOpen={this.state.alert.visible}
+                toggle={this.hideAlert}
+              >
+                {this.state.alert.text}
+              </Alert>
+            </Col>
+          </Row>
+          <Row noGutters>
+            <Col className="d-flex mb-3 mr-4 align-items-center" xs="12" sm="auto">
+              <div className="mx-auto">
+                <Dropzone
+                  styleName={`dropzone${this.state.hovering_img ? ' hover' : ''}`}
+                  onDrop={this.updateImage}
+                  onDragEnter={() => this.setState({ hovering_img: true })}
+                  onDragLeave={() => this.setState({ hovering_img: false })}
+                >
+                  <div
+                    styleName="overlay-img"
+                    style={{ backgroundImage: `url(${this.state.dog.new_img || this.state.dog.uri})` }}
+                    className="profile-img"
+                  />
+                </Dropzone>
+                <FormText styleName="help-text">
+                  Drop an image in the space above, or click it to select images to upload.
                 </FormText>
-              </FormGroup>
+              </div>
             </Col>
-            <Col xs="4">
-              <FormGroup>
-                {/* <Label for="exampleName">Name</Label> */}
-                <dt>Name</dt>
-                <Input type="text" name="name" value={this.state.name} onChange={this.updateName} placeholder="Name" />
-              </FormGroup>
-              <FormGroup>
-                {/* <Label for="exampleDogID">Dog ID</Label> */}
-                <dt>Dog ID</dt>
-                <Input type="number" name="id" value={this.state.chip} onChange={this.updateChip} placeholder="Chip ID" />
-              </FormGroup>
-              <FormGroup>
-                {/* <Label for="exampleGender">Gender</Label> */}
-                <dt>Gender</dt>
-                <Select
-                  options={[{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }]}
-                  value={this.state.gender}
-                  onSelectValue={this.updateGender}
-                  isSearchable={false}
-                />
-              </FormGroup>
-            </Col>
-            <Col xs="4">
-              <FormGroup>
-                <dt>Instructor</dt>
-                <InstructorSelect
-                  value={this.state.instructor_id}
-                  onSelectValue={this.updateInstructorId}
-                />
-              </FormGroup>
-              <FormGroup>
-                <dt>Litter</dt>
-                <LitterSelect
-                  value={this.state.litter_id}
-                  onSelectValue={this.updateLitterId}
-                />
-              </FormGroup>
-              <FormGroup>
-                <dt>Status</dt>
-                <Select
-                  options={[{ value: true, label: 'Active' }, { value: false, label: 'Inactive' }]}
-                  onSelectValue={this.updateActive}
-                  isSearchable={false}
-                  value={this.state.active}
-                />
-              </FormGroup>
+            <Col className="mb-3" xs="12" sm="" xl="8">
+              <ResponsiveCols equalWidth>
+                <FormGroup>
+                  <Label for="name">Name</Label>
+                  <Input type="text" id="name" value={this.state.dog.name} onChange={this.updateName} />
+                </FormGroup>
+                <FormGroup>
+                  <Label for="litter">Litter</Label>
+                  <LitterSelect
+                    inputId="litter"
+                    value={this.state.dog.litter_id}
+                    onSelectValue={this.updateLitterId}
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label for="chip_id">Chip ID</Label>
+                  <Input type="number" id="chip_id" value={this.state.dog.chip} onChange={this.updateChip} />
+                </FormGroup>
+                <FormGroup>
+                  <Label for="gender">Gender</Label>
+                  <Select
+                    inputId="gender"
+                    options={[{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }]}
+                    value={this.state.dog.gender}
+                    onSelectValue={this.updateGender}
+                    isSearchable={false}
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label for="instructor">Instructor</Label>
+                  <InstructorSelect
+                    inputId="instructor"
+                    value={this.state.dog.instructor_id}
+                    onSelectValue={this.updateInstructorId}
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label for="status">Status</Label>
+                  <Select
+                    inputId="status"
+                    options={[{ value: true, label: 'Active' }, { value: false, label: 'Inactive' }]}
+                    onSelectValue={this.updateActive}
+                    isSearchable={false}
+                    value={this.state.dog.active}
+                  />
+                </FormGroup>
+              </ResponsiveCols>
             </Col>
           </Row>
         </Form>
-        <br />
-        <br />
-        <br />
-        <div className="footer">
-          <h2>
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <Button outline size="lg" onClick={this.props.history.goBack}>BACK</Button>
-              &nbsp;
-              <Button color="secondary" size="lg" onClick={this.handleSubmit}>SAVE</Button>
-              &nbsp;
-              <Button color="primary" size="lg">REMOVE DOG</Button>
-            </div>
-          </h2>
-        </div>
+        <Row noGutters className="justify-content-center">
+          <Col xs="auto" className="mx-2">
+            <Button outline size="lg" onClick={this.props.history.goBack}>BACK</Button>
+          </Col>
+          <Col xs="auto" className="mx-2">
+            <Button size="lg" onClick={this.saveDog}>SAVE</Button>
+          </Col>
+          <Col xs="auto" className="mx-2">
+            <Button color="primary" size="lg">REMOVE DOG</Button>
+          </Col>
+        </Row>
       </>
     );
   }
 }
 
 export default connect(null, dispatch => ({
-  updateDog: vals => dispatch(updateDog(vals)),
   getDog: id => dispatch(getDog(id)),
+  updateDog: (id, dog) => dispatch(updateDog(id, dog)),
 }))(EditDogPage);
-// export default DogDetailPage;

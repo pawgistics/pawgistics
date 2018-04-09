@@ -109,16 +109,6 @@ class LoginPage extends React.Component<Props> {
   }
 }
 
-// LoginPage.propTypes = {
-//   isFetching: PropTypes.bool.isRequired,
-//   errMsg: PropTypes.string,
-//   loginUser: PropTypes.func.isRequired,
-// };
-//
-// LoginPage.defaultProps = {
-//   errMsg: null,
-// };
-
 const mapDispatchToProps = dispatch => ({ loginUser: creds => dispatch(loginUser(creds)) });
 
 export default connect(null, mapDispatchToProps)(LoginPage);

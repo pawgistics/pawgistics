@@ -99,17 +99,6 @@ export default (Sequelize, DataTypes) => {
     }),
   });
 
-  // Dog.unHashids = (origDog) => {
-  //   const dog = Object.assign({}, origDog);
-  //
-  //   if (dog.id) dog.id = hashidsDogs.decode(dog.id);
-  //   if (dog.litter_id) dog.litter_id = hashidsLitters.decode(dog.litter_id);
-  //   if (dog.instructor_id) dog.instructor_id = hashidsUsers.decode(dog.instructor_id);
-  //   if (dog.foster_group_id) dog.foster_group_id = hashidsFosters.decode(dog.foster_group_id);
-  //
-  //   return dog;
-  // };
-
   Dog.createFromObject = (obj) => {
     const dog = Object.assign({}, obj);
 
@@ -126,10 +115,9 @@ export default (Sequelize, DataTypes) => {
     });
   };
 
-  Dog.updateFromObject = (obj) => {
+  Dog.updateWithHashid = (hashid, obj) => {
     const dog = Object.assign({}, obj);
 
-    if (dog.id) dog.id = hashidsDogs.decode(dog.id);
     if (dog.litter_id) dog.litter_id = hashidsLitters.decode(dog.litter_id);
     if (dog.instructor_id) dog.instructor_id = hashidsUsers.decode(dog.instructor_id);
     if (dog.foster_group_id) dog.foster_id = hashidsFosters.decode(dog.foster_id);
@@ -145,7 +133,7 @@ export default (Sequelize, DataTypes) => {
       uri: dog.uri,
     }, {
       where: {
-        id: dog.id,
+        id: hashidsDogs.decode(hashid),
       },
     });
   };

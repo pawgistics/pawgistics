@@ -1,7 +1,6 @@
 // @flow
 
 import path from 'path';
-import glob from 'glob';
 import { getIfUtils, removeEmpty } from 'webpack-config-utils';
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 import MinifyPlugin from 'babel-minify-webpack-plugin';
@@ -11,7 +10,6 @@ import LodashModuleReplacementPlugin from 'lodash-webpack-plugin';
 import OptimizeJsPlugin from 'optimize-js-plugin';
 import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import PurifyCSSPlugin from 'purifycss-webpack';
 import ZopfliPlugin from 'zopfli-webpack-plugin';
 import BrotliPlugin from 'brotli-webpack-plugin';
 // import Visualizer from 'webpack-visualizer-plugin';
@@ -138,13 +136,6 @@ export default {
     })),
     ifProduction(new OptimizeCssAssetsPlugin()),
     ifProduction(new ExtractTextPlugin({ filename: 'css/styles.[contenthash:hex:20].css' })),
-    ifProduction(new PurifyCSSPlugin({
-      paths: glob.sync(path.join(__dirname, 'src/client/**/*.jsx')),
-      purifyOptions: {
-        whitelist: ['*-m-*'],
-        minify: true,
-      },
-    })),
     ifProduction(new ZopfliPlugin()),
     ifProduction(new BrotliPlugin()),
     // new Visualizer(),

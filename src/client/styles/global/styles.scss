@@ -13,6 +13,15 @@
   font-weight: 300;
 }
 
+.profile-img {
+  width: 12rem;
+  height: 12rem;
+  @media (max-width: 767px) {
+    width: 15rem;
+    height: 15rem;
+  }
+}
+
 .link-unstyled, .link-unstyled:link, .link-unstyled:hover {
   color: inherit;
   text-decoration: inherit;

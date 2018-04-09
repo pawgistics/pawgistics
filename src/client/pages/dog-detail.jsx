@@ -6,12 +6,11 @@ import { Link } from 'react-router-dom';
 import { Row, Col, ListGroupItem, Button, Input } from 'reactstrap';
 
 import ListGroupItemLink from '../components/list-group-item-link';
-import ResponsiveListGroup from '../containers/responsive-list-group';
+import ResponsiveListGroup from '../components/responsive-list-group';
 import OutingDetailTable from '../containers/outing-detail-table';
 import AdminControl from '../containers/admin-control';
 
 import { getDog } from '../api/volunteer';
-import '../styles/pages/detail-page.m.scss';
 
 import { userDetailPageRoute, editDogPageRoute } from '../routes';
 
@@ -53,9 +52,9 @@ class DogDetailPage extends React.Component<Props> {
         <span className="title-text">Dog Details</span>
         <Row noGutters>
           <Col className="d-flex mb-3 mr-3" xs="12" sm="auto">
-            <img src={this.state.dog.uri} alt={this.state.dog.name} styleName="profile-img" className="border rounded mx-auto" />
+            <img src={this.state.dog.uri} alt={this.state.dog.name} className="profile-img border rounded mx-auto" />
           </Col>
-          <Col className="mb-3" xs="12" sm="">
+          <Col className="mb-3" xs="12" sm="" xl="8">
             <ResponsiveListGroup>
               <ListGroupItem>Name: {this.state.dog.name}</ListGroupItem>
               <ListGroupItem>Litter: {this.state.dog.litter.name}</ListGroupItem>
@@ -92,7 +91,7 @@ class DogDetailPage extends React.Component<Props> {
         </Row>
         <Row noGutters className="justify-content-center">
           <Col xs="auto" className="mx-2">
-            <Button color="secondary" size="lg" onClick={this.props.history.goBack}>BACK</Button>
+            <Button size="lg" onClick={this.props.history.goBack}>BACK</Button>
           </Col>
           <AdminControl>
             <Col xs="auto" className="mx-2">

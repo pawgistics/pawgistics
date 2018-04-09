@@ -5,12 +5,11 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Row, Col, ListGroupItem, Button, Input } from 'reactstrap';
 
-import ResponsiveListGroup from '../containers/responsive-list-group';
+import ResponsiveListGroup from '../components/responsive-list-group';
 import OutingDetailTable from '../containers/outing-detail-table';
 import AdminControl from '../containers/admin-control';
 
 import { getUser } from '../api/volunteer';
-import '../styles/pages/detail-page.m.scss';
 
 import { editUserPageRoute } from '../routes';
 
@@ -39,15 +38,16 @@ class UserDetailPage extends React.Component<Props> {
         <span className="title-text">User Details</span>
         <Row noGutters>
           <Col className="d-flex mb-3 mr-3" xs="12" sm="auto">
-            <img src={this.state.user.uri} alt={this.state.user.first_name} styleName="profile-img" className="border rounded mx-auto" />
+            <img src={this.state.user.uri} alt={this.state.user.first_name} className="profile-img border rounded mx-auto" />
           </Col>
-          <Col className="mb-3" xs="12" sm="">
+          <Col className="mb-3" xs="12" sm="" xl="8">
             <ResponsiveListGroup>
               <ListGroupItem>First Name: {this.state.user.first_name}</ListGroupItem>
               <ListGroupItem>Last Name: {this.state.user.last_name}</ListGroupItem>
               <ListGroupItem>Email: {this.state.user.email}</ListGroupItem>
-              <ListGroupItem>Phone #: {this.state.user.phone || ''}</ListGroupItem>
+              <ListGroupItem>Phone #: {this.state.user.phone_number}</ListGroupItem>
               <ListGroupItem>User Type: {this.state.user.admin ? 'Instructor' : 'Volunteer'}</ListGroupItem>
+              <ListGroupItem>Status: {this.state.user.active ? 'Active' : 'Inactive'}</ListGroupItem>
             </ResponsiveListGroup>
           </Col>
         </Row>
@@ -74,7 +74,7 @@ class UserDetailPage extends React.Component<Props> {
         </Row>
         <Row noGutters className="justify-content-center">
           <Col xs="auto" className="mx-2">
-            <Button color="secondary" size="lg" onClick={this.props.history.goBack}>BACK</Button>
+            <Button size="lg" onClick={this.props.history.goBack}>BACK</Button>
           </Col>
           <AdminControl>
             <Col xs="auto" className="mx-2">

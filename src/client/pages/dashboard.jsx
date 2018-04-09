@@ -70,7 +70,7 @@ class Dashboard extends React.Component {
         <div styleName="content">
           <div styleName="sidebar_btn">
             <Button outline onClick={this.toggleSidebar}>
-              <NaviconRound size="2em" />
+              <NaviconRound size="2rem" />
             </Button>
           </div>
           <Switch>
