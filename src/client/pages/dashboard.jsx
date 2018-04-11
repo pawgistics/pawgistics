@@ -3,10 +3,12 @@
 import React from 'react';
 import { Switch, Route } from 'react-router';
 import NaviconRound from 'react-icons/lib/io/navicon-round';
-import { Button, Fade } from 'reactstrap';
+import { Alert, Button, Fade } from 'reactstrap';
 
 import Sidebar from '../components/sidebar';
 import AdminRoute from '../containers/admin-route';
+
+import { AlertProvider } from '../util/alert';
 
 import HomePage from './home';
 import DogsPage from './dogs';
@@ -44,19 +46,45 @@ class Dashboard extends React.Component {
     super(props);
     this.state = {
       sidebarActive: false,
+      alert: {
+        visible: false,
+        color: '',
+        text: '',
+      },
     };
 
-    this.toggleSidebar = this.toggleSidebar.bind(this);
+    this.showSidebar = this.showSidebar.bind(this);
+    this.hideSidebar = this.hideSidebar.bind(this);
+
+    this.showAlert = (color, text) => {
+      this.setState({
+        alert: {
+          visible: true,
+          color,
+          text,
+        },
+      });
+      setTimeout(() => {
+        this.hideAlert();
+      }, 2000);
+    };
+    this.hideAlert = () => {
+      this.setState({
+        alert: {
+          ...this.state.alert,
+          visible: false,
+        },
+      });
+    };
   }
 
-  toggleSidebar() {
-    this.setState({ sidebarActive: !this.state.sidebarActive });
-  }
+  showSidebar() { this.setState({ sidebarActive: true }); }
+  hideSidebar() { this.setState({ sidebarActive: false }); }
 
   render() {
     return (
       <>
-        <Sidebar active={this.state.sidebarActive} />
+        <Sidebar active={this.state.sidebarActive} onClick={this.hideSidebar} />
         <Fade
           in={this.state.sidebarActive}
           mountOnEnter
@@ -65,29 +93,45 @@ class Dashboard extends React.Component {
           tag="div"
           baseClass=""
           styleName="overlay"
-          onClick={this.toggleSidebar}
+          onClick={this.hideSidebar}
         />
+        <Alert
+          style={{ position: 'fixed' }}
+          styleName="alert"
+          color={this.state.alert.color}
+          isOpen={this.state.alert.visible}
+          toggle={this.hideAlert}
+        >
+          {this.state.alert.text}
+        </Alert>
         <div styleName="content">
           <div styleName="sidebar_btn">
-            <Button outline onClick={this.toggleSidebar}>
+            <Button outline onClick={this.showSidebar}>
               <NaviconRound size="2rem" />
             </Button>
           </div>
-          <Switch>
-            <Route exact path={HOME_PAGE_ROUTE} component={HomePage} />
-            <Route exact path={DOGS_PAGE_ROUTE} component={DogsPage} />
-            <Route exact path={USERS_PAGE_ROUTE} component={UsersPage} />
-            <Route exact path={FOSTERS_PAGE_ROUTE} component={FostersPage} />
-            <Route exact path={DOG_DETAIL_PAGE_ROUTE} component={DogDetailPage} />
-            <Route exact path={USER_DETAIL_PAGE_ROUTE} component={UserDetailPage} />
-            {/* <Route path={MY_PROFILE_PAGE_ROUTE} component={MyProfilePage} /> */}
-            <AdminRoute exact path={ADD_DOG_PAGE_ROUTE} component={AddDogPage} />
-            <AdminRoute exact path={ADD_USER_PAGE_ROUTE} component={AddUserPage} />
-            <AdminRoute exact path={RETURN_DOG_PAGE_ROUTE} component={ReturnDogPage} />
-            <AdminRoute exact path={EDIT_USER_PAGE_ROUTE} component={EditUser} />
-            <AdminRoute exact path={EDIT_DOG_PAGE_ROUTE} component={EditDogPage} />
-            <Route component={NotFoundPage} />
-          </Switch>
+          <AlertProvider
+            value={{
+              showAlert: this.showAlert,
+              hideAlert: this.hideAlert,
+            }}
+          >
+            <Switch>
+              <Route exact path={HOME_PAGE_ROUTE} component={HomePage} />
+              <Route exact path={DOGS_PAGE_ROUTE} component={DogsPage} />
+              <Route exact path={USERS_PAGE_ROUTE} component={UsersPage} />
+              <Route exact path={FOSTERS_PAGE_ROUTE} component={FostersPage} />
+              <Route exact path={DOG_DETAIL_PAGE_ROUTE} component={DogDetailPage} />
+              <Route exact path={USER_DETAIL_PAGE_ROUTE} component={UserDetailPage} />
+              {/* <Route path={MY_PROFILE_PAGE_ROUTE} component={MyProfilePage} /> */}
+              <AdminRoute exact path={ADD_DOG_PAGE_ROUTE} component={AddDogPage} />
+              <AdminRoute exact path={ADD_USER_PAGE_ROUTE} component={AddUserPage} />
+              <AdminRoute exact path={RETURN_DOG_PAGE_ROUTE} component={ReturnDogPage} />
+              <AdminRoute exact path={EDIT_USER_PAGE_ROUTE} component={EditUser} />
+              <AdminRoute exact path={EDIT_DOG_PAGE_ROUTE} component={EditDogPage} />
+              <Route component={NotFoundPage} />
+            </Switch>
+          </AlertProvider>
         </div>
       </>
     );

@@ -27,9 +27,10 @@ type Props = {
   // isAdmin: boolean,
   active: boolean,
   handleLogout: () => void,
+  onClick?: () => void,
 }
 
-const Sidebar = ({ /* isAdmin, */ active, handleLogout }: Props) => (
+const Sidebar = ({ /* isAdmin, */ active, handleLogout, onClick }: Props) => (
   <nav styleName="sidebar" className={active ? 'active' : ''}>
     <div styleName="header">
       <h3>Pawgistics</h3>
@@ -53,7 +54,7 @@ const Sidebar = ({ /* isAdmin, */ active, handleLogout }: Props) => (
         // ] : []),
       ].map(link => (
         <li key={link.route}>
-          <NavLink to={link.route} activeClassName="active" exact>{link.label}</NavLink>
+          <NavLink to={link.route} onClick={onClick} activeClassName="active" exact>{link.label}</NavLink>
         </li>
       ))}
     </ul>
@@ -62,6 +63,10 @@ const Sidebar = ({ /* isAdmin, */ active, handleLogout }: Props) => (
     </ul>
   </nav>
 );
+
+Sidebar.defaultProps = {
+  onClick: () => {},
+};
 
 const mapStateToProps = state => ({
   isAdmin: state.auth.isAdmin,

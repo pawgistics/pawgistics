@@ -91,11 +91,11 @@ class DogDetailPage extends React.Component<Props> {
         </Row>
         <Row noGutters className="justify-content-center">
           <Col xs="auto" className="mx-2">
-            <Button size="lg" onClick={this.props.history.goBack}>BACK</Button>
+            <Button outline size="lg" onClick={this.props.history.goBack}>BACK</Button>
           </Col>
           <AdminControl>
             <Col xs="auto" className="mx-2">
-              <Link className="btn btn-primary btn-lg" to={editDogPageRoute(this.state.dog.id)}>EDIT</Link>
+              <Link className="btn btn-secondary btn-lg" to={editDogPageRoute(this.state.dog.id)}>EDIT</Link>
             </Col>
           </AdminControl>
         </Row>

@@ -1,11 +1,13 @@
 // @flow
 
 import React from 'react';
-import { Row, Col, Button, Alert, Form, FormGroup, Input, FormText, Label } from 'reactstrap';
+import { Row, Col, Button, Form, FormGroup, Input, FormText, Label } from 'reactstrap';
 import Dropzone from 'react-dropzone';
 import { connect } from 'react-redux';
 import ResponsiveCols from '../components/responsive-cols';
 import Select from '../components/select';
+
+import { AlertConsumer } from '../util/alert';
 
 import { getUser } from '../api/volunteer';
 import { updateUser } from '../api/admin';
@@ -17,6 +19,7 @@ type Props = {
   history: Object,
   getUser(id): Promise,
   updateUser(id, user): Promise,
+  showAlert(color, text): void,
 }
 
 class EditUserPage extends React.Component<Props> {
@@ -35,15 +38,7 @@ class EditUserPage extends React.Component<Props> {
         new_img: undefined,
       },
       hovering_img: false,
-      alert: {
-        visible: false,
-        color: '',
-        text: '',
-      },
     };
-
-    this.showAlert = this.showAlert.bind(this);
-    this.hideAlert = this.hideAlert.bind(this);
 
     this.fetchUser = this.fetchUser.bind(this);
     this.updateUserState = this.updateUserState.bind(this);
@@ -61,9 +56,6 @@ class EditUserPage extends React.Component<Props> {
     this.saveUser = this.saveUser.bind(this);
   }
 
-  showAlert(color, text) { this.setState({ alert: { visible: true, color, text } }); }
-  hideAlert() { this.setState({ alert: { ...this.state.alert, visible: false } }); }
-
   updateUserState(update) { this.setState({ user: { ...this.state.user, ...update } }); }
   fetchUser() {
     this.props.getUser(this.state.id)
@@ -79,7 +71,7 @@ class EditUserPage extends React.Component<Props> {
         });
       })
       .catch((err) => {
-        this.showAlert('danger', err.message);
+        this.props.showAlert('danger', err.message);
       });
   }
 
@@ -101,9 +93,9 @@ class EditUserPage extends React.Component<Props> {
   saveUser() {
     this.props.updateUser(this.state.id, this.state.user)
       .then(() => {
-        this.showAlert('success', 'User saved successfully.');
+        this.props.showAlert('success', 'User saved successfully.');
       }).catch((err) => {
-        this.showAlert('danger', err.message);
+        this.props.showAlert('danger', err.message);
       });
   }
 
@@ -112,19 +104,6 @@ class EditUserPage extends React.Component<Props> {
       <>
         <span className="title-text">Edit User</span>
         <Form>
-          <Row noGutters>
-            <Col>
-              <Alert
-                style={{ position: 'absolute' }}
-                styleName="alert"
-                color={this.state.alert.color}
-                isOpen={this.state.alert.visible}
-                toggle={this.hideAlert}
-              >
-                {this.state.alert.text}
-              </Alert>
-            </Col>
-          </Row>
           <Row noGutters>
             <Col className="d-flex mb-3 mr-4 align-items-center" xs="12" sm="auto">
               <div className="mx-auto">
@@ -206,4 +185,8 @@ class EditUserPage extends React.Component<Props> {
 export default connect(null, dispatch => ({
   getUser: id => dispatch(getUser(id)),
   updateUser: (id, user) => dispatch(updateUser(id, user)),
-}))(EditUserPage);
+}))(props => (
+  <AlertConsumer>
+    {({ showAlert }) => <EditUserPage {...props} showAlert={showAlert} />}
+  </AlertConsumer>
+));

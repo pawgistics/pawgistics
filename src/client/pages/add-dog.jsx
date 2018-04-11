@@ -151,9 +151,9 @@ class AddDogPage extends React.Component<Props> {
         <div className="footer">
           <h2>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <Button size="lg" onClick={this.props.history.goBack}>BACK</Button>
+              <Button outline size="lg" onClick={this.props.history.goBack}>BACK</Button>
               &nbsp;
-              <Button color="primary" size="lg" onClick={this.handleSubmit}>SAVE</Button>
+              <Button size="lg" onClick={this.handleSubmit}>SAVE</Button>
             </div>
           </h2>
         </div>
