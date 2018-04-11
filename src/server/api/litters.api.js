@@ -15,7 +15,10 @@ littersRouter.route('/')
       .catch(() => res.status(500).json({ message: 'An error occurred.' }));
   })
   .post(protectRoute({ requireAdmin: true }), (req, res) => {
-    res.sendStatus(501);
+    Litter.create({
+      name: req.body.name,
+    }).then(res.sendStatus(200))
+      .catch(() => res.status(500).json({ message: 'An error occurred.' }));
   });
 
 littersRouter.route('/:id')

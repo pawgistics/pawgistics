@@ -90,6 +90,9 @@ export default (Sequelize, DataTypes) => {
 
   User.associate = (models) => {
     models.user.belongsTo(models.foster_group);
+    models.user.hasOne(models.dog, {
+      foreignKey: 'custodian_id',
+    });
     models.user.hasMany(models.dog, {
       foreignKey: 'instructor_id',
     });
