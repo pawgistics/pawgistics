@@ -17,8 +17,11 @@ usersRouter.route('/')
   })
   .post(protectRoute({ requireAdmin: true }), (req, res) => {
     (async () => {
+      delete req.body.uri;
+      req.body.password = 'password';
       const user = await User.create(req.body, {
         fields: [
+          'password',
           'first_name',
           'last_name',
           'email',
@@ -31,12 +34,12 @@ usersRouter.route('/')
         try {
           user.update({ uri: await uploadImage('user', user.hashid, req.body.new_img) });
         } catch (err) {
-          return res.status(400).json({ success: false, message: err.message });
+          return res.status(400).json({ message: err.message });
         }
       }
-      return res.status(200).json({ success: true, message: user });
+      return res.status(201).json({ message: user });
     })()
-      .catch(err => res.status(500).json({ success: false, message: err.message }));
+      .catch(err => res.status(500).json({ message: err.message }));
   });
 
 usersRouter.get('/instructors', protectRoute(), (req, res) => {
@@ -59,7 +62,13 @@ usersRouter.get('/instructors', protectRoute(), (req, res) => {
 usersRouter.route('/:id')
   .get(protectRoute(), (req, res) => {
     User.findByHashid(req.params.id)
-      .then(user => res.status(200).json(user))
+      .then((user) => {
+        if (user) {
+          res.status(200).json(user);
+        } else {
+          res.status(404).json({ message: 'User not found.' });
+        }
+      })
       .catch(() => res.status(500).json({ message: 'An error occurred.' }));
   })
   .put(protectRoute({ requireAdmin: true }), (req, res) => {
@@ -69,20 +78,31 @@ usersRouter.route('/:id')
         try {
           req.body.uri = await uploadImage('user', req.params.id, req.body.new_img);
         } catch (err) {
-          return res.status(400).json({ success: false, message: err.message });
+          return res.status(400).json({ message: err.message });
         }
       }
 
       return User.updateWithHashid(req.params.id, req.body)
         .then((result) => {
           if (result[0]) {
-            res.status(200).json({ success: true });
+            res.sendStatus(200);
           } else {
-            res.status(404).json({ success: false, message: 'User not found.' });
+            res.status(404).json({ message: 'User not found.' });
           }
         });
     })()
-      .catch(err => res.status(500).json({ success: false, message: err.message }));
+      .catch(err => res.status(500).json({ message: err.message }));
+  })
+  .delete(protectRoute({ requireAdmin: true }), (req, res) => {
+    User.deleteWithHashid(req.params.id)
+      .then((affectedRows) => {
+        if (affectedRows > 0) {
+          res.sendStatus(200);
+        } else {
+          res.status(404).json({ message: 'User not found.' });
+        }
+      })
+      .catch(() => res.status(500).json({ message: 'An error occurred.' }));
   });
 
 export default usersRouter;

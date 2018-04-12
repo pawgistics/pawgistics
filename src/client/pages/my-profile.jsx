@@ -130,7 +130,7 @@ class MyProfilePage extends React.Component<Props> {
         <div className="footer">
           <h2>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <Button outline size="lg" onClick={this.props.history.goBack}>BACK</Button>
+              <Button outline size="lg" onClick={this.props.history.goBack}>Back</Button>
             </div>
           </h2>
         </div>

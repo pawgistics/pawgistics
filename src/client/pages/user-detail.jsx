@@ -73,12 +73,12 @@ class UserDetailPage extends React.Component<Props> {
           </Col>
         </Row>
         <Row noGutters className="justify-content-center">
-          <Col xs="auto" className="mx-2">
-            <Button outline size="lg" onClick={this.props.history.goBack}>BACK</Button>
+          <Col xs="" sm="auto" className="mr-2 mx-sm-2">
+            <Button block outline size="lg" onClick={this.props.history.goBack}>Back</Button>
           </Col>
           <AdminControl>
-            <Col xs="auto" className="mx-2">
-              <Link className="btn btn-secondary btn-lg" to={editUserPageRoute(this.state.user.id)}>EDIT</Link>
+            <Col xs="" sm="auto" className="ml-2 mx-sm-2">
+              <Link className="btn btn-secondary btn-lg btn-block" to={editUserPageRoute(this.state.user.id)}>Edit</Link>
             </Col>
           </AdminControl>
         </Row>

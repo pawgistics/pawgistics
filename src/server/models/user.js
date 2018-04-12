@@ -38,23 +38,24 @@ export default (Sequelize, DataTypes) => {
     },
     first_name: {
       type: DataTypes.STRING,
-      // notEmpty: true,
+      notEmpty: true,
       allowNull: false,
     },
     last_name: {
       type: DataTypes.STRING,
-      // notEmpty: true,
+      notEmpty: true,
       allowNull: false,
     },
     phone_number: {
       type: DataTypes.STRING,
-      // notEmpty: true,
+      notEmpty: true,
       allowNull: false,
     },
     uri: {
       type: DataTypes.STRING,
-      // notEmpty: true,
-      allowNull: true,
+      notEmpty: true,
+      allowNull: false,
+      defaultValue: 'https://canine-assistants-assets.s3.amazonaws.com/user/default.jpg',
     },
   }, {
     underscored: true,
@@ -126,10 +127,20 @@ export default (Sequelize, DataTypes) => {
           },
         },
       ] : undefined,
+      updated_at: filter.before ? {
+        [Sequelize.Op.lt]: filter.before,
+      } : undefined,
       // eslint-disable-next-line no-nested-ternary
       admin: filter.user_type === 'instructor' ? true : filter.user_type === 'volunteer' ? false : undefined,
+      active: !filter.inactive ? true : undefined,
     }, _.isUndefined),
+    order: [
+      ['updated_at', 'DESC'],
+    ],
+    limit: 10,
   });
+
+  User.deleteWithHashid = hashid => User.destroy({ where: { id: hashidsUsers.decode(hashid)[0] } });
 
   User.updateWithHashid = (hashid, obj) => {
     const user = Object.assign({}, obj);

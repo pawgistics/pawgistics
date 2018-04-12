@@ -9,10 +9,18 @@ export function updateDog(id, dog) {
   return apiCall('PUT', dogApiRoute(id), dog);
 }
 
+export function removeDog(id) {
+  return apiCall('DELETE', dogApiRoute(id));
+}
+
 export function createUser(dog) {
   return apiCall('POST', USERS_API_ROUTE, dog);
 }
 
 export function updateUser(id, user) {
   return apiCall('PUT', userApiRoute(id), user);
+}
+
+export function removeUser(id) {
+  return apiCall('DELETE', userApiRoute(id));
 }

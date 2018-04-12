@@ -3,12 +3,12 @@
 import React from 'react';
 import { Switch, Route } from 'react-router';
 import NaviconRound from 'react-icons/lib/io/navicon-round';
-import { Alert, Button, Fade } from 'reactstrap';
+import { Row, Col, Fade, Alert, Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 
 import Sidebar from '../components/sidebar';
 import AdminRoute from '../containers/admin-route';
 
-import { AlertProvider } from '../util/alert';
+import { UIProvider } from '../util/ui';
 
 import HomePage from './home';
 import DogsPage from './dogs';
@@ -51,6 +51,11 @@ class Dashboard extends React.Component {
         color: '',
         text: '',
       },
+      confirmation: {
+        visible: false,
+        text: '',
+        action: () => {},
+      },
     };
 
     this.showSidebar = this.showSidebar.bind(this);
@@ -72,6 +77,24 @@ class Dashboard extends React.Component {
       this.setState({
         alert: {
           ...this.state.alert,
+          visible: false,
+        },
+      });
+    };
+
+    this.showConfirmation = (text, action) => {
+      this.setState({
+        confirmation: {
+          visible: true,
+          text,
+          action,
+        },
+      });
+    };
+    this.hideConfirmation = () => {
+      this.setState({
+        confirmation: {
+          ...this.state.confirmation,
           visible: false,
         },
       });
@@ -104,16 +127,35 @@ class Dashboard extends React.Component {
         >
           {this.state.alert.text}
         </Alert>
+        <Modal
+          isOpen={this.state.confirmation.visible}
+          toggle={this.hideConfirmation}
+        >
+          <ModalHeader toggle={this.hideConfirmation}>Confirmation</ModalHeader>
+          <ModalBody>
+            {this.state.confirmation.text}
+          </ModalBody>
+          <ModalFooter>
+            <Row noGutters className="justify-content-end w-100">
+              <Col xs="" sm="auto" className="mr-2 mx-sm-2 mb-sm-0">
+                <Button block color="primary" size="lg" onClick={() => { this.hideConfirmation(); this.state.confirmation.action(); }}>Confirm</Button>
+              </Col>
+              <Col xs="" sm="auto" className="ml-2 mx-sm-2 mb-sm-0">
+                <Button block outline size="lg" onClick={this.hideConfirmation}>Cancel</Button>
+              </Col>
+            </Row>
+          </ModalFooter>
+        </Modal>
         <div styleName="content">
           <div styleName="sidebar_btn">
             <Button outline onClick={this.showSidebar}>
               <NaviconRound size="2rem" />
             </Button>
           </div>
-          <AlertProvider
+          <UIProvider
             value={{
               showAlert: this.showAlert,
-              hideAlert: this.hideAlert,
+              showConfirmation: this.showConfirmation,
             }}
           >
             <Switch>
@@ -131,7 +173,7 @@ class Dashboard extends React.Component {
               <AdminRoute exact path={EDIT_DOG_PAGE_ROUTE} component={EditDogPage} />
               <Route component={NotFoundPage} />
             </Switch>
-          </AlertProvider>
+          </UIProvider>
         </div>
       </>
     );

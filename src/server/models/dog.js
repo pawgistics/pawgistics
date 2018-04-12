@@ -29,11 +29,13 @@ export default (Sequelize, DataTypes) => {
     gender: {
       type: DataTypes.ENUM,
       values: ['M', 'F'],
+      allowNull: false,
     },
     uri: {
       type: DataTypes.STRING,
       notEmpty: true,
-      allowNull: true,
+      allowNull: false,
+      defaultValue: 'https://canine-assistants-assets.s3.amazonaws.com/dog/default.jpg',
     },
   }, {
     underscored: true,
@@ -87,21 +89,32 @@ export default (Sequelize, DataTypes) => {
     });
   };
 
-  Dog.findByHashid = (hashid, ...rest) => Dog.scope('detail').findById(hashidsDogs.decode(hashid)[0], ...rest);
+  Dog.findByHashid = hashid => Dog.scope('detail').findById(hashidsDogs.decode(hashid)[0]);
 
   Dog.listWithFilter = filter => Dog.findAll({
     where: _.pickBy({
       name: filter.name ? {
         [Sequelize.Op.like]: `%${filter.name}%`,
       } : undefined,
+      updated_at: filter.before ? {
+        [Sequelize.Op.lt]: filter.before,
+      } : undefined,
       litter_id: filter.litter_id ? hashidsLitters.decode(filter.litter_id) : undefined,
       instructor_id: filter.instructor_id ? hashidsUsers.decode(filter.instructor_id) : undefined,
+      active: !filter.inactive ? true : undefined,
     }),
+    order: [
+      ['updated_at', 'DESC'],
+    ],
+    limit: 10,
   });
+
+  Dog.deleteWithHashid = hashid => Dog.destroy({ where: { id: hashidsDogs.decode(hashid)[0] } });
 
   Dog.createFromObject = (obj) => {
     const dog = Object.assign({}, obj);
 
+    delete dog.uri;
     if (dog.litter_id) dog.litter_id = hashidsLitters.decode(dog.litter_id);
     if (dog.instructor_id) dog.instructor_id = hashidsUsers.decode(dog.instructor_id);
     return Dog.create(dog, {
@@ -111,6 +124,7 @@ export default (Sequelize, DataTypes) => {
         'gender',
         'litter_id',
         'instructor_id',
+        'uri',
       ],
     });
   };

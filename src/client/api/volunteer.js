@@ -8,25 +8,25 @@ import {
 } from '../routes';
 
 export function getDogs(filters) {
-  return apiCall('GET', dogsApiRoute(filters), null);
+  return apiCall('GET', dogsApiRoute(filters));
 }
 
 export function getDog(id) {
-  return apiCall('GET', dogApiRoute(id), null);
+  return apiCall('GET', dogApiRoute(id));
 }
 
 export function getUsers(filters) {
-  return apiCall('GET', usersApiRoute(filters), null);
+  return apiCall('GET', usersApiRoute(filters));
 }
 
 export function getUser(id) {
-  return apiCall('GET', userApiRoute(id), null);
+  return apiCall('GET', userApiRoute(id));
 }
 
 export function getInstructors() {
-  return apiCall('GET', INSTRUCTORS_API_ROUTE, null);
+  return apiCall('GET', INSTRUCTORS_API_ROUTE);
 }
 
 export function getLitters() {
-  return apiCall('GET', '/api/litters', null);
+  return apiCall('GET', '/api/litters');
 }

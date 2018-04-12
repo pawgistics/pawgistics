@@ -9,7 +9,7 @@ import { dogDetailPageRoute } from '../routes';
 
 type Props = { dogs: [{}] }
 
-const DogDetailTable = ({ dogs }: Props) => (
+const DogDetailTable = ({ dogs, ...rest }: Props) => (
   <DetailTable
     headings={['Dog Name', 'Chip ID', 'Custody']}
     keys={['name', 'chip', 'custody']}
@@ -18,6 +18,7 @@ const DogDetailTable = ({ dogs }: Props) => (
       template: dogDetailPageRoute,
       key: 'id',
     }}
+    {...rest}
   />
 );
 

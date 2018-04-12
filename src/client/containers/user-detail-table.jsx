@@ -8,7 +8,7 @@ import { userDetailPageRoute } from '../routes';
 
 type Props = { users: [{}] }
 
-const UserDetailTable = ({ users }: Props) => (
+const UserDetailTable = ({ users, ...rest }: Props) => (
   <DetailTable
     headings={['First Name', 'Last Name', 'Email']}
     keys={['first_name', 'last_name', 'email']}
@@ -17,6 +17,7 @@ const UserDetailTable = ({ users }: Props) => (
       template: userDetailPageRoute,
       key: 'id',
     }}
+    {...rest}
   />
 );
 

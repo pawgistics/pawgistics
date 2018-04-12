@@ -480,7 +480,7 @@ class ReturnDogPage extends React.Component<Props> {
           <br />
           <div className="footer">
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <Button size="lg">SUBMIT FORM</Button>
+              <Button size="lg">Submit Form</Button>
             </div>
           </div>
         </Form>

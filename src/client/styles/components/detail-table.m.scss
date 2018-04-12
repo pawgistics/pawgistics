@@ -7,7 +7,7 @@
 
 .header, .row {
   display: flex;
-  padding: 0.75rem;
+  padding: 0.75rem 0.5rem;
   white-space: nowrap;
   align-items: center;
   position: relative;
@@ -16,6 +16,10 @@
   span {
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  &.clickable {
+    cursor: pointer;
   }
 }
 
@@ -28,10 +32,8 @@
 
 .row {
   border-bottom: 1px solid #dee2e6;
-  
+
   &.clickable {
-    cursor: pointer;
-    
     &:before {
       content: "";
       position: absolute;
@@ -41,9 +43,21 @@
       left: -1000%;
       z-index: -1;
     }
-    
+
     &:hover::before {
       background-color: rgba(0,0,0,.075);
     }
   }
+}
+
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.rotating {
+  animation: rotating 1.5s linear infinite;
 }

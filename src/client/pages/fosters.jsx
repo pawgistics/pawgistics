@@ -116,7 +116,7 @@ class FostersPage extends React.Component<Props> {
           <br />
           <br />
           <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <Button size="lg">ADD USER</Button>
+            <Button size="lg">Add User</Button>
           </div>
         </div>
         <br />

@@ -4,7 +4,7 @@ import _ from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
 // import NaviconRound from 'react-icons/lib/io/navicon-round';
-import { Label, Form, Row, Col, FormGroup, Input } from 'reactstrap';
+import { Label, Form, Row, Col, Button, FormGroup, Input } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { getDogs } from '../api/volunteer';
 import AdminControl from '../containers/admin-control';
@@ -28,23 +28,29 @@ class DogsPage extends React.Component<Props> {
         litter_id: '',
         instructor_id: '',
         available: false,
-        include_inactive: false,
+        inactive: false,
       },
+      loading: true,
     };
 
     this.updateDogs();
 
     this.updateDogs = this.updateDogs.bind(this);
+    this.loadMoreDogs = this.loadMoreDogs.bind(this);
     this.updateDogsDebounced = _.debounce(this.updateDogs, 250);
+
+    this.updateFilterState = this.updateFilterState.bind(this);
     this.updateNameFilter = this.updateNameFilter.bind(this);
     this.updateLitterFilter = this.updateLitterFilter.bind(this);
     this.updateInstructorFilter = this.updateInstructorFilter.bind(this);
+    this.updateInactiveFilter = this.updateInactiveFilter.bind(this);
   }
 
   updateDogs() {
+    this.setState({ loading: true });
     this.props.getDogs(this.state.filter)
       .then((dogs) => {
-        this.setState({ dogs });
+        this.setState({ dogs, loading: false });
       })
       .catch((err) => {
         // eslint-disable-next-line no-console
@@ -52,34 +58,52 @@ class DogsPage extends React.Component<Props> {
       });
   }
 
+  loadMoreDogs() {
+    this.setState({ loading: true });
+    this.props.getDogs({
+      ...this.state.filter,
+      before: this.state.dogs[this.state.dogs.length - 1].updated_at,
+    })
+      .then((dogs) => {
+        this.setState({ dogs: _.concat(this.state.dogs, dogs), loading: false });
+      })
+      .catch((err) => {
+        // eslint-disable-next-line no-console
+        console.log(err.message);
+      });
+  }
+
+  updateFilterState(update, cb) {
+    this.setState({ filter: { ...this.state.filter, ...update } }, cb);
+  }
+
   updateNameFilter(e) {
-    this.setState({
-      filter: {
-        ...this.state.filter,
-        name: e.target.value,
-      },
+    this.updateFilterState({
+      name: e.target.value,
     }, () => {
       this.updateDogsDebounced();
     });
   }
 
   updateLitterFilter(value) {
-    this.setState({
-      filter: {
-        ...this.state.filter,
-        litter_id: value,
-      },
+    this.updateFilterState({
+      litter_id: value,
     }, () => {
       this.updateDogs();
     });
   }
 
   updateInstructorFilter(value) {
-    this.setState({
-      filter: {
-        ...this.state.filter,
-        instructor_id: value,
-      },
+    this.updateFilterState({
+      instructor_id: value,
+    }, () => {
+      this.updateDogs();
+    });
+  }
+
+  updateInactiveFilter(e) {
+    this.updateFilterState({
+      inactive: e.target.checked,
     }, () => {
       this.updateDogs();
     });
@@ -115,7 +139,7 @@ class DogsPage extends React.Component<Props> {
             <Col xs="auto" className="pl-xl-3 mb-2 text-nowrap">
               <FormGroup check inline className="mr-0">
                 <Label check>
-                  <Input type="checkbox" />Include inactive
+                  <Input type="checkbox" checked={this.state.filter.inactive} onChange={this.updateInactiveFilter} />Include inactive
                 </Label>
               </FormGroup>
             </Col>
@@ -128,16 +152,23 @@ class DogsPage extends React.Component<Props> {
         </Form>
         <Row className="mb-3">
           <Col>
-            <DogDetailTable dogs={this.state.dogs} />
+            <DogDetailTable
+              dogs={this.state.dogs}
+              loading={this.state.loading}
+              onReload={this.updateDogs}
+            />
           </Col>
         </Row>
-        <AdminControl>
-          <Row className="justify-content-center">
-            <Col xs="auto">
-              <Link className="btn btn-secondary btn-lg" to={ADD_DOG_PAGE_ROUTE}>ADD DOG</Link>
+        <Row noGutters className="justify-content-center">
+          <Col xs="" sm="auto" className="mr-2 mx-sm-2">
+            <Button block outline size="lg" onClick={this.loadMoreDogs}>Load More</Button>
+          </Col>
+          <AdminControl>
+            <Col xs="" sm="auto" className="ml-2 mx-sm-2">
+              <Link className="btn btn-secondary btn-lg btn-block" to={ADD_DOG_PAGE_ROUTE}>Add Dog</Link>
             </Col>
-          </Row>
-        </AdminControl>
+          </AdminControl>
+        </Row>
       </>
     );
   }

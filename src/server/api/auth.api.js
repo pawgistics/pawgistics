@@ -14,15 +14,15 @@ authRouter.post('/login', (req, res) => {
   passport.authenticate('local', { session: false }, (err, user, info) => {
     if (err) {
       console.log(err);
-      return res.status(500).json({ success: false, message: 'An error occurred.' });
+      return res.status(500).json({ message: 'An error occurred.' });
     }
     if (user) {
       const token = jwt.sign({ id: user.hashid, admin: user.admin }, jwtSecret, {
         expiresIn: 10800, // in seconds
       });
-      return res.status(200).json({ success: true, token });
+      return res.status(200).json({ token });
     }
-    return res.status(401).json({ success: false, message: info.message });
+    return res.status(401).json({ message: info.message });
   })(req, res);
 });
 

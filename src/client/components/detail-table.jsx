@@ -4,6 +4,7 @@ import _ from 'lodash';
 import React from 'react';
 import { withRouter } from 'react-router';
 import ChevronRight from 'react-icons/lib/io/chevron-right';
+import Loop from 'react-icons/lib/io/loop';
 
 import '../styles/components/detail-table.m.scss';
 
@@ -12,6 +13,8 @@ type Props = {
   headings: [string],
   keys: [string],
   items: [{}],
+  loading?: boolean,
+  onReload?: () => void,
   detailRoute?: {
     template: (string | number) => string,
     key: string
@@ -23,12 +26,23 @@ const DetailTable = ({
   headings,
   keys,
   items,
+  loading,
+  onReload,
   detailRoute,
 }: Props) => (
   <div styleName="table">
     {headings.map(heading =>
       <div styleName="header" key={heading}><span>{heading}</span></div>)}
-    {detailRoute && <div styleName="header" />}
+    {detailRoute && onReload ? (
+      // eslint-disable-next-line
+      <div
+        styleName="header clickable"
+        className="d-flex"
+        onClick={onReload}
+      >
+        <span className="ml-auto"><Loop size="2rem" styleName={loading ? 'rotating' : ''} /></span>
+      </div>
+    ) : <div styleName="header" />}
     {_.map(items, (item, index) => _.concat(_.map(keys, (key, kIndex) => (
           // eslint-disable-next-line
           <div
@@ -45,7 +59,7 @@ const DetailTable = ({
           // eslint-disable-next-line
           <div
             key={`${index}_`}
-            styleName={`row${detailRoute ? ' clickable' : ''}`}
+            styleName="row clickable"
             className="d-flex"
             onClick={
               detailRoute &&
@@ -59,6 +73,8 @@ const DetailTable = ({
 );
 
 DetailTable.defaultProps = {
+  loading: null,
+  onReload: null,
   detailRoute: null,
 };
 
