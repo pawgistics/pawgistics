@@ -1,31 +1,12 @@
 // @flow
-
 import React from 'react';
 import { connect } from 'react-redux';
 import { Label, Form, Col, FormGroup, Input, Button } from 'reactstrap';
 
 import { getDogs } from '../api/volunteer';
-// import DogDetailTable from '../containers/dog-detail-table';
 
-// type Props = {
-//   getDogs: () => Promise,
-// }
-
-// eslint-disable-next-line react/prefer-stateless-function
 class ReturnDogPage extends React.Component<Props> {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = { dogs: [] };
-  //   this.props.getDogs()
-  //     .then((dogs) => {
-  //       this.setState({ dogs });
-  //     })
-  //     .catch((err) => {
-  //       // eslint-disable-next-line no-console
-  //       console.log(err.message);
-  //     });
-  // }
-
+  // eslint-disable-next-line no-useless-constructor
   render() {
     return (
       <>

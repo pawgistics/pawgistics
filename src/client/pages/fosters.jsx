@@ -2,28 +2,12 @@
 
 import React from 'react';
 import { Button, InputGroup, InputGroupAddon, Table, Form, Col, Input } from 'reactstrap';
-// import { connect } from 'react-redux';
-
-// import { getUsers } from '../api/volunteer';
-
-// type Props = {
-//   getUsers: () => Promise,
-// }
 
 // eslint-disable-next-line react/prefer-stateless-function
 class FostersPage extends React.Component<Props> {
   // eslint-disable-next-line no-useless-constructor
   constructor(props) {
     super(props);
-    // this.state = { users: [] };
-    // this.props.getUsers()
-    //   .then((users) => {
-    //     this.setState({ users });
-    //   })
-    //   .catch((err) => {
-    //     // eslint-disable-next-line no-console
-    //     console.log(err.message);
-    //   });
   }
 
   render() {
