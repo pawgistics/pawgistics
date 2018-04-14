@@ -8,13 +8,13 @@ const Checkout = models.checkout;
 
 const checkoutRouter = express.Router();
 
-checkoutRouter.route('/')
-  .get(protectRoute(), (req, res) => {
-    // get all pending checkout requests currently signed in user is responsible for
-  })
-  .post(protectRoute(), (req, res) => {
-    // create new checkout request
-  });
+// checkoutRouter.route('/')
+//   .get(protectRoute(), (req, res) => {
+//     // get all pending checkout requests currently signed in user is responsible for
+//   })
+//   .post(protectRoute(), (req, res) => {
+//     // create new checkout request
+//   });
 
 checkoutRouter.route('/:id')
   .get(protectRoute({ requireAdmin: true }), (req, res) => {

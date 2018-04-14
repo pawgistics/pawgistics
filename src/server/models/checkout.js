@@ -55,7 +55,7 @@ export default (Sequelize, DataTypes) => {
   Checkout.prototype.toJSON = function toJSON() {
     const checkout = Object.assign({}, this.dataValues);
     return checkout;
-  }
+  };
 
   return Checkout;
 };
