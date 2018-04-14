@@ -63,6 +63,7 @@ export default (Sequelize, DataTypes) => {
       onDelete: 'RESTRICT',
     });
     Dog.FosterGroup = models.dog.belongsTo(models.foster_group);
+    models.dog.hasOne(models.checkout);
 
     models.dog.addScope('defaultScope', {
       attributes: {

@@ -35,10 +35,22 @@ export default (Sequelize, DataTypes) => {
       allowNull: false,
     },
   });
-  // TODO: ask about which way models associate
-  // Checkout.associate = (models) => {
-  //   // Checkout.Volunteer = models.
-  // };
+
+  Checkout.associate = (models) => {
+    // Checkout.Dog = models.checkout.belongsTo(models.dog, {
+    //   foreignKey: { allowNull: false },
+    //   onDelete: 'CASCADE',
+    // });
+    models.checkout.addScope('detail', {
+      attributes: {
+        exclude: ['dog_id', 'volunteer_id'],
+      },
+      include: [
+        { model: models.user.scope('association'), as: 'volunteer' },
+        { model: models.dog.scope('association'), as: 'dog' },
+      ],
+    });
+  };
 
   return Checkout;
 };

@@ -96,6 +96,14 @@ export default (Sequelize, DataTypes) => {
     models.user.hasMany(models.dog, {
       foreignKey: 'instructor_id',
     });
+    models.user.hasOne(models.checkout, {
+      foreignKey: 'volunteer_id',
+      onDelete: 'CASCADE',
+    });
+    // models.checkout.hasOne(models.user, {
+    //   foreignKey: 'instructor_id',
+    //   onDelete: 'CASCADE',
+    // });
 
     models.user.addScope('detail', {
       attributes: {
