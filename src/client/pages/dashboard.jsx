@@ -20,7 +20,7 @@ import ReturnDogPage from './return-dog';
 import UserDetailPage from './user-detail';
 import AddDogPage from './add-dog';
 import AddUserPage from './add-user';
-// import AddLitterPage from './add-litter';
+import AddLitterPage from './add-litter';
 // import OutingRequestPage from './outing-request';
 import EditUser from './edit-user';
 import EditDogPage from './edit-dog';
@@ -38,7 +38,7 @@ import {
   // OUTING_REQUEST_PAGE_ROUTE,
   ADD_DOG_PAGE_ROUTE,
   ADD_USER_PAGE_ROUTE,
-  // ADD_LITTER_PAGE_ROUTE,
+  ADD_LITTER_PAGE_ROUTE,
   EDIT_USER_PAGE_ROUTE,
   EDIT_DOG_PAGE_ROUTE,
 } from '../routes';
@@ -174,7 +174,7 @@ class Dashboard extends React.Component {
               {/* <AdminRoute exact path={OUTING_REQUEST_PAGE_ROUTE}
               component={OutingRequestPage} /> */}
               <AdminRoute exact path={ADD_USER_PAGE_ROUTE} component={AddUserPage} />
-              {/* <AdminRoute exact path={ADD_LITTER_PAGE_ROUTE} component={AddLitterPage} /> */}
+              <AdminRoute exact path={ADD_LITTER_PAGE_ROUTE} component={AddLitterPage} />
               <AdminRoute exact path={RETURN_DOG_PAGE_ROUTE} component={ReturnDogPage} />
               <AdminRoute exact path={EDIT_USER_PAGE_ROUTE} component={EditUser} />
               <AdminRoute exact path={EDIT_DOG_PAGE_ROUTE} component={EditDogPage} />

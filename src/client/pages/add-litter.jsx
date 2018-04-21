@@ -1,60 +1,58 @@
 // @flow
+
 import React from 'react';
+import { FormGroup, Input, Label, Row, Col, Button } from 'reactstrap';
 import { connect } from 'react-redux';
-import { Form, Row, Col, Table, Button } from 'reactstrap';
+import { postLitter } from '../api/admin';
 
-import { getDogs } from '../api/volunteer';
+type Props = {
+  history: Object,
+  postLitter(val): Promise,
+}
 
-class AddLitterPage extends React.Component<Props> {
-  // eslint-disable-next-line no-useless-constructor
+class AddLitter extends React.Component<Props> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+    };
+    this.updateName = this.updateName.bind(this);
+    this.onSave = this.onSave.bind(this);
+  }
+
+  onSave() {
+    if (this.state === '') {
+      /* eslint-disable no-alert */
+      alert('Please enter a litter name');
+    }
+    this.props.postLitter(this.state)
+      .then(() => {
+        alert(`${this.state.name} added successfully`);
+      }).catch((err) => {
+        alert(err.message);
+      });
+  }
+
+  updateName(e) { this.setState({ name: e.target.value }); }
+
   render() {
     return (
-      <>
-        <span className="title-text">Add Litter</span>
-        {/* <button className="btn btn-primary">Back</button>
-        <Button color="primary">Save</Button> */}
-        <Form>
-          <Col>
-            <br />
-            <Table bordered>
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Litter Name</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>ABC</td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>DEF</td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td>GHI</td>
-                </tr>
-                <tr>
-                  <th scope="row">4</th>
-                  <td>XYZ</td>
-                </tr>
-              </tbody>
-            </Table>
+      <FormGroup>
+        <Label for="name">Name</Label>
+        <Input type="text" id="name" placeholder="Litter Name" value={this.state.name || ''} onChange={this.updateName} />
+        <Row noGutters className="justify-content-center">
+          <Col xs="" sm="auto" className="mr-2 mx-sm-2">
+            <Button block outline size="lg" onClick={this.props.history.goBack}>Back</Button>
           </Col>
-          <br />
-          <Row noGutters className="justify-content-center">
-            <Col xs="4" sm="auto" className="mr-2 mx-sm-2">
-              <Button block size="lg">Add New Litter</Button>
-            </Col>
-          </Row>
-        </Form>
-      </>
+          <Col xs="" sm="auto" className="ml-2 mx-sm-2">
+            <Button block size="lg" onClick={this.onSave}>Create</Button>
+          </Col>
+        </Row>
+      </FormGroup>
     );
   }
 }
 
 export default connect(null, dispatch => ({
-  getDogs: () => dispatch(getDogs()),
-}))(AddLitterPage);
+  postLitter: val => dispatch(postLitter(val)),
+}))(AddLitter);
