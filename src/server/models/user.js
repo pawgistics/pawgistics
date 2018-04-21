@@ -91,9 +91,20 @@ export default (Sequelize, DataTypes) => {
 
   User.associate = (models) => {
     models.user.belongsTo(models.foster_group);
+    models.user.hasOne(models.dog, {
+      foreignKey: 'custodian_id',
+    });
     models.user.hasMany(models.dog, {
       foreignKey: 'instructor_id',
     });
+    models.user.hasOne(models.checkout, {
+      foreignKey: 'volunteer_id',
+      onDelete: 'CASCADE',
+    });
+    // models.checkout.hasOne(models.user, {
+    //   foreignKey: 'instructor_id',
+    //   onDelete: 'CASCADE',
+    // });
 
     models.user.addScope('detail', {
       attributes: {

@@ -55,11 +55,17 @@ export default (Sequelize, DataTypes) => {
       onDelete: 'RESTRICT',
       as: 'instructor',
     });
+    Dog.Custodian = models.dog.belongsTo(models.user, {
+      foreignKey: { allowNull: true },
+      onDelete: 'RESTRICT',
+      as: 'custodian',
+    });
     Dog.Litter = models.dog.belongsTo(models.litter, {
       foreignKey: { allowNull: false },
       onDelete: 'RESTRICT',
     });
     Dog.FosterGroup = models.dog.belongsTo(models.foster_group);
+    models.dog.hasOne(models.checkout);
 
     models.dog.addScope('defaultScope', {
       attributes: {
@@ -73,11 +79,12 @@ export default (Sequelize, DataTypes) => {
 
     models.dog.addScope('detail', {
       attributes: {
-        exclude: ['instructor_id', 'litter_id', 'foster_group_id'],
+        exclude: ['instructor_id', 'litter_id', 'foster_group_id', 'custodian_id'],
       },
       include: [
         { model: models.user.scope('association'), as: 'instructor' },
         models.litter.scope('association'),
+        { model: models.user.scope('association'), as: 'custodian' },
         {
           model: models.foster_group.scope('association'),
           include: [
@@ -135,6 +142,7 @@ export default (Sequelize, DataTypes) => {
     if (dog.litter_id) dog.litter_id = hashidsLitters.decode(dog.litter_id);
     if (dog.instructor_id) dog.instructor_id = hashidsUsers.decode(dog.instructor_id);
     if (dog.foster_group_id) dog.foster_id = hashidsFosters.decode(dog.foster_id);
+    if (dog.custodian_id) dog.custodian_id = hashidsUsers.dencode(dog.custodian_id);
 
     return Dog.update({
       chip: dog.chip,
@@ -159,6 +167,7 @@ export default (Sequelize, DataTypes) => {
     if (dog.litter_id) dog.litter_id = hashidsLitters.encode(dog.litter_id);
     if (dog.instructor_id) dog.instructor_id = hashidsUsers.encode(dog.instructor_id);
     if (dog.foster_group_id) dog.foster_group_id = hashidsFosters.encode(dog.foster_group_id);
+    if (dog.custodian_id) dog.custodian_id = hashidsUsers.encode(dog.custodian_id);
 
     return dog;
   };

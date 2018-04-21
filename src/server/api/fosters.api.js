@@ -16,7 +16,9 @@ fostersRouter.route('/')
       .catch(() => res.status(500).json({ message: 'An error occurred.' }));
   })
   .post(protectRoute({ requireAdmin: true }), (req, res) => {
-    res.sendStatus(501);
+    FosterGroup.create({})
+      .then(res.sendStatus(200))
+      .catch(() => res.status(500).json({ message: 'An error occurred.' }));
   });
 
 fostersRouter.route('/:id')
