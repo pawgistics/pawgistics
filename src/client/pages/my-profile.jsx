@@ -2,144 +2,65 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { /* Link, */InputGroupAddon, InputGroup, Row, Col, Button, Form, FormGroup, ListGroup, ListGroupItem, Input, Table } from 'reactstrap';
-import { getDog } from '../api/volunteer';
-import '../styles/pages/my-profile.m.scss';
+import { Link } from 'react-router-dom';
+import { Row, Col, ListGroupItem } from 'reactstrap';
+
+import ResponsiveListGroup from '../components/responsive-list-group';
+import { getUser } from '../api/volunteer';
+import { editUserPageRoute } from '../routes';
 
 type Props = {
-  // data: Object,
-  match: Object,
-  history: Object,
-  getDog(chipId): Promise,
+  me: String,
+  getUser(id): Promise,
 }
 
-class MyProfilePage extends React.Component<Props> {
+const mapStateToProps = state => ({
+  me: state.auth.id,
+});
+
+class UserDetailPage extends React.Component<Props> {
   constructor(props) {
     super(props);
-    this.state = { dog: {} };
-    this.state.id = props.match.params.id;
-    this.props.getDog(this.state.id)
-      .then((response) => {
-        if (response.success) {
-          this.setState({ dog: response.response });
-        } else {
-          // eslint-disable-next-line no-console
-          console.log(response.message);
-        }
-      }).catch(() => {
+    console.log(this.state);
+    this.state = { user: {} };
+    this.props.getUser(this.props.me)
+      .then((user) => {
+        this.setState({ user });
+      }).catch((err) => {
         // eslint-disable-next-line no-console
-        console.log('Failed to get a resopnse from the server.');
+        console.log(err.message);
       });
   }
 
   render() {
     return (
       <>
-        <span className="title-text">My Profile</span>
-        {/* <button className="btn btn-primary">Back</button>
-        <Button color="primary">Save</Button> */}
-        <Form>
-          <br />
-          <Row>
-            <Col xs="3">
-              <img src={this.state.dog.uri} alt={this.state.dog.name} className="border rounded" />
-            </Col>
-            <Col xs="4">
-              <ListGroup>
-                <ListGroupItem className="justify-content-between">Name: {this.state.dog.name} </ListGroupItem>
-                <ListGroupItem className="justify-content-between">ID: {this.state.dog.chipId} </ListGroupItem>
-                <ListGroupItem className="justify-content-between">Gender: {this.state.dog.gender} </ListGroupItem>
-                <ListGroupItem className="justify-content-between">DoB: {this.state.dog.dob} </ListGroupItem>
-              </ListGroup>
-            </Col>
-            <Col xs="4">
-              <FormGroup>
-                <ListGroup>
-                  <ListGroupItem className="justify-content-between">Marking: {this.state.dog.color} {this.state.dog.shape}</ListGroupItem>
-                  <ListGroupItem className="justify-content-between">Custody: Canine Assistants </ListGroupItem>
-                  <Form inline>
-                    <div className="form-group">
-                      <ListGroupItem className="justify-content-between">Status: Training </ListGroupItem>
-                      {/* <Link
-                        to={{
-                          pathname: `/editDog/${this.state.dog.chipId}`,
-                        }}
-                      > */}
-                      <Button>Edit</Button>
-                      {/* </Link> */}
-                    </div>
-                  </Form>
-                </ListGroup>
-              </FormGroup>
-            </Col>
-          </Row>
-        </Form>
-        <br />
-        <br />
-        <InputGroup>
-          <Input type="text" className="form-control" placeholder="Search using keywords" id="inputGroup" />
-          <InputGroupAddon addonType="append">
-            <Button>Search</Button>
-          </InputGroupAddon>
-        </InputGroup>
-        <br />
-        <Table hover>
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Name of person</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">10/10/17</th>
-              <td>Steve</td>
-              <td>Requested to walk Fido</td>
-            </tr>
-            <tr>
-              <th scope="row">10/10/17</th>
-              <td>Adam</td>
-              <td>Approved Steve to walk Fido</td>
-            </tr>
-            <tr>
-              <th scope="row">10/10/17</th>
-              <td>Steve</td>
-              <td>Signed Fido back in</td>
-            </tr>
-            <tr>
-              <th scope="row" />
-              <td />
-              <td />
-            </tr>
-            <tr>
-              <th scope="row" />
-              <td />
-              <td />
-            </tr>
-            <tr>
-              <th scope="row" />
-              <td />
-              <td />
-            </tr>
-          </tbody>
-        </Table>
-        <br />
-        <br />
-        <br />
-        <div className="footer">
-          <h2>
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <Button outline size="lg" onClick={this.props.history.goBack}>Back</Button>
-            </div>
-          </h2>
-        </div>
+        <span className="title-text">User Details</span>
+        <Row noGutters>
+          <Col className="d-flex mb-3 mr-3" xs="12" sm="auto">
+            <img src={this.state.user.uri} alt={this.state.user.first_name} className="profile-img border rounded mx-auto" />
+          </Col>
+          <Col className="mb-3" xs="12" sm="" xl="8">
+            <ResponsiveListGroup>
+              <ListGroupItem>First Name: {this.state.user.first_name}</ListGroupItem>
+              <ListGroupItem>Last Name: {this.state.user.last_name}</ListGroupItem>
+              <ListGroupItem>Email: {this.state.user.email}</ListGroupItem>
+              <ListGroupItem>Phone #: {this.state.user.phone_number}</ListGroupItem>
+              <ListGroupItem>User Type: {this.state.user.admin ? 'Instructor' : 'Volunteer'}</ListGroupItem>
+              <ListGroupItem>Status: {this.state.user.active ? 'Active' : 'Inactive'}</ListGroupItem>
+            </ResponsiveListGroup>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs="" sm="auto" className="ml-2 mx-sm-2">
+            <Link className="btn btn-secondary btn-lg btn-block" to={editUserPageRoute(this.props.me)}>Edit</Link>
+          </Col>
+        </Row>
       </>
     );
   }
 }
 
-// export default DogDetailPage;
-export default connect(null, dispatch => ({
-  getDog: id => dispatch(getDog(id)),
-}))(MyProfilePage);
+export default connect(mapStateToProps, dispatch => ({
+  getUser: id => dispatch(getUser(id)),
+}))(UserDetailPage);

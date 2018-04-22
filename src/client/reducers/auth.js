@@ -22,6 +22,7 @@ const authReducer = (state: Immut = initialState, action: { type: string, payloa
         isAuthenticated: true,
         token: action.payload.token,
         isAdmin: jwtDecode(action.payload.token).admin,
+        id: jwtDecode(action.payload.token).id,
       });
     case LOGOUT:
       return state.merge({
