@@ -10,7 +10,7 @@ import {
   DOGS_PAGE_ROUTE,
   USERS_PAGE_ROUTE,
   FOSTERS_PAGE_ROUTE,
-  // MY_PROFILE_PAGE_ROUTE,
+  MY_PROFILE_PAGE_ROUTE,
   // EDIT_USER_PAGE_ROUTE,
   // EDIT_DOG_PAGE_ROUTE,
   // DOG_DETAIL_PAGE_ROUTE,
@@ -20,7 +20,7 @@ import {
   // ADD_USER_PAGE_ROUTE,
   RETURN_DOG_PAGE_ROUTE,
   ADD_LITTER_PAGE_ROUTE,
-  // OUTING_REQUEST_PAGE_ROUTE,
+  OUTING_REQUEST_PAGE_ROUTE,
 } from '../routes';
 import { logoutUser } from '../actions/auth';
 import '../styles/components/sidebar.m.scss';
@@ -43,11 +43,11 @@ const Sidebar = ({ /* isAdmin, */ active, handleLogout, onClick }: Props) => (
         { route: DOGS_PAGE_ROUTE, label: 'Dogs' },
         { route: USERS_PAGE_ROUTE, label: 'Users' },
         { route: FOSTERS_PAGE_ROUTE, label: 'Fosters' },
-        // { route: OUTING_REQUEST_PAGE_ROUTE, label: 'Outing Request' },
+        { route: OUTING_REQUEST_PAGE_ROUTE, label: 'Outing Request' },
         { route: RETURN_DOG_PAGE_ROUTE, label: 'Return Dog' },
         { route: ADD_LITTER_PAGE_ROUTE, label: 'Add Litter' },
 
-        // { route: MY_PROFILE_PAGE_ROUTE, label: 'My Profile Page' },
+        { route: MY_PROFILE_PAGE_ROUTE, label: 'My Profile Page' },
         // { route: DOG_DETAIL_PAGE_ROUTE, label: 'Dog Detail Page' },
         // { route: USER_DETAIL_PAGE_ROUTE, label: 'My Profile Page' },
         // { route: DOGS_PAGE_ROUTE, label: 'Dogs' },

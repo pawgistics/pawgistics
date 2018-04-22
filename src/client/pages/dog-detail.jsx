@@ -93,6 +93,9 @@ class DogDetailPage extends React.Component<Props> {
           <Col xs="" sm="auto" className="mr-2 mx-sm-2">
             <Button block outline size="lg" onClick={this.props.history.goBack}>Back</Button>
           </Col>
+          <Col xs="" sm="auto" className="mr-2 mx-sm-2">
+            <Button block size="lg">Request Dog for Outing</Button>
+          </Col>
           <AdminControl>
             <Col xs="" sm="auto" className="ml-2 mx-sm-2">
               <Link className="btn btn-secondary btn-lg btn-block" to={editDogPageRoute(this.state.dog.id)}>Edit</Link>

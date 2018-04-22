@@ -11,13 +11,14 @@ type Props = {
   value: Object,
 }
 
-export default class DogEditFields extends React.Component<Props> {
+export default class UserEditFields extends React.Component<Props> {
   constructor(props) {
     super(props);
 
     this.updateFirstName = this.updateFirstName.bind(this);
     this.updateLastName = this.updateLastName.bind(this);
     this.updateEmail = this.updateEmail.bind(this);
+    this.updatePassword = this.updatePassword.bind(this);
     this.updatePhoneNumber = this.updatePhoneNumber.bind(this);
     this.updateAdmin = this.updateAdmin.bind(this);
     this.updateActive = this.updateActive.bind(this);
@@ -26,6 +27,12 @@ export default class DogEditFields extends React.Component<Props> {
   updateFirstName(e) { this.props.onChange({ first_name: e.target.value }); }
   updateLastName(e) { this.props.onChange({ last_name: e.target.value }); }
   updateEmail(e) { this.props.onChange({ email: e.target.value }); }
+  updatePassword(e) {
+    this.props.onChange({
+      password: e.target.value,
+      passChanged: true,
+    });
+  }
   updatePhoneNumber(e) { this.props.onChange({ phone_number: e.target.value }); }
   updateAdmin(value) { this.props.onChange({ admin: value }); }
   updateActive(value) { this.props.onChange({ active: value }); }
@@ -44,6 +51,10 @@ export default class DogEditFields extends React.Component<Props> {
         <FormGroup>
           <Label for="email">Email</Label>
           <Input type="text" id="email" autoComplete="email" placeholder="user@canineassistants.com" value={this.props.value.email || ''} onChange={this.updateEmail} />
+        </FormGroup>
+        <FormGroup>
+          <Label for="password">Password</Label>
+          <Input type="password" id="password" autoComplete="pass" placeholder="Unchanged" value={this.props.value.password || ''} onChange={this.updatePassword} />
         </FormGroup>
         <FormGroup>
           <Label for="phone_number">Phone #</Label>

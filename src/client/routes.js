@@ -25,7 +25,7 @@ export const editUserPageRoute = id => `/user/${id}/edit`;
 export const FOSTERS_PAGE_ROUTE = '/fosters';
 export const RETURN_DOG_PAGE_ROUTE = '/return';
 export const ADD_LITTER_PAGE_ROUTE = '/litters';
-// export const OUTING_REQUEST_PAGE_ROUTE = '/user';
+export const OUTING_REQUEST_PAGE_ROUTE = '/outing';
 
 // API
 
@@ -39,5 +39,6 @@ export const USERS_API_ROUTE = '/api/users';
 export const INSTRUCTORS_API_ROUTE = '/api/users/instructors';
 export const usersApiRoute = filters => `/api/users${stringify(_.pickBy(filters, _.identity), true)}`;
 export const userApiRoute = id => `/api/users/${id}`;
+export const MY_PROFILE_PAGE_ROUTE = '/me';
 
 export const LITTERS_API_ROUTE = '/api/litters';

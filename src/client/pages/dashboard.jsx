@@ -16,12 +16,12 @@ import UsersPage from './users';
 import FostersPage from './fosters';
 import DogDetailPage from './dog-detail';
 import ReturnDogPage from './return-dog';
-// import MyProfilePage from './my-profile';
+import MyProfilePage from './my-profile';
 import UserDetailPage from './user-detail';
 import AddDogPage from './add-dog';
 import AddUserPage from './add-user';
 import AddLitterPage from './add-litter';
-// import OutingRequestPage from './outing-request';
+import OutingRequestPage from './outing-request';
 import EditUser from './edit-user';
 import EditDogPage from './edit-dog';
 import NotFoundPage from './not-found';
@@ -31,11 +31,11 @@ import {
   DOGS_PAGE_ROUTE,
   USERS_PAGE_ROUTE,
   DOG_DETAIL_PAGE_ROUTE,
-  // MY_PROFILE_PAGE_ROUTE,
+  MY_PROFILE_PAGE_ROUTE,
   USER_DETAIL_PAGE_ROUTE,
   FOSTERS_PAGE_ROUTE,
   RETURN_DOG_PAGE_ROUTE,
-  // OUTING_REQUEST_PAGE_ROUTE,
+  OUTING_REQUEST_PAGE_ROUTE,
   ADD_DOG_PAGE_ROUTE,
   ADD_USER_PAGE_ROUTE,
   ADD_LITTER_PAGE_ROUTE,
@@ -169,10 +169,9 @@ class Dashboard extends React.Component {
               <Route exact path={FOSTERS_PAGE_ROUTE} component={FostersPage} />
               <Route exact path={DOG_DETAIL_PAGE_ROUTE} component={DogDetailPage} />
               <Route exact path={USER_DETAIL_PAGE_ROUTE} component={UserDetailPage} />
-              {/* <Route path={MY_PROFILE_PAGE_ROUTE} component={MyProfilePage} /> */}
+              <Route path={MY_PROFILE_PAGE_ROUTE} component={MyProfilePage} />
               <AdminRoute exact path={ADD_DOG_PAGE_ROUTE} component={AddDogPage} />
-              {/* <AdminRoute exact path={OUTING_REQUEST_PAGE_ROUTE}
-              component={OutingRequestPage} /> */}
+              <AdminRoute exact path={OUTING_REQUEST_PAGE_ROUTE} component={OutingRequestPage} />
               <AdminRoute exact path={ADD_USER_PAGE_ROUTE} component={AddUserPage} />
               <AdminRoute exact path={ADD_LITTER_PAGE_ROUTE} component={AddLitterPage} />
               <AdminRoute exact path={RETURN_DOG_PAGE_ROUTE} component={ReturnDogPage} />

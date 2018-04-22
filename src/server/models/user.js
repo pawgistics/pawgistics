@@ -155,7 +155,25 @@ export default (Sequelize, DataTypes) => {
 
   User.updateWithHashid = (hashid, obj) => {
     const user = Object.assign({}, obj);
-
+    if (user.passChanged) {
+      argon2.hash(user.password, { type: argon2.argon2id })
+        .then((hash) => {
+          User.update({
+            first_name: user.first_name,
+            last_name: user.last_name,
+            email: user.email,
+            password: hash,
+            phone_number: user.phone_number,
+            admin: user.admin,
+            active: user.active,
+            uri: user.uri,
+          }, {
+            where: {
+              id: hashidsUsers.decode(hashid),
+            },
+          });
+        });
+    }
     return User.update({
       first_name: user.first_name,
       last_name: user.last_name,
