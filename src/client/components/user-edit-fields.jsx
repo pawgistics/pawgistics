@@ -5,6 +5,7 @@ import { FormGroup, Input, Label } from 'reactstrap';
 
 import ResponsiveCols from '../components/responsive-cols';
 import Select from '../components/select';
+import AdminControl from '../containers/admin-control';
 
 type Props = {
   onChange(): void,
@@ -60,16 +61,18 @@ export default class UserEditFields extends React.Component<Props> {
           <Label for="phone_number">Phone #</Label>
           <Input type="text" id="phone_number" autoComplete="tel" placeholder="###-###-####" value={this.props.value.phone_number || ''} onChange={this.updatePhoneNumber} />
         </FormGroup>
-        <FormGroup>
-          <Label for="user_type">User Type</Label>
-          <Select
-            inputId="user_type"
-            options={[{ value: false, label: 'Volunteer' }, { value: true, label: 'Instructor' }]}
-            onSelectValue={this.updateAdmin}
-            isSearchable={false}
-            value={this.props.value.admin}
-          />
-        </FormGroup>
+        <AdminControl>
+          <FormGroup>
+            <Label for="user_type">User Type</Label>
+            <Select
+              inputId="user_type"
+              options={[{ value: false, label: 'Volunteer' }, { value: true, label: 'Instructor' }]}
+              onSelectValue={this.updateAdmin}
+              isSearchable={false}
+              value={this.props.value.admin}
+            />
+          </FormGroup>
+        </AdminControl>
         <FormGroup>
           <Label for="status">Status</Label>
           <Select

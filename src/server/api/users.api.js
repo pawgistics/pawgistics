@@ -71,7 +71,7 @@ usersRouter.route('/:id')
       })
       .catch(() => res.status(500).json({ message: 'An error occurred.' }));
   })
-  .put(protectRoute({ requireAdmin: true }), (req, res) => {
+  .put(protectRoute({ requireAdmin: false }), (req, res) => {
     (async () => {
       delete req.body.uri;
       if (req.body.new_img) {
