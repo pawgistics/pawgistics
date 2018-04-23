@@ -10,18 +10,10 @@ export default (Sequelize, DataTypes) => {
     description: {
       type: DataTypes.TEXT,
     },
-    requested_at: {
-      type: DataTypes.DATEONLY,
-      allowNull: false,
-    },
     decision_status: {
       type: DataTypes.ENUM,
       values: ['Pending', 'Approved', 'Rejected'],
       default: 'Pending',
-    },
-    decision_at: {
-      type: DataTypes.DATEONLY,
-      allowNull: false,
     },
     decision_reason: {
       type: DataTypes.TEXT,
@@ -36,21 +28,16 @@ export default (Sequelize, DataTypes) => {
     },
   });
 
-  Checkout.associate = (models) => {
-    // Checkout.Dog = models.checkout.belongsTo(models.dog, {
-    //   foreignKey: { allowNull: false },
-    //   onDelete: 'CASCADE',
-    // });
-    models.checkout.addScope('detail', {
-      attributes: {
-        exclude: ['dog_id', 'volunteer_id'],
-      },
-      include: [
-        { model: models.user.scope('association'), as: 'volunteer' },
-        { model: models.dog.scope('association'), as: 'dog' },
-      ],
-    });
-  };
+  // Checkout.associate = (models) => {
+  //   models.checkout.belongsTo(models.dog, {
+  //     foreignKey: { allowNull: false },
+  //     onDelete: 'CASCADE',
+  //   });
+  //   models.checkout.belongsTo(models.user, {
+  //     foreignKey: { allowNull: false },
+  //     onDelete: 'CASCADE',
+  //   });
+  // };
 
   Checkout.prototype.toJSON = function toJSON() {
     const checkout = Object.assign({}, this.dataValues);
