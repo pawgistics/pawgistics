@@ -20,19 +20,21 @@ import {
   // ADD_USER_PAGE_ROUTE,
   RETURN_DOG_PAGE_ROUTE,
   ADD_LITTER_PAGE_ROUTE,
-  OUTING_REQUEST_PAGE_ROUTE,
+  // OUTING_REQUEST_PAGE_ROUTE,
 } from '../routes';
 import { logoutUser } from '../actions/auth';
 import '../styles/components/sidebar.m.scss';
 
 type Props = {
-  // isAdmin: boolean,
+  isAdmin: boolean,
   active: boolean,
   handleLogout: () => void,
   onClick?: () => void,
 }
 
-const Sidebar = ({ /* isAdmin, */ active, handleLogout, onClick }: Props) => (
+const Sidebar = ({
+  isAdmin, active, handleLogout, onClick,
+}: Props) => (
   <nav styleName="sidebar" className={active ? 'active' : ''}>
     <div styleName="header">
       <h3>Pawgistics</h3>
@@ -43,20 +45,19 @@ const Sidebar = ({ /* isAdmin, */ active, handleLogout, onClick }: Props) => (
         { route: DOGS_PAGE_ROUTE, label: 'Dogs' },
         { route: USERS_PAGE_ROUTE, label: 'Users' },
         { route: FOSTERS_PAGE_ROUTE, label: 'Fosters' },
-        { route: OUTING_REQUEST_PAGE_ROUTE, label: 'Outing Request' },
+        // { route: OUTING_REQUEST_PAGE_ROUTE, label: 'Outing Request' },
         { route: RETURN_DOG_PAGE_ROUTE, label: 'Return Dog' },
-        { route: ADD_LITTER_PAGE_ROUTE, label: 'Add Litter' },
-
         { route: MY_PROFILE_PAGE_ROUTE, label: 'My Profile Page' },
         // { route: DOG_DETAIL_PAGE_ROUTE, label: 'Dog Detail Page' },
         // { route: USER_DETAIL_PAGE_ROUTE, label: 'My Profile Page' },
         // { route: DOGS_PAGE_ROUTE, label: 'Dogs' },
-        // ...(isAdmin ? [
+        ...(isAdmin ? [
+          { route: ADD_LITTER_PAGE_ROUTE, label: 'Add Litter' },
         //   // { route: ADD_DOG_PAGE_ROUTE, label: 'Add Dog Page' },
         //   // { route: ADD_USER_PAGE_ROUTE, label: 'Add User Page' },
         //   // { route: EDIT_USER_PAGE_ROUTE, label: 'Edit User Page' },
         //   // { route: EDIT_DOG_PAGE_ROUTE, label: 'Edit Dog Page' },
-        // ] : []),
+        ] : []),
       ].map(link => (
         <li key={link.route}>
           <NavLink to={link.route} onClick={onClick} activeClassName="active" exact>{link.label}</NavLink>

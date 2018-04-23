@@ -30,3 +30,6 @@ export function getInstructors() {
 export function getLitters() {
   return apiCall('GET', '/api/litters');
 }
+export function submitCheckout(request) {
+  return apiCall('POST', '/api/checkouts', request);
+}

@@ -21,7 +21,6 @@ const mapStateToProps = state => ({
 class UserDetailPage extends React.Component<Props> {
   constructor(props) {
     super(props);
-    console.log(this.state);
     this.state = { user: {} };
     this.props.getUser(this.props.me)
       .then((user) => {

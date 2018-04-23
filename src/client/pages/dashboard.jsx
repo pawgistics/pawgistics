@@ -171,8 +171,8 @@ class Dashboard extends React.Component {
               <Route exact path={USER_DETAIL_PAGE_ROUTE} component={UserDetailPage} />
               <Route path={MY_PROFILE_PAGE_ROUTE} component={MyProfilePage} />
               <Route exact path={EDIT_USER_PAGE_ROUTE} component={EditUser} />
+              <Route exact path={OUTING_REQUEST_PAGE_ROUTE} component={OutingRequestPage} />
               <AdminRoute exact path={ADD_DOG_PAGE_ROUTE} component={AddDogPage} />
-              <AdminRoute exact path={OUTING_REQUEST_PAGE_ROUTE} component={OutingRequestPage} />
               <AdminRoute exact path={ADD_USER_PAGE_ROUTE} component={AddUserPage} />
               <AdminRoute exact path={ADD_LITTER_PAGE_ROUTE} component={AddLitterPage} />
               <AdminRoute exact path={RETURN_DOG_PAGE_ROUTE} component={ReturnDogPage} />

@@ -25,7 +25,9 @@ export const editUserPageRoute = id => `/user/${id}/edit`;
 export const FOSTERS_PAGE_ROUTE = '/fosters';
 export const RETURN_DOG_PAGE_ROUTE = '/return';
 export const ADD_LITTER_PAGE_ROUTE = '/litters';
-export const OUTING_REQUEST_PAGE_ROUTE = '/outing';
+
+export const OUTING_REQUEST_PAGE_ROUTE = '/outing/:id';
+export const requestCheckoutRoute = id => `/outing/${id}`;
 
 // API
 

@@ -12,7 +12,7 @@ import AdminControl from '../containers/admin-control';
 
 import { getDog } from '../api/volunteer';
 
-import { userDetailPageRoute, editDogPageRoute } from '../routes';
+import { userDetailPageRoute, editDogPageRoute, requestCheckoutRoute } from '../routes';
 
 type Props = {
   match: Object,
@@ -94,7 +94,7 @@ class DogDetailPage extends React.Component<Props> {
             <Button block outline size="lg" onClick={this.props.history.goBack}>Back</Button>
           </Col>
           <Col xs="" sm="auto" className="mr-2 mx-sm-2">
-            <Button block size="lg">Request Dog for Outing</Button>
+            <Link className="btn btn-secondary btn-lg btn-block" to={requestCheckoutRoute(this.state.dog.id)}>Request Checkout</Link>
           </Col>
           <AdminControl>
             <Col xs="" sm="auto" className="ml-2 mx-sm-2">
