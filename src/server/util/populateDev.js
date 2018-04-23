@@ -94,7 +94,7 @@ export default (models) => {
         color: 'blue',
         shape: 'circle',
         gender: 'M',
-        uri: 'https://s3.amazonaws.com/canine-assistants-assets/dogs/o9jaFsXt.jpg',
+        uri: 'https://s3.amazonaws.com/canine-assistants-assets/dog/default.jpg',
         dob: new Date(),
       },
       {
@@ -106,7 +106,7 @@ export default (models) => {
         color: 'red',
         shape: 'triangle',
         gender: 'M',
-        uri: 'https://s3.amazonaws.com/canine-assistants-assets/dogs/o9jaFsXt.jpg',
+        uri: 'https://s3.amazonaws.com/canine-assistants-assets/dog/default.jpg',
         dob: new Date(),
       },
       {
@@ -118,7 +118,7 @@ export default (models) => {
         color: 'orange',
         shape: 'circle',
         gender: 'F',
-        uri: 'https://s3.amazonaws.com/canine-assistants-assets/dogs/o9jaFsXt.jpg',
+        uri: 'https://s3.amazonaws.com/canine-assistants-assets/dog/default.jpg',
         dob: new Date(),
       },
     ].map(dog => Dog.findOrCreate({

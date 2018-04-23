@@ -33,11 +33,11 @@ class DogsPage extends React.Component<Props> {
       loading: true,
     };
 
-    this.updateDogs();
-
     this.updateDogs = this.updateDogs.bind(this);
     this.loadMoreDogs = this.loadMoreDogs.bind(this);
     this.updateDogsDebounced = _.debounce(this.updateDogs, 250);
+
+    this.updateDogs();
 
     this.updateFilterState = this.updateFilterState.bind(this);
     this.updateNameFilter = this.updateNameFilter.bind(this);

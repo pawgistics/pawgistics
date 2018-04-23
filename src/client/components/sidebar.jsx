@@ -9,18 +9,11 @@ import { Button } from 'reactstrap';
 import {
   DOGS_PAGE_ROUTE,
   USERS_PAGE_ROUTE,
-  FOSTERS_PAGE_ROUTE,
+  // FOSTERS_PAGE_ROUTE,
   MY_PROFILE_PAGE_ROUTE,
-  // EDIT_USER_PAGE_ROUTE,
-  // EDIT_DOG_PAGE_ROUTE,
-  // DOG_DETAIL_PAGE_ROUTE,
-  // ADMIN_PANEL_PAGE_ROUTE,
-  // USER_DETAIL_PAGE_ROUTE,
-  // ADD_DOG_PAGE_ROUTE,
-  // ADD_USER_PAGE_ROUTE,
-  RETURN_DOG_PAGE_ROUTE,
+  // RETURN_DOG_PAGE_ROUTE,
   ADD_LITTER_PAGE_ROUTE,
-  // OUTING_REQUEST_PAGE_ROUTE,
+  REQUESTS_PAGE_ROUTE,
 } from '../routes';
 import { logoutUser } from '../actions/auth';
 import '../styles/components/sidebar.m.scss';
@@ -42,12 +35,12 @@ const Sidebar = ({
     <ul styleName="pages">
       {[
         // { route: HOME_PAGE_ROUTE, label: 'Home' },
+        { route: REQUESTS_PAGE_ROUTE, label: 'Requests' },
         { route: DOGS_PAGE_ROUTE, label: 'Dogs' },
         { route: USERS_PAGE_ROUTE, label: 'Users' },
-        { route: FOSTERS_PAGE_ROUTE, label: 'Fosters' },
-        // { route: OUTING_REQUEST_PAGE_ROUTE, label: 'Outing Request' },
-        { route: RETURN_DOG_PAGE_ROUTE, label: 'Return Dog' },
-        { route: MY_PROFILE_PAGE_ROUTE, label: 'My Profile Page' },
+        // { route: FOSTERS_PAGE_ROUTE, label: 'Fosters' },
+        // { route: REQUEST_DOG_PAGE_ROUTE, label: 'Outing Request' },
+        // { route: RETURN_DOG_PAGE_ROUTE, label: 'Return Dog' },
         // { route: DOG_DETAIL_PAGE_ROUTE, label: 'Dog Detail Page' },
         // { route: USER_DETAIL_PAGE_ROUTE, label: 'My Profile Page' },
         // { route: DOGS_PAGE_ROUTE, label: 'Dogs' },
@@ -58,6 +51,7 @@ const Sidebar = ({
         //   // { route: EDIT_USER_PAGE_ROUTE, label: 'Edit User Page' },
         //   // { route: EDIT_DOG_PAGE_ROUTE, label: 'Edit Dog Page' },
         ] : []),
+        { route: MY_PROFILE_PAGE_ROUTE, label: 'My Profile Page' },
       ].map(link => (
         <li key={link.route}>
           <NavLink to={link.route} onClick={onClick} activeClassName="active" exact>{link.label}</NavLink>

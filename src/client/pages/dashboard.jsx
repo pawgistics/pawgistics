@@ -13,11 +13,13 @@ import { UIProvider } from '../util/ui';
 import HomePage from './home';
 import DogsPage from './dogs';
 import UsersPage from './users';
-import FostersPage from './fosters';
+// import FostersPage from './fosters';
 import DogDetailPage from './dog-detail';
-import ReturnDogPage from './return-dog';
+// import ReturnDogPage from './return-dog';
 import MyProfilePage from './my-profile';
 import UserDetailPage from './user-detail';
+import RequestsPage from './requests';
+import RequestDetailPage from './request-detail';
 import AddDogPage from './add-dog';
 import AddUserPage from './add-user';
 import AddLitterPage from './add-litter';
@@ -33,9 +35,11 @@ import {
   DOG_DETAIL_PAGE_ROUTE,
   MY_PROFILE_PAGE_ROUTE,
   USER_DETAIL_PAGE_ROUTE,
-  FOSTERS_PAGE_ROUTE,
-  RETURN_DOG_PAGE_ROUTE,
-  OUTING_REQUEST_PAGE_ROUTE,
+  // FOSTERS_PAGE_ROUTE,
+  // RETURN_DOG_PAGE_ROUTE,
+  REQUEST_DOG_PAGE_ROUTE,
+  REQUESTS_PAGE_ROUTE,
+  REQUEST_DETAIL_PAGE_ROUTE,
   ADD_DOG_PAGE_ROUTE,
   ADD_USER_PAGE_ROUTE,
   ADD_LITTER_PAGE_ROUTE,
@@ -164,18 +168,20 @@ class Dashboard extends React.Component {
           >
             <Switch>
               <Route exact path={HOME_PAGE_ROUTE} component={HomePage} />
+              <Route exact path={REQUESTS_PAGE_ROUTE} component={RequestsPage} />
               <Route exact path={DOGS_PAGE_ROUTE} component={DogsPage} />
               <Route exact path={USERS_PAGE_ROUTE} component={UsersPage} />
-              <Route exact path={FOSTERS_PAGE_ROUTE} component={FostersPage} />
+              {/* <Route exact path={FOSTERS_PAGE_ROUTE} component={FostersPage} /> */}
               <Route exact path={DOG_DETAIL_PAGE_ROUTE} component={DogDetailPage} />
               <Route exact path={USER_DETAIL_PAGE_ROUTE} component={UserDetailPage} />
               <Route path={MY_PROFILE_PAGE_ROUTE} component={MyProfilePage} />
               <Route exact path={EDIT_USER_PAGE_ROUTE} component={EditUser} />
-              <Route exact path={OUTING_REQUEST_PAGE_ROUTE} component={OutingRequestPage} />
+              <Route exact path={REQUEST_DOG_PAGE_ROUTE} component={OutingRequestPage} />
+              <Route exact path={REQUEST_DETAIL_PAGE_ROUTE} component={RequestDetailPage} />
+              {/* <Route exact path={RETURN_DOG_PAGE_ROUTE} component={ReturnDogPage} /> */}
               <AdminRoute exact path={ADD_DOG_PAGE_ROUTE} component={AddDogPage} />
               <AdminRoute exact path={ADD_USER_PAGE_ROUTE} component={AddUserPage} />
               <AdminRoute exact path={ADD_LITTER_PAGE_ROUTE} component={AddLitterPage} />
-              <AdminRoute exact path={RETURN_DOG_PAGE_ROUTE} component={ReturnDogPage} />
               <AdminRoute exact path={EDIT_DOG_PAGE_ROUTE} component={EditDogPage} />
               <Route component={NotFoundPage} />
             </Switch>

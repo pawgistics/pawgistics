@@ -4,6 +4,8 @@ import {
   dogApiRoute,
   usersApiRoute,
   userApiRoute,
+  requestsApiRoute,
+  REQUESTS_API_ROUTE,
   INSTRUCTORS_API_ROUTE,
 } from '../routes';
 
@@ -30,6 +32,11 @@ export function getInstructors() {
 export function getLitters() {
   return apiCall('GET', '/api/litters');
 }
-export function submitCheckout(request) {
-  return apiCall('POST', '/api/checkouts', request);
+
+export function getRequests(before) {
+  return apiCall('GET', requestsApiRoute(before));
+}
+
+export function submitRequest(request) {
+  return apiCall('POST', REQUESTS_API_ROUTE, request);
 }

@@ -29,11 +29,11 @@ class UsersPage extends React.Component<Props> {
       loading: true,
     };
 
-    this.updateUsers();
-
     this.updateUsers = this.updateUsers.bind(this);
     this.loadMoreUsers = this.loadMoreUsers.bind(this);
     this.updateUsersDebounced = _.debounce(this.updateUsers, 250);
+
+    this.updateUsers();
 
     this.updateFilterState = this.updateFilterState.bind(this);
     this.updateNameFilter = this.updateNameFilter.bind(this);

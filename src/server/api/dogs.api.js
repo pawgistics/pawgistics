@@ -5,6 +5,7 @@ import models from '../models';
 import uploadImage from '../util/uploadImage';
 
 const Dog = models.dog;
+const Checkout = models.checkout;
 
 const dogsRouter = express.Router();
 
@@ -28,6 +29,13 @@ dogsRouter.route('/')
     })()
       .catch(err => res.status(500).json({ message: err.message }));
   });
+
+dogsRouter.get('/:id/outings', protectRoute({ requireAdmin: true }), (req, res) =>
+  Checkout.listForDog(req.params.id, req.query)
+    .then((checkouts) => {
+      res.status(200).json(checkouts);
+    })
+    .catch(e => res.status(500).json({ message: e.message })));
 
 dogsRouter.route('/:id')
   .get(protectRoute(), (req, res) => {

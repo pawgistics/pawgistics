@@ -1,5 +1,6 @@
 // @flow
 
+import _ from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -7,17 +8,20 @@ import { Row, Col, ListGroupItem, Button, Input } from 'reactstrap';
 
 import ListGroupItemLink from '../components/list-group-item-link';
 import ResponsiveListGroup from '../components/responsive-list-group';
-import OutingDetailTable from '../containers/outing-detail-table';
+import RequestsDetailTable from '../containers/requests-detail-table';
 import AdminControl from '../containers/admin-control';
 
 import { getDog } from '../api/volunteer';
+import { getDogOutings } from '../api/admin';
 
-import { userDetailPageRoute, editDogPageRoute, requestCheckoutRoute } from '../routes';
+import { userDetailPageRoute, editDogPageRoute, requestDogPageRoute } from '../routes';
 
 type Props = {
   match: Object,
   history: Object,
-  getDog(id): Promise,
+  isAdmin: boolean,
+  getDog: (id) => Promise,
+  getDogOutings: (id, filter) => Promise,
 }
 
 class DogDetailPage extends React.Component<Props> {
@@ -35,7 +39,21 @@ class DogDetailPage extends React.Component<Props> {
           name: '',
         },
       },
+      userName: '',
+      outings: [],
+      loading: true,
     };
+
+    this.updateOutings = this.updateOutings.bind(this);
+    this.loadMoreOutings = this.loadMoreOutings.bind(this);
+    this.updateOutingsDebounced = _.debounce(this.updateOutings, 250);
+
+    if (props.isAdmin) {
+      this.updateOutings();
+    }
+
+    this.updateNameFilter = this.updateNameFilter.bind(this);
+
     this.props.getDog(props.match.params.id)
       .then((dog) => {
         this.setState({ dog });
@@ -44,6 +62,43 @@ class DogDetailPage extends React.Component<Props> {
         // eslint-disable-next-line no-console
         console.log(err.message);
       });
+  }
+
+  updateOutings() {
+    this.setState({ loading: true });
+    this.props.getDogOutings(this.props.match.params.id, {
+      user_name: this.state.userName,
+    })
+      .then((outings) => {
+        this.setState({ outings, loading: false });
+      })
+      .catch((err) => {
+        // eslint-disable-next-line no-console
+        console.log(err.message);
+      });
+  }
+
+  loadMoreOutings() {
+    this.setState({ loading: true });
+    this.props.getDogOutings(this.props.match.params.id, {
+      user_name: this.state.userName,
+      before: this.state.outings[this.state.outings.length - 1].updated_at,
+    })
+      .then((outings) => {
+        this.setState({ outings: _.concat(this.state.outings, outings), loading: false });
+      })
+      .catch((err) => {
+        // eslint-disable-next-line no-console
+        console.log(err.message);
+      });
+  }
+
+  updateNameFilter(e) {
+    this.setState({
+      userName: e.target.value,
+    }, () => {
+      this.updateOutingsDebounced();
+    });
   }
 
   render() {
@@ -63,38 +118,38 @@ class DogDetailPage extends React.Component<Props> {
               <ListGroupItemLink to={userDetailPageRoute(this.state.dog.instructor.id)}>
                 Instructor: {this.state.dog.instructor.name}
               </ListGroupItemLink>
-              <ListGroupItem>Custody: Canine Assistants</ListGroupItem>
               <ListGroupItem>Status: {this.state.dog.active ? 'Active' : 'Inactive'}</ListGroupItem>
             </ResponsiveListGroup>
           </Col>
         </Row>
-        <Row className="mb-2">
-          <Col>
-            <h1 className="mb-0">Outings</h1>
-          </Col>
-        </Row>
-        <Row className="mb-2">
-          <Col>
-            <Input type="text" placeholder="Filter by volunteer name" />
-          </Col>
-        </Row>
-        <Row className="mb-3">
-          <Col>
-            <OutingDetailTable
-              subjectName="Volunteer"
-              outings={[
-              { name: 'John', date: '10/10/17', action: 'Took on a walk' },
-              { name: 'John', date: '10/10/17', action: 'Requested an outing' },
-              { name: 'Jane', date: '10/10/17', action: 'Signed back in' }]}
-            />
-          </Col>
-        </Row>
+        <AdminControl>
+          <Row className="mb-2">
+            <Col>
+              <h1 className="mb-0">Outings</h1>
+            </Col>
+          </Row>
+          <Row className="mb-2">
+            <Col>
+              <Input type="text" value={this.state.userName} onChange={this.updateNameFilter} placeholder="Filter by volunteer name" />
+            </Col>
+          </Row>
+          <Row className="mb-3">
+            <Col>
+              <RequestsDetailTable
+                view="dog"
+                requests={this.state.outings}
+                loading={this.state.loading}
+                onReload={this.updateOutings}
+              />
+            </Col>
+          </Row>
+        </AdminControl>
         <Row noGutters className="justify-content-center">
           <Col xs="" sm="auto" className="mr-2 mx-sm-2">
             <Button block outline size="lg" onClick={this.props.history.goBack}>Back</Button>
           </Col>
           <Col xs="" sm="auto" className="mr-2 mx-sm-2">
-            <Link className="btn btn-secondary btn-lg btn-block" to={requestCheckoutRoute(this.state.dog.id)}>Request Checkout</Link>
+            <Link className="btn btn-secondary btn-lg btn-block" to={requestDogPageRoute(this.state.dog.id)}>Request Checkout</Link>
           </Col>
           <AdminControl>
             <Col xs="" sm="auto" className="ml-2 mx-sm-2">
@@ -108,6 +163,12 @@ class DogDetailPage extends React.Component<Props> {
 }
 
 // export default DogDetailPage;
-export default connect(null, dispatch => ({
-  getDog: id => dispatch(getDog(id)),
-}))(DogDetailPage);
+export default connect(
+  state => ({
+    isAdmin: state.auth.isAdmin,
+  }),
+  dispatch => ({
+    getDog: id => dispatch(getDog(id)),
+    getDogOutings: (id, filter) => dispatch(getDogOutings(id, filter)),
+  }),
+)(DogDetailPage);

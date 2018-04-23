@@ -3,42 +3,36 @@ import React from 'react';
 import { connect } from 'react-redux';
 // import { Link } from 'react-router-dom';
 import { Label, Form, Row, Col, FormGroup, Input, Button } from 'reactstrap';
-import { submitCheckout } from '../api/volunteer';
+import { submitRequest } from '../api/volunteer';
 
 type Props = {
   match: Object,
   history: Object,
-  user_id: String,
-  submitCheckout(request): Promise,
+  submitRequest(request): Promise,
 }
-
-const mapStateToProps = state => ({
-  user_id: state.auth.id,
-});
 
 class OutingRequestPage extends React.Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      start: '',
-      end: '',
-      desc: '',
-      user_id: this.props.user_id,
+      pickup_date: '',
+      return_date: '',
+      description: '',
       dog_id: this.props.match.params.id,
     };
-    this.updateStart = this.updateStart.bind(this);
-    this.updateEnd = this.updateEnd.bind(this);
-    this.updateDesc = this.updateDesc.bind(this);
+    this.updatePickupDate = this.updatePickupDate.bind(this);
+    this.updateReturnDate = this.updateReturnDate.bind(this);
+    this.updateDescription = this.updateDescription.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  updateStart(e) { this.setState({ start: e.target.value }); }
-  updateEnd(e) { this.setState({ end: e.target.value }); }
-  updateDesc(e) { this.setState({ desc: e.target.value }); }
+  updatePickupDate(e) { this.setState({ pickup_date: e.target.value }); }
+  updateReturnDate(e) { this.setState({ return_date: e.target.value }); }
+  updateDescription(e) { this.setState({ description: e.target.value }); }
   handleSubmit() {
     /* eslint-disable no-alert */
-    this.props.submitCheckout(this.state)
-      .then(() => alert('Request submit successfully!'))
+    this.props.submitRequest(this.state)
+      .then(() => alert('Request submitted successfully!'))
       .catch(err => alert(err.message));
   }
 
@@ -50,15 +44,15 @@ class OutingRequestPage extends React.Component<Props> {
           <br />
           <Row>
             <Col sm={8}>
-              <Label for="Date">Start Date</Label>
-              <Input type="date" name="date" id="start" onChange={this.updateStart} />
+              <Label for="Date">Pickup Date</Label>
+              <Input type="date" name="date" id="start" onChange={this.updatePickupDate} value={this.state.pickup_date} />
             </Col>
           </Row>
           <br />
           <Row>
             <Col sm={8}>
               <Label for="Date">Return Date</Label>
-              <Input type="date" name="date" id="end" onChange={this.updateEnd} />
+              <Input type="date" name="date" id="end" onChange={this.updateReturnDate} value={this.state.return_date} />
             </Col>
           </Row>
           <br />
@@ -72,7 +66,8 @@ class OutingRequestPage extends React.Component<Props> {
                 name="text"
                 id="desc"
                 placeholder="Please provide description of what you expect to do on the outing."
-                onChange={this.updateDesc}
+                onChange={this.updateDescription}
+                value={this.state.description}
               />
             </Col>
           </FormGroup>
@@ -92,6 +87,6 @@ class OutingRequestPage extends React.Component<Props> {
   }
 }
 
-export default connect(mapStateToProps, dispatch => ({
-  submitCheckout: request => dispatch(submitCheckout(request)),
+export default connect(null, dispatch => ({
+  submitRequest: request => dispatch(submitRequest(request)),
 }))(OutingRequestPage);

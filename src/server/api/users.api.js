@@ -6,6 +6,7 @@ import models from '../models';
 import uploadImage from '../util/uploadImage';
 
 const User = models.user;
+const Checkout = models.checkout;
 
 const usersRouter = express.Router();
 
@@ -58,6 +59,13 @@ usersRouter.get('/instructors', protectRoute(), (req, res) => {
     })))
     .catch(() => res.status(500).json({ message: 'An error occurred.' }));
 });
+
+usersRouter.get('/:id/outings', protectRoute({ requireAdmin: true }), (req, res) =>
+  Checkout.listForUser({ id: req.params.id, admin: false }, req.query)
+    .then((checkouts) => {
+      res.status(200).json(checkouts);
+    })
+    .catch(e => res.status(500).json({ message: e.message })));
 
 usersRouter.route('/:id')
   .get(protectRoute(), (req, res) => {

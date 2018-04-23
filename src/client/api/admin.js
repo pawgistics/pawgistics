@@ -1,5 +1,14 @@
 import apiCall from '../actions/api';
-import { DOGS_API_ROUTE, USERS_API_ROUTE, dogApiRoute, userApiRoute, LITTERS_API_ROUTE } from '../routes';
+import {
+  DOGS_API_ROUTE,
+  USERS_API_ROUTE,
+  LITTERS_API_ROUTE,
+  dogApiRoute,
+  userApiRoute,
+  requestApiRoute,
+  userOutingsApiRoute,
+  dogOutingsApiRoute,
+} from '../routes';
 
 export function createDog(dog) {
   return apiCall('POST', DOGS_API_ROUTE, dog);
@@ -27,4 +36,20 @@ export function removeUser(id) {
 
 export function postLitter(litter) {
   return apiCall('POST', LITTERS_API_ROUTE, litter);
+}
+
+export function getRequest(id) {
+  return apiCall('GET', requestApiRoute(id));
+}
+
+export function updateRequestStatus(id, update) {
+  return apiCall('PUT', requestApiRoute(id), update);
+}
+
+export function getUserOutings(id, filters) {
+  return apiCall('GET', userOutingsApiRoute(id, filters));
+}
+
+export function getDogOutings(id, filters) {
+  return apiCall('GET', dogOutingsApiRoute(id, filters));
 }
